@@ -1,0 +1,77 @@
+.question-paper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.question-form {
+  position: absolute;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.9),
+    rgba(33, 174, 169, 0.8)
+  );
+  width: 70%;
+  margin-top: 7%;
+  margin-left: 16%;
+  height: 18rem;
+  border-radius: 2rem;
+}
+
+.question-form h2 {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 3rem;
+  
+}
+
+.question-form input {
+  padding: 1%;
+  width: 41rem;
+  height: 3rem;
+  border: none;
+  border-radius: 1rem;
+  margin-left: 2rem;
+}
+
+.question-form input::placeholder {
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: black;
+}
+
+.q1 {
+  margin-top: 2.5rem;
+}
+
+.question-form select {
+  margin-left: 2px;
+  width: 12%;
+  border-radius: 5px;
+  background-color: white;
+  color: darkcyan;
+  font-size: larger;
+  font-weight: 600;
+}
+.question-form label {
+  color: white;
+  margin-left: 1rem;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.question-form button {
+  padding: 1%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 2rem;
+  width: 10rem;
+  border: none;
+  color: rgb(39, 65, 64);
+  font-size: 15px;
+  font: bold;
+  font-weight: 600;
+  margin-left: 25rem;
+    
+}

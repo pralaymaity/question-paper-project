@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(
+    to right,
+    /* direction */ rgba(33, 174, 169, 0.5),
+    /* Blue with 50% opacity */ rgba(0, 0, 0, 0.974) /* Red with 50% opacity */
+  );
+}
+
+.handleSignout {
+  padding: 1%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  width: 7rem;
+  border: none;
+  color: rgb(39, 65, 64);
+  font-size: 15px;
+  font: bold;
+  font-weight: 600;
+}
+
+.header-logo img {
+  position: absolute;
+  width: 5rem;
+  height: 10%;
+}
+
+.header ul {
+  position: absolute;
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+  margin-top: 22px;
+  margin-left: 73%;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.header-link {
+    text-decoration: none;
+    color: white;
+}

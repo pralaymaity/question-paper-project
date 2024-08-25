@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: pralay
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: question-paper
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  server:
+    build: .
+    ports:
+      - "9000:9000"
+    # environment:
+    #   - DATABASE_URL=postgresql://pralay:12345@db:5432/question-paper
+    #   - JWT_SECRET=your_jwt_secret
+    depends_on:
+      - postgres
+    command: ["npm","start"]
+    volumes:
+      - ./:/app
+      - /app/node_modules
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: p@p.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    ports:
+      - "8085:80"
+    depends_on:
+      - postgres
+
+volumes:
+  db_data:
