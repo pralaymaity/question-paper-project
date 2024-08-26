@@ -3,9 +3,10 @@
   justify-content: space-between;
   background: linear-gradient(
     to right,
-    /* direction */ rgba(33, 174, 169, 0.5),
-    /* Blue with 50% opacity */ rgba(0, 0, 0, 0.974) /* Red with 50% opacity */
+     rgba(33, 174, 169, 0.5),
+     rgba(0, 0, 0, 0.974) 
   );
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .handleSignout {
@@ -17,6 +18,7 @@
   width: 7rem;
   border: none;
   color: rgb(39, 65, 64);
+  background-color: honeydew;
   font-size: 15px;
   font: bold;
   font-weight: 600;
@@ -40,6 +42,16 @@
 }
 
 .header-link {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
+}
+
+.header-go-back {
+  padding: 13%;
+  width: 5rem;
+  color: rgb(39, 65, 64);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 7px;
+  background-color: honeydew;
 }
