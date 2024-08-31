@@ -6,19 +6,20 @@ import { useAuth } from "./AuthProvider";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const questionList = useSelector((store) => {
-    return store.questions.list;
-  });
-
-  const navigate = useNavigate();
   const location = useLocation(); // Hook to get the current location
-  
+  const navigate = useNavigate();
 
-  const { isAuthenticated, signOut } = useAuth(); // custom hooks
+  const questionList = useSelector((store) => store.questions.list);
+
+  const { isAuthenticated, signOut } = useAuth(); // Custom hook for authentication
+
+  if (location.pathname === "/") {
+    return null; // Do not render the header
+  }
 
   const handleSignout = () => {
-    signOut();
-    navigate("/");
+    signOut(); // Perform sign-out logic
+    navigate("/"); // Redirect to home or login page
   };
 
   return (
@@ -29,16 +30,15 @@ const Header = () => {
 
       <ul>
         <li>
-        {location.pathname === '/questionlist' ? (
-            <button onClick={() => navigate(-1)} className="header-go-back">   
+          {location.pathname === "/questionlist" ? (
+            <button onClick={() => navigate(-1)} className="header-go-back">
               Go Back
             </button>
           ) : (
             <Link to="/questionlist" className="header-link">
-            📃 ({questionList.length})
-          </Link>
+              📃 ({questionList.length})
+            </Link>
           )}
-          
         </li>
       </ul>
 

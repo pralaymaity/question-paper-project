@@ -1,7 +1,7 @@
 import "../style/questionList.css";
 
 import { useSelector } from "react-redux";
-import Header from "./Header";
+
 
 const QuestionList = () => {
   const questionList = useSelector((store) => {
@@ -13,22 +13,21 @@ const QuestionList = () => {
 
   return (
     <div>
-      <Header />
+     
 
       <div className="question-list">
         <h1>Question List</h1>
 
         <div className="individual-question">
-          {questionList.map((question, index) => {      
-            
+          {questionList.map((question, index) => {
             return (
               <ul key={index}>
-                <li className="question">{question.questionText}</li>
+                <li className="question">Q{index +1}. {question.questionText} </li>
 
                 {/* <li className="category">{question.category}</li> */}
 
                 {question.category === "true/false" && (
-                  <div>
+                  <div className="category1">
                     <label>
                       <input
                         type="radio"
@@ -50,76 +49,40 @@ const QuestionList = () => {
                 )}
 
                 {question.category === "select one" && (
-                  <div>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`question-${index}`}
-                        value="option1"
-                      />
-                      Option 1
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`question-${index}`}
-                        value="option2"
-                      />
-                      Option 2
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`question-${index}`}
-                        value="option3"
-                      />
-                      Option 3
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`question-${index}`}
-                        value="option4"
-                      />
-                      Option 4
-                    </label>
+                  <div className="category2-3">
+                    {question.answereOptions.map((options, optIndex) => {
+                      return (
+                        <div key={optIndex}>
+                          <label>
+                            <input
+                              type="radio"
+                              name={`question-${index}`}
+                              value={options.text}
+                            />
+                            {options.text}
+                          </label>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
 
                 {question.category === "select two" && (
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name={`question-${index}-1`}
-                        value="option1"
-                      />
-                      Option 1
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name={`question-${index}-2`}
-                        value="option2"
-                      />
-                      Option 2
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name={`question-${index}-3`}
-                        value="option3"
-                      />
-                      Option 3
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name={`question-${index}-4`}
-                        value="option4"
-                      />
-                      Option 4
-                    </label>
+                  <div className="category2-3">
+                    {question.answereOptions.map((options, optIndex) => {
+                      return (
+                        <div key={optIndex}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              name={`question-${index}`}
+                              value={options.text}
+                            />
+                            {options.text}
+                          </label>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
 

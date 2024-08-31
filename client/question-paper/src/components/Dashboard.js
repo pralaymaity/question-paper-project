@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div>
       
-      <Header />
+      
       <QuestionForm />
       
       

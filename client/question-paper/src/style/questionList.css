@@ -3,8 +3,7 @@
   text-align: center;
   margin-top: 3rem;
   font-size: 20px;
-  position: absolute;
-  width: 100%;
+  
 }
 .question-btn {
   margin-left: 73%;
@@ -16,7 +15,7 @@
   padding: 1%;
   border-radius: 5px;
   width: 7rem;
-  border: 2px solid rgb(39, 65, 64);;
+  border: 2px solid rgb(39, 65, 64);
   color: rgb(39, 65, 64);
   background-color: honeydew;
   font-size: 15px;
@@ -24,21 +23,61 @@
   font-weight: 600;
 }
 .individual-question {
-    
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-right: 12rem;
-    margin-left: 12rem;
-    
-    
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-right: 12rem;
+  margin-left: 12rem;
 }
 .individual-question ul {
-    margin-top: 2rem;
-    margin-left: 9px;
-    border: none;
-    border-bottom: 2px solid black;
-    border-bottom-width: 2px;
-    width: 70rem;
-    list-style-type: none;
-    padding-top: 15px;
+  margin-top: 2rem;
+  margin-left: 9px;
+  border: none;
+  border-bottom: 2px solid black;
+  border-bottom-width: 2px;
+  width: 70rem;
+  list-style-type: none;
+  padding-top: 15px;
+}
+
+.question {
+  color: rgb(15, 15, 101);
+  font-size: 25px;
+  font-weight: 600;
+  text-align: left;
+  margin-left: 2rem;
+}
+
+.category1 {
+  margin-top: 1%;
+  display: flex;
+  margin-left: 7rem;
+}
+.category1 label {
+  margin-right: 18px;
+  font-size: 25px;
+}
+.category1 input {
+  width: 25px;
+  height: 15px;
+}
+
+.category2-3 label {
+  display: block;
+  margin-bottom: 10px; /* Add some space between the options */
+}
+
+.category2-3 {
+  margin-top: 1%;
+}
+.category2-3 input {
+  width: 25px;
+  height: 15px;
+}
+
+.category2-3 div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 7rem;
 }

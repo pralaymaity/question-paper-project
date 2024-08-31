@@ -1,44 +1,48 @@
 .question-paper {
-  position: absolute;
-  width: 100%;
+  width: 65rem;
   height: 100%;
+  margin: auto;
 }
 
 .question-form {
-  position: absolute;
   background: linear-gradient(
     to left,
     rgba(0, 0, 0, 0.9),
     rgba(33, 174, 169, 0.8)
   );
-  width: 70%;
-  margin-top: 7%;
-  margin-left: 16%;
-  height: 18rem;
+
   border-radius: 2rem;
+  margin-top: 7rem;
+  padding-top: 20px;
 }
 
 .question-form h2 {
   text-align: center;
   font-weight: 600;
-  margin-top: 3rem;
-  
+
+  color: white;
+  font-size: 2.5rem;
+}
+
+.form-heading {
+  margin-top: 1rem;
 }
 
 .question-form input {
-  padding: 1%;
-  width: 41rem;
   height: 3rem;
   border: none;
   border-radius: 1rem;
   margin-left: 2rem;
+  font-size: 19px;
+  width: 40rem;
+  padding: 10px;
 }
 
 .question-form input::placeholder {
   text-align: center;
-  font-weight: 600;
   font-size: 15px;
   color: black;
+  opacity: 0.7;
 }
 
 .q1 {
@@ -57,7 +61,7 @@
 .question-form label {
   color: white;
   margin-left: 1rem;
-  font-size: 2rem;
+  font-size: 25px;
   font-weight: 900;
 }
 
@@ -73,5 +77,89 @@
   font: bold;
   font-weight: 600;
   margin-left: 25rem;
-    
+}
+
+.answereOptions {
+  background-color: #eeeeee;
+  margin-top: 0rem;
+  margin: 32px;
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column;
+  align-items: baseline;
+  padding: 20px;
+}
+
+.answereOptions h3 {
+  margin-top: 2rem;
+  color: rgb(39, 65, 64);
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.answereOptions input {
+  margin-top: 10px;
+  border: 1px solid black;
+}
+
+.answereOptions button {
+  border: 1px solid rgb(39, 65, 64);
+  margin-left: 2rem;
+}
+
+.true-false-answere {
+  background-color: #eeeeee;
+  margin-top: 0rem;
+  margin: 32px;
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column;
+  padding: 20px;
+  align-items: center;
+  gap: 20px;
+}
+.true-false-category {
+  display: flex;
+  gap: 1rem;
+}
+.true-false-category label {
+  color: rgb(39, 65, 64);
+  font-size: 25px;
+}
+.true-false-category input {
+  width: 25px;
+  height: 2rem;
+}
+
+.single-answere {
+  display: flex;
+}
+.single-answere h1 {
+  margin-left: 13rem;
+  margin-top: 13px;
+  position: absolute;
+  text-align: right;
+  font-size: 22px;
+  color: green;
+}
+.single-answere input {
+  height: 2rem;
+}
+
+.two-answere {
+  display: flex;
+}
+
+.two-answere h1 {
+  margin-left: 10rem;
+  margin-top: 13px;
+  position: absolute;
+  text-align: right;
+  font-size: 22px;
+  color: green;
+}
+
+.two-answere input {
+  height: 2rem;
 }
