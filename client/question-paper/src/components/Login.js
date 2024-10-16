@@ -20,7 +20,7 @@ const Login = () => {
 
     if(!isSignInForm){
       try {
-        const response = await axios.post("http://localhost:9000/signup", {
+        const response = await axios.post("/signup", {    //the url is on the pckj.json file "proxy"
           name: name?.current?.value,
           username: email?.current?.value,
           password: password?.current?.value,
@@ -32,15 +32,17 @@ const Login = () => {
     }
     else {
       try {
-        const response = await axios.post("http://localhost:9000/signin", {
+        const response = await axios.post("/signin", {
           // name: name?.current.value,
           username: email?.current?.value,
           password: password?.current?.value,
         });
-        console.log(response.data);
+        //console.log(response.data);
 
         const token = response.data.token;
+        //console.log('Response data:', response.data);
         localStorage.setItem("token", token); // Store the token in localStorage
+
         console.log("Signed in successfully");
         window.location.href = "http://localhost:3000/dashboard";
       } catch (error) {

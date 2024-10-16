@@ -1,12 +1,13 @@
 .question-list {
   background-color: rgb(209, 207, 207);
   text-align: center;
-  margin-top: 3rem;
+  padding-top: 2rem;
   font-size: 20px;
-  
+  height: auto;
 }
 .question-btn {
   margin-left: 73%;
+  list-style-type: none;
 }
 .question-btn button {
   margin-top: 1rem;
@@ -24,20 +25,19 @@
 }
 .individual-question {
   background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  margin-right: 12rem;
-  margin-left: 12rem;
+  border-radius: 7px;
+  margin: 1rem 12rem;
+  padding-top: 2rem;
 }
 .individual-question ul {
   margin-top: 2rem;
-  margin-left: 9px;
-  border: none;
-  border-bottom: 2px solid black;
-  border-bottom-width: 2px;
-  width: 70rem;
-  list-style-type: none;
-  padding-top: 15px;
+    margin-left: 9px;
+    border: none;
+    border-bottom: 2px solid black;
+    border-bottom-width: 2px;
+    width: 67rem;
+    list-style-type: none;
+    padding-top: 15px;
 }
 
 .question {
@@ -48,36 +48,33 @@
   margin-left: 2rem;
 }
 
-.category1 {
-  margin-top: 1%;
-  display: flex;
-  margin-left: 7rem;
-}
-.category1 label {
-  margin-right: 18px;
-  font-size: 25px;
-}
-.category1 input {
-  width: 25px;
-  height: 15px;
+.question-info {
+  padding-top: 1rem;
 }
 
-.category2-3 label {
-  display: block;
-  margin-bottom: 10px; /* Add some space between the options */
+q li {
+  color: blue;
+}
+.question-info,
+.list {
+  color: blueviolet;
+  text-align: left;
 }
 
-.category2-3 {
-  margin-top: 1%;
-}
-.category2-3 input {
-  width: 25px;
-  height: 15px;
-}
-
-.category2-3 div {
-  display: flex;
-  align-items: center;
+.question-details-list,
+.list li {
+  color: rgb(255, 132, 0);
+  padding: 2px 0px 0px 18px;
+  font-weight: 800;
+  font-size: 22px;
   margin-bottom: 10px;
-  margin-left: 7rem;
+}
+
+.question-details-list ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-details-list span {
+  color: blueviolet;
 }

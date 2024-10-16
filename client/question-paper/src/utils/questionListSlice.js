@@ -10,9 +10,13 @@ const questionListSlice = createSlice({
     reducers:{
         addQuestion : (state,action)=>{
             state.list.push(action.payload)
+        },
+        removeQuestion: (state, action) => {
+            state.list.pop();
         }
+
     }
 })
 
 export default questionListSlice.reducer;
-export const {addQuestion} = questionListSlice.actions;
+export const {addQuestion , removeQuestion} = questionListSlice.actions;

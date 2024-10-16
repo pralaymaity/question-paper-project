@@ -1,0 +1,29 @@
+
+.answereOptions {
+    background-color: #eeeeee;
+    margin-top: 0rem;
+    margin: 32px;
+    border-radius: 1rem;
+    display: flex;
+    flex-flow: column;
+    padding: 20px;
+  }
+  
+  .answereOptions h3 {
+    margin-top: 2rem;
+    color: rgb(39, 65, 64);
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  
+  .answereOptions input {
+    margin-top: 10px;
+    border: 1px solid black;
+  }
+  
+  .answereOptions button {
+    border: 1px solid rgb(39, 65, 64);
+    margin-left: 2rem;
+  }
+  

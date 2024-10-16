@@ -28,7 +28,12 @@ const Header = () => {
         <img src={DashBoardLogo} alt="logo" />
       </div>
 
-      <ul>
+      <ul className="header-ul">
+
+        <li className="storage">
+          <Link to="/question-storage" className="header-link">Storage</Link> 
+        </li>
+
         <li>
           {location.pathname === "/questionlist" ? (
             <button onClick={() => navigate(-1)} className="header-go-back">
@@ -40,6 +45,7 @@ const Header = () => {
             </Link>
           )}
         </li>
+
       </ul>
 
       {isAuthenticated && (

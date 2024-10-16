@@ -3,10 +3,10 @@
   justify-content: space-between;
   background: linear-gradient(
     to right,
-     rgba(33, 174, 169, 0.5),
-     rgba(0, 0, 0, 0.974) 
+    rgba(16, 62, 61, 0.5),
+    rgba(0, 0, 0, 0.974)
   );
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
 }
 
 .handleSignout {
@@ -25,26 +25,28 @@
 }
 
 .header-logo {
-  position: relative; 
-  width: 5rem; 
-  height: auto; 
+  position: relative;
+  width: 5rem;
+  height: auto;
 }
 
 .header-logo img {
-  width: 100%; 
-  height: auto; 
-  display: block; 
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .header ul {
-  position: absolute;
+  
   color: white;
-  font-size: 25px;
-  font-weight: 600;
-  margin-top: 22px;
-  margin-left: 73%;
-  cursor: pointer;
-  list-style-type: none;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 400px;
 }
 
 .header-link {
@@ -60,4 +62,10 @@
   font-weight: 600;
   border-radius: 7px;
   background-color: honeydew;
+}
+
+.storage {
+  padding: 3px 25px;
+ 
+  
 }
