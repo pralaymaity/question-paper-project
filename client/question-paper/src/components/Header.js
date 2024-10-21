@@ -23,33 +23,54 @@ const Header = () => {
   };
 
   return (
-    <div className="header">
-      <div className="header-logo">
-        <img src={DashBoardLogo} alt="logo" />
+    <div className=" bg-gray-800 h-20 flex justify-between text-white ">
+      <div className="absolute">
+        <img className="h-20 w-20" src={DashBoardLogo} alt="logo" />
       </div>
 
-      <ul className="header-ul">
+      <div className="relative w-full">
+        <ul className="flex justify-center gap-10 my-6 ">
+          <li className="font-bold text-2xl">
+            {location.pathname === "/question-storage" ? (
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+              >
+                Home
+              </button>
+            ) : (
+              <Link
+                to="/question-storage"
+                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+              >               
+                Store
+              </Link>
+            )}
+          </li>
 
-        <li className="storage">
-          <Link to="/question-storage" className="header-link">Storage</Link> 
-        </li>
-
-        <li>
-          {location.pathname === "/questionlist" ? (
-            <button onClick={() => navigate(-1)} className="header-go-back">
-              Go Back
-            </button>
-          ) : (
-            <Link to="/questionlist" className="header-link">
-              📃 ({questionList.length})
-            </Link>
-          )}
-        </li>
-
-      </ul>
+          <li className="font-bold text-2xl">
+            {location.pathname === "/questionlist" ? (
+              <button
+                onClick={() => navigate(-1)}
+                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+              >
+                Go Back
+              </button>
+            ) : (
+              <Link
+                to="/questionlist"
+                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+              >
+                📃 ({questionList.length})
+              </Link>
+            )}
+          </li>
+        </ul>
+      </div>
 
       {isAuthenticated && (
-        <button className="handleSignout" onClick={handleSignout}>
+        <button className="text-white  font-bold text-lg  p-1 px-3  w-36 rounded-l-lg"
+         onClick={handleSignout}>
           Sign Out
         </button>
       )}

@@ -1,10 +1,17 @@
-import React from 'react';
-import "../style/optionItem.css"
+import React from "react";
+import "../style/optionItem.css";
 
-const OptionItem = ({ index, option, category, handleOptionChange, handleCorrectAnswerChange }) => {
+const OptionItem = ({
+  index,
+  option,
+  category,
+  handleOptionChange,
+  handleCorrectAnswerChange,
+}) => {
   return (
-    <div className="option-item">
+    <div className="my-2">
       <input
+        className="w-6/12 border border-blue-400 p-1 rounded outline-none"
         type="text"
         value={option.text}
         placeholder={`Option ${index + 1}`}
@@ -12,9 +19,13 @@ const OptionItem = ({ index, option, category, handleOptionChange, handleCorrect
       />
 
       {category === "select one" ? (
-        <div className="single-answere">
-          <h1>Correct Ans</h1>
-          <input 
+        <div className="flex items-center my-1 space-x-3">
+          <p className="font-semibold text-lg text-green-600 mx-2">
+            Correct Ans
+          </p>
+
+          <input
+            className="w-6 h-6 text-blue-600 form-radio "
             type="radio"
             name="correctAnswer"
             checked={option.isCorrect}
@@ -23,9 +34,12 @@ const OptionItem = ({ index, option, category, handleOptionChange, handleCorrect
         </div>
       ) : (
         category === "select two" && (
-          <div className="two-answere">
-            <h1>Correct Ans</h1>
+          <div className="flex items-center my-1 space-x-3">
+            <p className="font-semibold text-lg text-green-600 mx-2">
+              Correct Ans
+            </p>
             <input
+              className="w-5 h-5  text-blue-600 form-checkbox"
               type="checkbox"
               checked={option.isCorrect}
               onChange={() => handleCorrectAnswerChange(index)}

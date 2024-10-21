@@ -1,4 +1,4 @@
-.question-paper {
+/* .question-paper {
   height: auto;
 }
 
@@ -83,14 +83,14 @@
 
 .question-submit {
   display: flex;
-  /* Stack elements vertically */
+  
   position: relative;
-  gap: 20px; /* Space between elements */
+  gap: 20px; 
 }
 
 .question-input {
   position: relative;
-  z-index: 1; /* Keep the input field in front of other elements */
+  z-index: 1;
 }
 
 .question-category {
@@ -112,4 +112,4 @@
 .question-marks {
   position: absolute;
   left: 65%;
-}
+} */

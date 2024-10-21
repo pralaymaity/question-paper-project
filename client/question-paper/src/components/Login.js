@@ -58,42 +58,44 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
+    <div className="">
 
-        <div className="login-background">
-           <img src={LoginBodyImg} alt="img" />
+        <div className="absolute w-full">
+           <img className="object-cover w-full h-[800px]" src={LoginBodyImg} alt="img" />
         </div>
 
       <form
-        className="form"
+        className="absolute  bg-slate-500 p-12 w-3/12 my-32 mx-auto  right-0 left-0 text-white rounded-lg bg-opacity-80"
         onSubmit={(e) => {
           return e.preventDefault();
         }}
       >
-        <h1>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
+        <h1 className="font-bold my-2 text-2xl">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
 
         {!isSignInForm && (
 
-        <input 
+        <input className="w-full outline-none text-black p-2 my-1 rounded-md"
         ref={name}  
          type="name" placeholder="Name" />
         )}
         <br />
         
-        <input
+        <input className="w-full outline-none text-black p-2 my-1 rounded-md"
         ref={email}
          type="email" placeholder="Email" />
         <br />
 
-        <input
+        <input className="w-full outline-none text-black p-2 my-1 rounded-md"
         ref={password}
          type="password" placeholder="Password" />
         <br />
 
-        <button onClick={handleButtonClick}>
+        <button className="w-full p-2 my-1 rounded-md bg-slate-900 text-slate-100"
+        onClick={handleButtonClick}>
           {isSignInForm? "Sign In" : "Sign Up"}</button>
 
-        <p onClick={togglSignInForm}>
+        <p className="my-2" 
+        onClick={togglSignInForm} >
           {isSignInForm
             ? "Not have account?  Sign Up"
             : "Already registered? Sign In "}

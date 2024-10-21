@@ -1,4 +1,4 @@
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   background: linear-gradient(
@@ -6,7 +6,7 @@
     rgba(16, 62, 61, 0.5),
     rgba(0, 0, 0, 0.974)
   );
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
+  
 }
 
 .handleSignout {
@@ -68,4 +68,4 @@
   padding: 3px 25px;
  
   
-}
+} */

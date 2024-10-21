@@ -1,31 +1,22 @@
 import "../style/questionList.css";
 
-import { useDispatch, useSelector } from "react-redux";
-import { removeQuestion } from "../utils/questionListSlice";
+import {  useSelector } from "react-redux";
+
 
 const QuestionList = () => {
 
   const questionList = useSelector((store) => {
     return store.questions.list;
   });
-  console.log(questionList);
+  //console.log(questionList);
 
-  const dispatch = useDispatch();
-
-  const AddQuestion = () => {
-
-  };
-
-  const RemoveQuestion = () => {
-    dispatch(removeQuestion());
-  };
 
   return (
     
-      <div className="question-list">
-        <h1>Question List</h1>
+      <div className="bg-slate-50 py-4">
+        <h1 className="text-4xl text-center  font-bold leading-7 text-gray-900  ">Question List</h1>
 
-        <div className="individual-question">
+        <div className="my-6 px-6 py-4 space-y-4 ">
           
           {questionList.map((question, index) => {
 
@@ -52,25 +43,25 @@ const QuestionList = () => {
             }
 
             return (
-              <div className="question-info" key={index}>
-                <h1 className="question">
+              <div  key={index}>
+                <h1 className="font-bold text-lg text-red-950">
                   Q{index + 1}. {question.questionText}
                 </h1>
-                <div className="question-details-list">
-                  <ul className="list">
-                    <li className="q-subject">
+                <div >
+                  <ul className="text-lg text-gray-500">
+                    <li >
                       Subject: <span>{question.subject}</span>
                     </li>
 
-                    <li className="q-level">
+                    <li >
                       Difficulty: <span>{question.difficulty}</span>
                     </li>
 
-                    <li className="q-marks">
+                    <li >
                       Marks: <span>{question.marks}</span>
                     </li>
 
-                    <li className="q-category">
+                    <li >
                       Category: <span>{question.category}</span>
                     </li>
 
@@ -80,12 +71,12 @@ const QuestionList = () => {
                    </li>
 
                     {question.category === "true/false" ? (
-                      <li className="q-category">
+                      <li className="text-green-600">
                         {/* Display True or False based on isCorrect */}
                         Correct Answer:{" "} <span>{correctAnswer}</span>
                       </li>
                     ) : (
-                      <li className="q-category">
+                      <li className="text-green-600">
                         {/* For other categories, display the correct answer text */}
                         Correct Answer:{" "}
                         <span>
@@ -94,10 +85,7 @@ const QuestionList = () => {
                       </li>
                     )}
                   </ul>
-                  <li className="question-btn">
-                    <button onClick={AddQuestion}>Add+</button>
-                    <button onClick={RemoveQuestion}>Remove</button>
-                  </li>
+                  
                 </div>
               </div>
             );
