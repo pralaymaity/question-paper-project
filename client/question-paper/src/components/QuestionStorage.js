@@ -5,16 +5,16 @@ import { useNavigate } from "react-router-dom";
 
 const QuestionStorage = () => {
   const [originalData, setOriginalData] = useState([]);
-  console.log(originalData);
+  //console.log(originalData);
 
   const [filterData, setFilterData] = useState([]);
-  //console.log(filterData);
+  console.log(filterData);
 
   const [searchText, setSearchText] = useState("");
   //console.log(searchText);
   const [searchMarks, setSearchMarks] = useState("");
   const [selectedQuestions, setSelectedQuestions] = useState([]);
-  console.log(selectedQuestions);
+  //console.log(selectedQuestions);
 
   const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ const QuestionStorage = () => {
             className="w-6/12 p-3 rounded-md border text-slate-900  border-blue-500 outline-none"
             type="text"
             value={searchText}
-            placeholder="search"
+            placeholder="Search"
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
@@ -145,7 +145,9 @@ const QuestionStorage = () => {
                 </li>
                 <li>Subject : {list.Subject.subject_name}</li>
                 <li>Marks : {list.questions_details.marks}</li>
-                <li>Difficulty : {list.questions_details.category}</li>
+                <li>Difficulty : {list.difficulty}</li>
+                <li>Category : {list.questions_details.category}</li>
+                <li className="text-amber-600">Options : {list?.questions_details?.answereOptions?.map((option) => option.text).join(", ")}</li>
 
                 {list.questions_details.category === "true/false" ? (
                   <li className="text-green-600">
