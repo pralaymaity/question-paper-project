@@ -35,8 +35,10 @@ app.use(express.json());
 // Main API routes
 const questionRoutes = require('./src/router');
 const examRoutes = require("./src/examRoutes")
+const examPaperRoutes = require("./src/examPaperRoutes")
 app.use('/api', questionRoutes);
 app.use('/api',examRoutes);
+app.use('/api',examPaperRoutes);
 
 // Initialize Sequelize
 const sequelize = new Sequelize("question-paper", "pralay", 1234, {
