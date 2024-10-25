@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -14,6 +14,7 @@ const ExamForm = () => {
   const [academicSession, setAcademicSession] = useState("");
   const [duration, setDuration] = useState("");
   const [fullMarks, setFullMarks] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedQuestionIds.length) {
@@ -58,20 +59,25 @@ const ExamForm = () => {
 
   const handleCreateExam = async () => {
     const examInfo = {
-      selectedQuestionIds, 
+      selectedQuestionIds,
       exam_date: ExamDate, // This should match exactly with the backend
       subject,
       duration,
-      academic_session: academicSession, 
-      fullmarks: fullMarks, 
+      academic_session: academicSession,
+      fullmarks: fullMarks,
     };
 
     try {
       const response = await axios.post("/api/create-exam", examInfo);
 
+      const exam_id = response?.data?.exam?.exam_id;
+
       if (response.status === 200) {
         console.log("Exam Create successfully!");
         alert("Exam Create ✔");
+
+        // Navigate to the ExamPaper component with exam_id
+        navigate(`/exam-paper/${exam_id}`); // Passing the exam_id in the URL
       } else {
         console.log("Failed to create exam.");
       }

@@ -5,12 +5,14 @@ import { lazy } from "react";
 
 import Layout from "./Layout";
 
+
 const Body = () => {
   const Login = lazy(() => import("./Login"));
   const Dashboard = lazy(() => import("./Dashboard"));
   const QuestionList = lazy(() => import("./QuestionList"));
   const QuestionStorage = lazy(() => import("./QuestionStorage"));
   const ExamForm = lazy(() => import("./ExamForm"));
+  const ExamPaper = lazy(() => import("./ExamPaper"));
 
   const appRoute = createBrowserRouter([
     {
@@ -54,6 +56,14 @@ const Body = () => {
           element: (
             <Suspense>
               <ExamForm />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/exam-paper/:exam_id",
+          element: (
+            <Suspense>
+              <ExamPaper />
             </Suspense>
           ),
         },
