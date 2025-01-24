@@ -15,18 +15,19 @@ const Body = () => {
   const ExamPaper = lazy(() => import("./ExamPaper"));
 
   const appRoute = createBrowserRouter([
+
+    {
+      path: "/",
+      element: (
+        <Suspense>
+          <Login />
+        </Suspense>
+      )
+    },
     {
       path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "/",
-          element: (
-            <Suspense>
-              <Login />
-            </Suspense>
-          ),
-        },
         {
           path: "/dashboard",
           element: (

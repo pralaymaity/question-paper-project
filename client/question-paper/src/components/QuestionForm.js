@@ -69,9 +69,19 @@ const QuestionForm = () => {
   };
 
   const handleQuestionForm = async () => {
-    if (questionText.trim() === "" || category === "") {
-      alert("Please fill in both the question and category.");
+    if (questionText.trim() === ""  || category === "" || marks === "") {
+      alert("⚠Please fill in both the question and category and marks⚠");
       return;
+    }
+
+    // Validation: Check if a correct answer is selected
+    const hasCorrectAnswer = answereOptions.some((option) => option.isCorrect);
+
+    if (!hasCorrectAnswer) {
+      alert(
+        "⚠Please select the correct ans⚠"
+      )
+      return
     }
 
     const questionData = {

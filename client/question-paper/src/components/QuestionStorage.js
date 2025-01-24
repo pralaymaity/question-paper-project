@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const QuestionStorage = () => {
   const [originalData, setOriginalData] = useState([]);
   //console.log(originalData);
@@ -51,7 +50,7 @@ const QuestionStorage = () => {
 
   const handleNavigateExamForm = () => {
     // Navigate to ExamForm component, passing the selectedQuestions
-    navigate('/exam-form', { state: { selectedQuestions } });
+    navigate("/exam-form", { state: { selectedQuestions } });
   };
 
   return (
@@ -104,12 +103,12 @@ const QuestionStorage = () => {
           </button>
         </div>
 
-      <button
-        onClick={handleNavigateExamForm}
-        className="p-3 rounded-md font-semibold bg-blue-950 border text-white"
-      >
-        Go to Exam Form
-      </button>
+        <button
+          onClick={handleNavigateExamForm}
+          className="p-3 rounded-md font-semibold bg-blue-950 border text-white"
+        >
+          Go to Exam Form
+        </button>
       </div>
 
       <div className="py-4 px-8 space-y-4">
@@ -130,6 +129,7 @@ const QuestionStorage = () => {
               })
               .join(" , ");
           } else {
+            
             correctAns = list.questions_details.answereOptions.find(
               (option) => {
                 return option.isCorrect;
@@ -147,7 +147,12 @@ const QuestionStorage = () => {
                 <li>Marks : {list.questions_details.marks}</li>
                 <li>Difficulty : {list.difficulty}</li>
                 <li>Category : {list.questions_details.category}</li>
-                <li className="text-amber-600">Options : {list?.questions_details?.answereOptions?.map((option) => option.text).join(", ")}</li>
+                <li className="text-amber-600">
+                  Options :{" "}
+                  {list?.questions_details?.answereOptions
+                    ?.map((option) => option.text)
+                    .join(", ")}
+                </li>
 
                 {list.questions_details.category === "true/false" ? (
                   <li className="text-green-600">

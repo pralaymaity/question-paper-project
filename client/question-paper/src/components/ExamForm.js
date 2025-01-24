@@ -89,7 +89,7 @@ const ExamForm = () => {
   return (
     <div className="h-auto ">
       <form
-        className="absolute bg-slate-50 h-auto  my-10 w-8/12 right-0 left-0 mx-auto rounded-xl"
+        className=" bg-slate-50 h-auto  my-10 w-8/12 right-0 left-0 mx-auto rounded-xl"
         onSubmit={(e) => e.preventDefault()}
       >
         <h1 className="text-center text-green-800 font-bold py-8 text-4xl">
