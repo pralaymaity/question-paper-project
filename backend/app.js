@@ -11,13 +11,15 @@ require("dotenv").config();
 
 const Subject = require("./src/subject"); // Import Subject model
 const Question = require("./src/questions"); //Import Question model
-const ExamForm = require("./src/examForm"); // 
+const ExamForm = require("./src/examForm"); 
 const ExamQuestions = require("./src/examQuestions");
+
+const SubjectPaper = require("./src/collegePaper/table/subjectPaper");
+const QuestionStorage = require("./src/collegePaper/table/questionStorage");
 
 
 const app = express();
 
-// CORS configuration
 const corsOptions = {
   origin: 'http://localhost:3000',   // Allow requests from the frontend
   credentials: true,                  // Allow credentials (cookies, etc.)
@@ -25,20 +27,22 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 };
 
-// Apply CORS middleware before defining routes
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));   // Apply CORS middleware before defining routes
 app.options('*', cors(corsOptions));  // Handle preflight requests for all routes
+
 // Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 
 
 // Main API routes
-const questionRoutes = require('./src/router');
+const routes = require('./src/router');
 const examRoutes = require("./src/examRoutes")
 const examPaperRoutes = require("./src/examPaperRoutes")
-app.use('/api', questionRoutes);
+const questionRoute = require('./src/collegePaper/questionRoute')
+app.use('/api', routes);
 app.use('/api',examRoutes);
 app.use('/api',examPaperRoutes);
+app.use('/api',questionRoute)
 
 // Initialize Sequelize
 const sequelize = new Sequelize("question-paper", "pralay", 1234, {
@@ -55,6 +59,8 @@ const sequelize = new Sequelize("question-paper", "pralay", 1234, {
     await Question.sync(); // Sync Question table
     await ExamForm.sync();
     await ExamQuestions.sync();
+    await SubjectPaper.sync();
+    await QuestionStorage.sync();
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }

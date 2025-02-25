@@ -4,7 +4,6 @@ const ExamForm = require('./examForm');
 const ExamQuestions = require('./examQuestions');
 const Question = require('./questions');
 
-
 // Define associations
 ExamForm.belongsToMany(Question, {
     through: ExamQuestions,
