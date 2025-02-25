@@ -1,6 +1,7 @@
 import React from "react";
 import QuestionForm from "./QuestionForm";
 import { useEffect } from "react";
+import CollegeQuestionForm from "./collegePaper/CollegeQuestionForm";
 
 const Dashboard = () => {
   
@@ -14,7 +15,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      <QuestionForm />
+      <CollegeQuestionForm />
+      {/* <QuestionForm /> */}
     </div>
   );
 };

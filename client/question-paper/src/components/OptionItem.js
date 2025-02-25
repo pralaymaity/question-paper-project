@@ -9,7 +9,7 @@ const OptionItem = ({
   handleCorrectAnswerChange,
 }) => {
   return (
-    <div className="my-2">
+    <div className="my-4">
       <input
         className="w-6/12 border border-blue-400 p-1 rounded outline-none"
         type="text"

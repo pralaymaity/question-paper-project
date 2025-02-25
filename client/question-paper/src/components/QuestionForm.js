@@ -125,12 +125,13 @@ const QuestionForm = () => {
   };
 
   return (
-    <div className=" h-[600px]">
+    <div className="">
+      
       <form
-        className="absolute bg-slate-50 my-10 w-8/12 right-0 left-0 mx-auto rounded-xl"
+        className=" relative  mx-auto bg-slate-50 py-12  w-8/12   rounded-xl"
         onSubmit={(e) => e.preventDefault()}
       >
-        <div className="space-y-12 my-7">
+        <div className="space-y-12 ">
           <div class="border-b border-gray-900/10 pb-12">
             <h2 className="text-4xl text-center  font-bold leading-7 text-gray-900">
               Question Form
@@ -254,6 +255,7 @@ const QuestionForm = () => {
           </div>
         </div>
       </form>
+      
     </div>
   );
 };
