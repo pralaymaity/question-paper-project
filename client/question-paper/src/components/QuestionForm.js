@@ -19,6 +19,8 @@ const QuestionForm = () => {
   ]);
   //console.log(answereOptions);
 
+  const subjectList = ["Java", "Python", "JavaScript", "GK", "DBMS"];
+
   const token = localStorage.getItem("token");
 
   const handleAddOption = () => {
@@ -69,7 +71,7 @@ const QuestionForm = () => {
   };
 
   const handleQuestionForm = async () => {
-    if (questionText.trim() === ""  || category === "" || marks === "") {
+    if (questionText.trim() === "" || category === "" || marks === "") {
       alert("⚠Please fill in both the question and category and marks⚠");
       return;
     }
@@ -78,10 +80,8 @@ const QuestionForm = () => {
     const hasCorrectAnswer = answereOptions.some((option) => option.isCorrect);
 
     if (!hasCorrectAnswer) {
-      alert(
-        "⚠Please select the correct ans⚠"
-      )
-      return
+      alert("⚠Please select the correct ans⚠");
+      return;
     }
 
     const questionData = {
@@ -126,36 +126,35 @@ const QuestionForm = () => {
 
   return (
     <div className="">
-      
       <form
         className=" relative  mx-auto bg-slate-50 py-12  w-8/12   rounded-xl"
         onSubmit={(e) => e.preventDefault()}
       >
         <div className="space-y-12 ">
-          <div class="border-b border-gray-900/10 pb-12">
+          <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-4xl text-center  font-bold leading-7 text-gray-900">
               Question Form
             </h2>
 
             <div className="my-6 px-6">
               <div className="my-4">
-                <label className="font-semibold text-2xl text-amber-500 ">
-                  Subjects :
-                  <select
-                    className="font-semibold text-lg text-red-900 border mx-3 border-blue-500 rounded focus:outline-none "
-                    value={subject}
-                    onChange={(e) => {
-                      setSubject(e.target.value);
-                    }}
-                  >
-                    <option value=""></option>
-                    <option value="java">Java</option>
-                    <option value="python">Python</option>
-                    <option value="javascript">JavaScript</option>
-                    <option value="gk">General Knowledge</option>
-                    <option value="dbms">Dbms</option>
-                  </select>
+                <label className="font-semibold text-2xl text-amber-500">
+                  Subjects:
                 </label>
+                <select
+                  className="font-semibold text-lg text-red-900 border mx-3 border-blue-500 rounded focus:outline-none px-2 py-1"
+                  value={subject} // Controlled component
+                  onChange={(e) => setSubject(e.target.value)}
+                >
+                  <option value="" disabled hidden>
+                    
+                  </option>
+                  {subjectList.map((subj, index) => (
+                    <option key={index} value={subj.toLowerCase()}>
+                      {subj}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="my-4">
@@ -255,7 +254,6 @@ const QuestionForm = () => {
           </div>
         </div>
       </form>
-      
     </div>
   );
 };

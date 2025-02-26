@@ -45,7 +45,6 @@ const Login = () => {
         name.current.value = "";
         email.current.value = "";
         password.current.value = "";
-
       } catch (error) {
         console.log("🔴Registration Faild🔴");
       }
@@ -63,10 +62,10 @@ const Login = () => {
         localStorage.setItem("token", token); // Store the token in localStorage
 
         console.log("Signed in successfully");
-        alert("✔Signed in successfully")
+        alert("✔Signed in successfully");
         window.location.href = "http://localhost:3000/dashboard";
       } catch (error) {
-        alert("⚠ User not found")
+        alert("⚠ User not found");
         console.log("Error signing in");
         // showErrorMessage("Error signing in")
       }
@@ -80,14 +79,13 @@ const Login = () => {
   return (
     <div className="">
       <div className="my-12">
-        <h1 className="flex items-center justify-center font-bold text-gray-800 text-4xl">
+        <h1 className="flex items-center justify-center font-bold text-teal-600 text-4xl">
           Question Paper Generator Portal
         </h1>
       </div>
-      
 
       <form
-        className="absolute  p-12 w-3/12 my-22 mx-auto right-0 left-0  rounded-lg bg-opacity-80 border border-gray-800 text-gray-800"
+        className="absolute  p-12 w-3/12 my-22 mx-auto right-0 left-0 shadow-xl  rounded-lg  border border-teal-600 text-green-950"
         onSubmit={(e) => {
           return e.preventDefault();
         }}
@@ -98,7 +96,7 @@ const Login = () => {
 
         {!isSignInForm && (
           <input
-            className="w-full border border-gray-800  text-black p-2 my-1 rounded-md"
+            className="w-full border-2 border-teal-500  text-black p-2 my-1 rounded-md outline-none"
             ref={name}
             type="name"
             placeholder="Full Name"
@@ -115,7 +113,7 @@ const Login = () => {
         <br />
 
         <input
-          className="w-full outline-none border border-gray-800 text-black p-2 my-1 rounded-md"
+          className="w-full outline-none border-2 border-teal-500 text-black p-2 my-1 rounded-md"
           ref={email}
           type="email"
           placeholder="Email"
@@ -131,7 +129,7 @@ const Login = () => {
         <br />
 
         <input
-          className="w-full outline-none border border-gray-800 text-black p-2 my-1 rounded-md"
+          className="w-full outline-none border-2 border-teal-500 text-black p-2 my-1 rounded-md"
           ref={password}
           type="password"
           placeholder="Password"
@@ -147,13 +145,16 @@ const Login = () => {
         <p className="font-bold text-red-700">{showErrorMessage}</p>
 
         <button
-          className="w-full p-2 my-1 rounded-md bg-slate-900 text-slate-100 font-semibold"
+          className="w-full p-2 my-1 rounded-md bg-teal-500 text-lime-950 font-semibold"
           onClick={handleButtonClick}
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
 
-        <p className="my-2 font-semibold" onClick={togglSignInForm}>
+        <p
+          className="my-2 font-semibold cursor-pointer"
+          onClick={togglSignInForm}
+        >
           {isSignInForm
             ? "Not have account?  Sign Up"
             : "Already registered? Sign In "}
