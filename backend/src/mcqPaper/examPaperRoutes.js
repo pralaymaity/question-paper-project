@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const ExamForm = require("./examForm");
-const ExamQuestions = require("./examQuestions");
-const Question = require("./questions");
+const ExamForm = require("./models/examForm");
+const ExamQuestions = require("./models/examQuestions");
+const Question = require("./models/questions");
 
 router.get("/exam/:exam_id", async (req, res) => {
   const { exam_id } = req.params;

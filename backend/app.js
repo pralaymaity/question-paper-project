@@ -8,14 +8,13 @@ const { Sequelize, DataTypes } = require("sequelize");
 require("dotenv").config();
 // require('dotenv').config(); loads environment variables from a .env file into process.env.
 
-
-const Subject = require("./src/subject"); // Import Subject model
-const Question = require("./src/questions"); //Import Question model
-const ExamForm = require("./src/examForm"); 
-const ExamQuestions = require("./src/examQuestions");
-
-const SubjectPaper = require("./src/collegePaper/table/subjectPaper");
-const QuestionStorage = require("./src/collegePaper/table/questionStorage");
+const User = require("./src/loginUser/models/loginUser");
+const Subject = require("./src/mcqPaper/models/subject"); 
+const Question = require("./src/mcqPaper/models/questions"); 
+const ExamForm = require("./src/mcqPaper/models/examForm"); 
+const ExamQuestions = require("./src/mcqPaper/models/examQuestions");
+const SubjectPaper = require("./src/collegePaper/models/subjectPaper");
+const QuestionStorage = require("./src/collegePaper/models/questionStorage");
 
 
 const app = express();
@@ -35,10 +34,13 @@ app.use(express.json());
 
 
 // Main API routes
-const routes = require('./src/router');
-const examRoutes = require("./src/examRoutes")
-const examPaperRoutes = require("./src/examPaperRoutes")
+const loginRoute = require("./src/loginUser/loginRoute")
+const routes = require('./src/mcqPaper/router');
+const examRoutes = require("./src/mcqPaper/examRoutes")
+const examPaperRoutes = require("./src/mcqPaper/examPaperRoutes")
 const questionRoute = require('./src/collegePaper/questionRoute')
+
+app.use(loginRoute)
 app.use('/api', routes);
 app.use('/api',examRoutes);
 app.use('/api',examPaperRoutes);
@@ -65,100 +67,18 @@ const sequelize = new Sequelize("question-paper", "pralay", 1234, {
     console.error("Unable to connect to the database:", error);
   }
 })();
-
-// Define User database table model
-const User = sequelize.define("User", {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  username: {
-    type: DataTypes.STRING,
-    unique: true, // This will be the email
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
-
-// Sync database
 sequelize.sync();
 
 app.get("/", async (req, res) => {
   res.send("Hello World!!");
 });
 
-//app.use('/api', questionRoutes);
 
-// Sign in  route
-app.post("/signin", async (req, res) => {
-  //console.log("Sign in is working fine.........");
 
-  const { username, password } = req.body;
+// Sync database
 
-  try {
-    const user = await User.findOne({ where: { username } });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign(
-        { username: user.username, name: user.name },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "24h",
-        }
-      );
-      res.json({ token });
-    } else {
-      res.status(401).json({ error: "Invalid credentials" });
-    }
-  } catch (err) {
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
-// sign up route
-app.post("/signup", async (req, res) => {
-  //console.log("Sign up is working fine.........", req.body);
-
-  try {
-    const { name, username, password } = req.body;
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user
-    await User.create({ name, username, password: hashedPassword });
-
-    res.status(201).send("User created successfully!");
-  } catch (error) {
-    console.error(error);
-
-    if (error.name === "SequelizeUniqueConstraintError") {
-      return res.status(400).send("Email already taken.");
-    }
-
-    res.status(400).send("Error creating user.");
-  }
-});
-
-// Protected route
-app.get("/protected", (req, res) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Extract token from 'Bearer <token>'
-
-  if (!token) {
-    return res.status(403).json({ error: "No token provided" });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(500).json({ error: "Failed to authenticate token" });
-    }
-    res.json({ message: "Welcome to the protected route", user: decoded });
-  });
-});
 //--------------------------------------------------------------------------------------
 
 app.listen(9000, () => {

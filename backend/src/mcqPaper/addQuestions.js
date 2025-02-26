@@ -1,5 +1,5 @@
-const Subject = require("./subject"); // Adjust path
-const Question = require("./questions"); // Adjust path
+const Subject = require("./models/subject"); // Adjust path
+const Question = require("./models/questions"); // Adjust path
 
 const addQuestion = async (req, res) => {
   //   console.log("reques is coming");

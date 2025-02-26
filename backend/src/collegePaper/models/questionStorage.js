@@ -2,8 +2,8 @@
 
 const { DataTypes } = require('sequelize');
 const sequelize = require("../../sequelize");
-const SubjectPaper = require("../table/subjectPaper")
 
+const SubjectPaper = require("../models/subjectPaper")
 const QuestionStorage = sequelize.define('QuestionStorage', {
     
     id:{

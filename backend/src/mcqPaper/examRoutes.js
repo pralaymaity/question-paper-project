@@ -1,10 +1,10 @@
 
-// routes/exam.js
 const express = require('express');
 const router = express.Router();
-const { ExamForm, ExamQuestions } = require('./associations');
+const ExamForm = require('./models/examForm')
+const ExamQuestions = require('./models/examQuestions')
+const Question = require('./models/questions')
 
-const Question = require('./questions')
 
 router.post('/create-exam', async (req, res) => {
 

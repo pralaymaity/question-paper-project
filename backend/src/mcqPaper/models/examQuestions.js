@@ -1,6 +1,6 @@
 
 const { DataTypes } = require('sequelize');
-const sequelize = require('./sequelize');
+const sequelize = require('../../sequelize');
 const ExamForm = require('./examForm');
 const Question = require('./questions');
 

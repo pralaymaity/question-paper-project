@@ -1,5 +1,5 @@
-const SubjectPaper = require("../collegePaper/table/subjectPaper");
-const QuestionStorage = require("../collegePaper/table/questionStorage");
+const SubjectPaper = require("./models/subjectPaper");
+const QuestionStorage = require("./models/questionStorage");
 
 const storeQuestion = async (req, res) => {
   const { subject, questionText, difficulty, marks, group } = req.body;
@@ -42,7 +42,7 @@ const storeQuestion = async (req, res) => {
       subjectRecord = await SubjectPaper.create({ subject_name: subject });
     }
 
-    const question_details = { marks: totalMarks, group: group };
+    const question_details = { marks: totalMarks, group: group  };
     console.log("📝 Question Details Before Inserting:", question_details);
     console.log("✅ Type of question_details:", typeof question_details);
 

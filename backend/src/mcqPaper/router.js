@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const { addQuestion } = require('./addQuestions');
-const authenticate = require('./auth');
+const authenticate = require('../auth');
 
-const Question = require('./questions'); // Ensure you import the Question model
-const Subject = require('./subject');
+const Question = require('./models/questions'); // Ensure you import the Question model
+const Subject = require('./models/subject');
 
 
 router.post('/add-question',  authenticate, addQuestion);
@@ -26,7 +26,7 @@ router.get('/add-question', authenticate, async (req, res) => {
       console.error(err);
       res.status(500).json({ error: 'Database error' });
     }
-  });
+});
 
 module.exports = router;
 

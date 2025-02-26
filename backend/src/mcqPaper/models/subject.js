@@ -1,7 +1,7 @@
 
 
 const { DataTypes } = require('sequelize');
-const sequelize = require('./sequelize'); 
+const sequelize = require('../../sequelize'); 
 
 // Define the Subject model
 const Subject = sequelize.define('Subject', {
