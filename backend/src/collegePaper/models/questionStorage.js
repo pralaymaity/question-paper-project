@@ -16,20 +16,20 @@ const QuestionStorage = sequelize.define('QuestionStorage', {
         allowNull: false,
     },
     question: {
-        type: DataTypes.TEXT, // stores unlimited-length text including \n,
-        allowNull: false, // Store who created the question
+        type: DataTypes.TEXT, 
+        allowNull: false, 
     },
     difficulty: {
-        type: DataTypes.ENUM('easy', 'moderate', 'hard'), // Example of enum levels
+        type: DataTypes.ENUM('easy', 'moderate', 'hard'), 
         allowNull: false,
     },
     questions_details: {
-        type: DataTypes.JSON, // Store questions details as JSON
+        type: DataTypes.JSON, 
         allowNull: false,
     },
     created_by: {
         type: DataTypes.STRING,
-        allowNull: false, // Store who created the question
+        allowNull: false, 
     },
     
 })

@@ -2,6 +2,8 @@
 const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
+  
+  
   const token = req.headers['authorization']?.split(' ')[1]; // Assuming Bearer token format
 
   if (!token) {
@@ -12,7 +14,10 @@ const authenticate = (req, res, next) => {
     if (err) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
+  //console.log(req.user);
     req.user = decoded; // Attach the decoded payload to req.user
+    
+    //console.log(req.user); 
     next();
   });
 };

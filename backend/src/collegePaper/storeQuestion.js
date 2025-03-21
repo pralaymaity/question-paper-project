@@ -5,7 +5,7 @@ const storeQuestion = async (req, res) => {
   const { subject, questionText, difficulty, marks, group } = req.body;
   const createdBy = req.user.name;
 
-  console.log(req.body);
+  //console.log(req.body);
   
   // Assuming req.user is set by authentication middleware
 
@@ -43,10 +43,10 @@ const storeQuestion = async (req, res) => {
     }
 
     const question_details = { marks: totalMarks, group: group  };
-    console.log("📝 Question Details Before Inserting:", question_details);
-    console.log("✅ Type of question_details:", typeof question_details);
+    // console.log("📝 Question Details Before Inserting:", question_details);
+    // console.log("✅ Type of question_details:", typeof question_details);
 
-    // 🔹 Store the Question in QuestionStorage Table
+    
     const question = await QuestionStorage.create({
       subject_id: subjectRecord.id,
       question: questionText,

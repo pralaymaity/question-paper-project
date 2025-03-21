@@ -11,31 +11,31 @@ const Question = sequelize.define('Question', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true, // Automatically increments the ID
+    autoIncrement: true, 
   },
   subject_id: {
     type: DataTypes.INTEGER,
-    allowNull: false, // Foreign key to Subject table
+    allowNull: false, 
   },
   question: {
     type: DataTypes.STRING,
-    allowNull: false, // Store who created the question
+    allowNull: false,
   },
   difficulty: {
-    type: DataTypes.ENUM('easy', 'medium', 'hard'), // Example of enum levels
+    type: DataTypes.ENUM('easy', 'medium', 'hard'), 
     allowNull: false,
   },
   questions_details: {
-    type: DataTypes.JSON, // Store questions details as JSON
+    type: DataTypes.JSON, 
     allowNull: false,
   },
   created_by: {
     type: DataTypes.STRING,
-    allowNull: false, // Store who created the question
+    allowNull: false, 
   },
 
   status: {
-    type: DataTypes.STRING, // You can adjust this to be ENUM if needed
+    type: DataTypes.STRING, 
     allowNull: false,
   },
 });

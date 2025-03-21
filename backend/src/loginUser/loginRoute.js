@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require('./models/loginUser')
 const router = express.Router();
+const authenticate = require("../auth")
 
 
 // Sign in  route
@@ -15,6 +16,10 @@ router.post("/signin", async (req, res) => {
     const user = await User.findOne({ where: { username } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
+      
+      //user.username refers to the username stored in the database for the logged-in user.
+      //user.name is the full name of the user from the database.
+
       const token = jwt.sign(
         { username: user.username, name: user.name },
         process.env.JWT_SECRET,
@@ -22,6 +27,7 @@ router.post("/signin", async (req, res) => {
           expiresIn: "24h",
         }
       );
+
       res.json({ token });
     } else {
       res.status(401).json({ error: "Invalid credentials" });
@@ -57,20 +63,8 @@ router.post("/signup", async (req, res) => {
 });
 
 // Protected route
-router.get("/protected", (req, res) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Extract token from 'Bearer <token>'
-
-  if (!token) {
-    return res.status(403).json({ error: "No token provided" });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(500).json({ error: "Failed to authenticate token" });
-    }
-    res.json({ message: "Welcome to the protected route", user: decoded });
-  });
+router.get("/protected", authenticate, (req, res) => {
+  res.json({ message: "Welcome to the protected route", user: req.user });
 });
 
 module.exports = router;

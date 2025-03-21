@@ -1,11 +1,12 @@
 
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+
+
+require("dotenv").config();
 const cors = require("cors");
 
 const { Sequelize, DataTypes } = require("sequelize");
-require("dotenv").config();
+
 // require('dotenv').config(); loads environment variables from a .env file into process.env.
 
 const User = require("./src/loginUser/models/loginUser");
@@ -20,10 +21,10 @@ const QuestionStorage = require("./src/collegePaper/models/questionStorage");
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',   // Allow requests from the frontend
+  origin: 'http://localhost:3000',   
   credentials: true,                  // Allow credentials (cookies, etc.)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 
 app.use(cors(corsOptions));   // Apply CORS middleware before defining routes
@@ -69,17 +70,10 @@ const sequelize = new Sequelize("question-paper", "pralay", 1234, {
 })();
 sequelize.sync();
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World!!");
 });
 
-
-
-// Sync database
-
-
-
-//--------------------------------------------------------------------------------------
 
 app.listen(9000, () => {
   console.log("Server is running on port 9000");

@@ -18,7 +18,7 @@ router.get('/take-question', authenticate, async (req, res) => {
           attributes: ['subject_name'],  // Only include subject_name from SubjectPaper table
         },
         order: [['question', 'ASC']],
-      }); // Fetch all questions from the database
+      }); 
       res.json(questions);
       //console.log(questions);
       

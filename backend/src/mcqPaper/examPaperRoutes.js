@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const ExamForm = require("./models/examForm");
-const ExamQuestions = require("./models/examQuestions");
-const Question = require("./models/questions");
+
+const {ExamForm, ExamQuestions, Question} = require("./associations")
 
 router.get("/exam/:exam_id", async (req, res) => {
+
+  
   const { exam_id } = req.params;
 
   if (!exam_id) {
@@ -19,9 +20,9 @@ router.get("/exam/:exam_id", async (req, res) => {
           model: Question,
           through: {
             model: ExamQuestions,
-            attributes: [], // No need to include columns from ExamQuestions
+            attributes: [], 
           },
-          attributes: ['question', 'questions_details'], // column name you want to fetch in Question model
+          attributes: ['question', 'questions_details'], 
         },
       ],
     });

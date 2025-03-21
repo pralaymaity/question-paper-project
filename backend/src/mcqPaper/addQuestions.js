@@ -1,5 +1,5 @@
-const Subject = require("./models/subject"); // Adjust path
-const Question = require("./models/questions"); // Adjust path
+const Subject = require("./models/subject"); 
+const Question = require("./models/questions"); 
 
 const addQuestion = async (req, res) => {
   //   console.log("reques is coming");
@@ -11,7 +11,7 @@ const addQuestion = async (req, res) => {
 
   //console.log(req.body);
 
-  // Validate inputs
+  
   if (
     !subject ||
     !questionText ||
@@ -25,10 +25,10 @@ const addQuestion = async (req, res) => {
       .json({ success: false, message: "All fields are required." });
   }
 
-  // Convert marks to a number
-  const marksNumber = Number.parseInt(marks); // Or use parseInt(marks, 10);
+  
+  const marksNumber = Number.parseInt(marks); 
 
-  // Validate that marks is a valid number
+ 
   if (isNaN(marksNumber) || marksNumber < 0) {
     //console.log("err 2");
     return res
@@ -36,7 +36,7 @@ const addQuestion = async (req, res) => {
       .json({ success: false, message: "Marks must be a positive number." });
   }
 
-  // 2. Prepare question details for the question_details column
+  
   const questionDetails = {
     marks: marksNumber,
     category: category,
@@ -45,7 +45,7 @@ const addQuestion = async (req, res) => {
   //console.log("Question details:", questionDetails);
 
   try {
-    // 1. Store the subject in the Subjects table
+    
     let subjectRecord = await Subject.findOne({
       where: { subject_name: subject },
     });
@@ -54,13 +54,13 @@ const addQuestion = async (req, res) => {
       subjectRecord = await Subject.create({ subject_name: subject });
     }
 
-    // 3. Store the question in the Questions table
+    
     const question = await Question.create({
-      subject_id: subjectRecord.id, // Store subject_id from Subjects table
-      question: questionText, // Store question_text in the 'question' column
-      difficulty: difficulty, // Store difficulty in the 'difficulty' column
-      questions_details: questionDetails, // Store JSON data (marks, category, answereOptions) in the 'question_details' column
-      created_by: createdBy, // Store the logged-in user's name in the 'created_by' column
+      subject_id: subjectRecord.id, 
+      question: questionText, 
+      difficulty: difficulty, 
+      questions_details: questionDetails, 
+      created_by: createdBy, 
       status: "active",
     });
 

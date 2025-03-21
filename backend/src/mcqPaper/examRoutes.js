@@ -15,7 +15,7 @@ router.post('/create-exam', async (req, res) => {
   }
 
   try {
-    // Step 1: Create a new exam form
+    
     const newExam = await ExamForm.create({
       exam_date,
       subject,
@@ -24,7 +24,7 @@ router.post('/create-exam', async (req, res) => {
       fullmarks
     });
 
-    // Step 2: Link selected questions to the new exam in ExamQuestions table
+    
     const examQuestionData = selectedQuestionIds.map((question_id) => ({
       exam_id: newExam.exam_id,
       question_id,
@@ -32,21 +32,21 @@ router.post('/create-exam', async (req, res) => {
     
     await ExamQuestions.bulkCreate(examQuestionData);
 
-    // Step 3: Fetch questions along with their answer options from the Questions table
+    
     const selectedQuestions = await Question.findAll({
       where: {
-        id: selectedQuestionIds // Fetch all questions by their IDs
+        id: selectedQuestionIds 
       },
-      attributes: ['id', 'questions_details'] // Bring question details (including options)
+      attributes: ['id', 'questions_details'] 
     });
 
-    // Step 4: Return both the exam form details and the selected questions with options
+    
     res.status(200).json({
       message: 'Exam created successfully',
       exam: newExam,
       questions: selectedQuestions
     });
-    console.log("Exam created successfully ✔");
+    //console.log("Exam created successfully ✔");
     
   } catch (err) {
     console.error(err);
@@ -54,23 +54,25 @@ router.post('/create-exam', async (req, res) => {
   }
 });
 
-// Route to get multiple questions by their IDs
+
 router.get('/add-questions/:ids', async (req, res) => {
 
-    // Use req.params instead of req.query to get ids from the path
+    
     const { ids } = req.params; 
+    console.log(ids);
+    
 
-    // Split the string into an array of IDs
+    
     const selectedQuestionIds = ids.split(','); 
 
     try {
         const questions = await Question.findAll({
             where: {
-                id: selectedQuestionIds, // Match the IDs in the question table
+                id: selectedQuestionIds, 
             },
         });
 
-        // Return the questions as a JSON response
+        
         res.status(200).json(questions);
     } catch (error) {
         
