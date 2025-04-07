@@ -1,14 +1,9 @@
 
 const express = require("express");
-
-
 require("dotenv").config();
-const cors = require("cors");
-
-const { Sequelize, DataTypes } = require("sequelize");
-
 // require('dotenv').config(); loads environment variables from a .env file into process.env.
-
+const cors = require("cors");
+const { Sequelize, DataTypes } = require("sequelize");
 const User = require("./src/loginUser/models/loginUser");
 const Subject = require("./src/mcqPaper/models/subject"); 
 const Question = require("./src/mcqPaper/models/questions"); 
@@ -27,7 +22,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 
-app.use(cors(corsOptions));   // Apply CORS middleware before defining routes
+app.use(cors(corsOptions));   
 app.options('*', cors(corsOptions));  // Handle preflight requests for all routes
 
 // Middleware to parse incoming requests with JSON payloads
@@ -35,17 +30,19 @@ app.use(express.json());
 
 
 // Main API routes
-const loginRoute = require("./src/loginUser/loginRoute")
+const loginRoute = require("./src/loginUser/loginRoute");
 const routes = require('./src/mcqPaper/router');
-const examRoutes = require("./src/mcqPaper/examRoutes")
-const examPaperRoutes = require("./src/mcqPaper/examPaperRoutes")
-const questionRoute = require('./src/collegePaper/questionRoute')
+const examRoutes = require("./src/mcqPaper/examRoutes");
+const examPaperRoutes = require("./src/mcqPaper/examPaperRoutes");
+const questionRoute = require('./src/collegePaper/questionRoute');
+const subjectRoute = require("./src/collegePaper/subjectRoute");
 
 app.use(loginRoute)
 app.use('/api', routes);
 app.use('/api',examRoutes);
 app.use('/api',examPaperRoutes);
-app.use('/api',questionRoute)
+app.use('/api',questionRoute);
+app.use("/take-subject",subjectRoute);
 
 // Initialize Sequelize
 const sequelize = new Sequelize("question-paper", "pralay", 1234, {
@@ -54,16 +51,17 @@ const sequelize = new Sequelize("question-paper", "pralay", 1234, {
 });
 (async function () {
   try {
-    await sequelize.authenticate();
-    // await sequelize.sync({ force: false });
+    await sequelize.authenticate();;
     console.log("Database Connection has been established successfully.");
-    await User.sync(); // create  User table on postgres db
-    await Subject.sync(); // Sync Subject table
-    await Question.sync(); // Sync Question table
+    await User.sync(); 
+    await Subject.sync(); 
+    await Question.sync(); 
     await ExamForm.sync();
     await ExamQuestions.sync();
     await SubjectPaper.sync();
-    await QuestionStorage.sync();
+    await QuestionStorage.sync(); //{ force: true } if u want later update the table
+    //console.log("🔁 QuestionStorage table dropped and recreated successfully!");
+
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }

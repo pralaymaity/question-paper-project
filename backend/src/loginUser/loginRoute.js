@@ -17,8 +17,7 @@ router.post("/signin", async (req, res) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       
-      //user.username refers to the username stored in the database for the logged-in user.
-      //user.name is the full name of the user from the database.
+      
 
       const token = jwt.sign(
         { username: user.username, name: user.name },
@@ -27,6 +26,9 @@ router.post("/signin", async (req, res) => {
           expiresIn: "24h",
         }
       );
+      //user.username refers to the username stored in the database for the logged-in user.
+      //user.name is the full name of the user from the database.
+
 
       res.json({ token });
     } else {

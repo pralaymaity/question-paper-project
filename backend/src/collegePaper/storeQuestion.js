@@ -6,7 +6,7 @@ const storeQuestion = async (req, res) => {
   const createdBy = req.user.name;
 
   //console.log(req.body);
-  
+
   // Assuming req.user is set by authentication middleware
 
   // Validate inputs
@@ -18,51 +18,63 @@ const storeQuestion = async (req, res) => {
     !group ||
     !createdBy
   ) {
-    return res
-      .status(401)
-      .json({ success: false, message: "All fields are required." });
+    return res.status(400).json({ error: "Missing required fields" });
   }
 
-  const calculateTotalMarks = (marksStr) => {
-    return marksStr
-      .split("+") // Split by '+'
-      .map((num) => parseInt(num.trim(), 10)) // Convert each part to an integer
-      .reduce((acc, curr) => acc + curr, 0); // Sum the values
-  };
-
-  const totalMarks = calculateTotalMarks(marks);
-  console.log("📌 Total Marks Calculated:", totalMarks);
-
   try {
-    let subjectRecord = await SubjectPaper.findOne({
-      where: { subject_name: subject },
-    });
+    let foundSubject = await SubjectPaper.findOne({ where: { subject_name: subject } });
+    if (!foundSubject) {
+      // If not found, create it
+      foundSubject = await SubjectPaper.create({ subject_name: subject });
+    }
+    //console.log(foundSubject);
+    
 
-    if (!subjectRecord) {
-      subjectRecord = await SubjectPaper.create({ subject_name: subject });
+    const subjectId = foundSubject.id;
+    //console.log(subjectId);
+    
+
+    // Split the questions by line
+    const subQuestions = questionText
+      .split("\n")
+      .map((q) => q.trim())
+      .filter((q) => q);
+    
+
+    // Split the marks string and convert to numbers
+    const marksArray = marks.split("+").map((m) => parseInt(m.trim()));
+
+    // Check if questions and length are match
+    if (subQuestions.length !== marksArray.length) {
+      return res.status(400).json({
+        error: `Number of subquestions (${subQuestions.length}) and marks (${marksArray.length}) do not match.`,
+      });
     }
 
-    const question_details = { marks: totalMarks, group: group  };
-    // console.log("📝 Question Details Before Inserting:", question_details);
-    // console.log("✅ Type of question_details:", typeof question_details);
+    // Combine subquestions with marks
+    const sub_question_marks = subQuestions.map((question, idx) => ({
+      subquestion: question,
+      marks: marksArray[idx],
+    }));
 
-    
-    const question = await QuestionStorage.create({
-      subject_id: subjectRecord.id,
+    // Total marks
+    const totalMarks = marksArray.reduce((acc, val) => acc + val, 0);
+
+  
+    await QuestionStorage.create({
+      subject_id: subjectId,
       question: questionText,
       difficulty: difficulty,
-      questions_details: question_details,
+      question_group: group,
+      total_marks: totalMarks,
+      sub_question_marks: sub_question_marks,
       created_by: createdBy,
     });
 
-    res.status(200).json({
-      success: true,
-      message: "Question added successfully",
-      question,
-    });
+    res.status(201).json({ message: "College Question stored successfully." });
   } catch (error) {
-    console.error("Error storing question:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error saving question:", error);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
