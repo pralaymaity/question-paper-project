@@ -6,7 +6,7 @@ const ExamPaper = () => {
   const { exam_id } = useParams(); // Extract exam_id from the URL
   //console.log(exam_id);
   const [paper, setPaper] = useState([]);
-  console.log(paper);
+  //console.log(paper);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   //console.log(selectedAnswers);
   const [score, setScore] = useState(0);

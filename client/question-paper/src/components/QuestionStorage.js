@@ -7,13 +7,13 @@ const QuestionStorage = () => {
   //console.log(originalData);
 
   const [filterData, setFilterData] = useState([]);
-  console.log(filterData);
+  //console.log(filterData);
 
   const [searchText, setSearchText] = useState("");
   //console.log(searchText);
   const [searchMarks, setSearchMarks] = useState("");
-  const [selectedQuestions, setSelectedQuestions] = useState([]);
-  //console.log(selectedQuestions);
+  const [selectedQuestionsIds, setselectedQuestionsIds] = useState([]);
+  //console.log(selectedQuestionsIds);
 
   const navigate = useNavigate();
 
@@ -24,14 +24,17 @@ const QuestionStorage = () => {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token"); // Ensure you have the token saved in localStorage or a similar place
-
+      //console.log(token);
+      
       const questionStorage = await axios.get(
-        "http://localhost:3000/api/add-question",
+        "http://localhost:3000/api/get-question",
         {
           headers: {
             Authorization: `Bearer ${token}`, // Send the token in the Bearer format
           },
         }
+        // If you include headers (like the Authorization header) in any HTTP request (GET, POST, PUT, DELETE, etc.), 
+        // they will automatically be sent to the server along with the request.
       );
 
       const jsonData = questionStorage.data;
@@ -43,14 +46,17 @@ const QuestionStorage = () => {
   };
 
   const filterQuestions = (id) => {
-    setSelectedQuestions((prev) =>
+    setselectedQuestionsIds((prev) =>
       prev.includes(id) ? prev.filter((q) => q !== id) : [...prev, id]
     );
   };
 
   const handleNavigateExamForm = () => {
-    // Navigate to ExamForm component, passing the selectedQuestions
-    navigate("/exam-form", { state: { selectedQuestions } });
+    // Navigate to ExamForm component, passing the selectedQuestionsIds
+    console.log(selectedQuestionsIds);
+    
+    navigate("/dashboard/exam-form", { state: { selectedQuestionsIds } });
+    // now go to Exam form component and console the useLocation variable. 
   };
 
   return (
@@ -175,7 +181,7 @@ const QuestionStorage = () => {
                 onChange={() => {
                   filterQuestions(list.id);
                 }}
-                checked={selectedQuestions.includes(list.id)}
+                checked={selectedQuestionsIds.includes(list.id)}
               />
             </div>
           );

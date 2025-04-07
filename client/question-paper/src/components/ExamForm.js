@@ -5,10 +5,13 @@ import axios from "axios";
 
 const ExamForm = () => {
   const location = useLocation();
+  console.log(location);
+  
   const [filterquestions, setFilterQuestions] = useState([]);
   //console.log(filterquestions);
-  const selectedQuestionIds = location.state?.selectedQuestions || []; // Expecting an array of IDs
-
+  const selectedQuestionIds = location.state?.selectedQuestionsIds || []; // Expecting an array of IDs
+   console.log(selectedQuestionIds);
+   
   const [subject, setSubject] = useState("");
   const [ExamDate, setExamDate] = useState("");
   const [academicSession, setAcademicSession] = useState("");
@@ -77,7 +80,7 @@ const ExamForm = () => {
         alert("Exam Create ✔");
 
         // Navigate to the ExamPaper component with exam_id
-        navigate(`/exam-paper/${exam_id}`); // Passing the exam_id in the URL
+        navigate(`/dashboard/exam-paper/${exam_id}`); // Passing the exam_id in the URL
       } else {
         console.log("Failed to create exam.");
       }

@@ -16,7 +16,7 @@ const Layout = () => {
       </main>
   
       {/* Footer (always at the bottom) */}
-      <footer className="bg-gray-800 text-white p-4">
+      <footer className="bg-teal-900 text-white p-4 text-2xl">
         <Footer />
       </footer>
     </div>

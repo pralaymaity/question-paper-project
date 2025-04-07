@@ -6,6 +6,7 @@ import { lazy } from "react";
 import Layout from "./Layout";
 
 
+
 const Body = () => {
   const Login = lazy(() => import("./Login"));
   const Dashboard = lazy(() => import("./Dashboard"));
@@ -13,6 +14,8 @@ const Body = () => {
   const QuestionStorage = lazy(() => import("./QuestionStorage"));
   const ExamForm = lazy(() => import("./ExamForm"));
   const ExamPaper = lazy(() => import("./ExamPaper"));
+  const QuestionForm = lazy(() => import("./QuestionForm"));
+  const StoreQuestions = lazy(()=> import("./collegePaper/StoreQuestions"));
 
   const appRoute = createBrowserRouter([
 
@@ -29,15 +32,24 @@ const Body = () => {
       element: <Layout />,
       children: [
         {
-          path: "/dashboard",
+          path: "dashboard",
           element: (
             <Suspense>
               <Dashboard />
             </Suspense>
           ),
         },
+        //MCQ route
         {
-          path: "/questionlist",
+          path: "dashboard/questionform",
+          element: (
+            <Suspense>
+              <QuestionForm />
+            </Suspense>
+          ),
+        },
+        {
+          path: "dashboard/questionlist",
           element: (
             <Suspense>
               <QuestionList />
@@ -45,7 +57,7 @@ const Body = () => {
           ),
         },
         {
-          path: "/question-storage",
+          path: "dashboard/question-storage",
           element: (
             <Suspense>
               <QuestionStorage />
@@ -53,7 +65,7 @@ const Body = () => {
           ),
         },
         {
-          path: "/exam-form",
+          path: "dashboard/exam-form",
           element: (
             <Suspense>
               <ExamForm />
@@ -61,13 +73,25 @@ const Body = () => {
           ),
         },
         {
-          path: "/exam-paper/:exam_id",
+          path: "dashboard/exam-paper/:exam_id",
           element: (
             <Suspense>
               <ExamPaper />
             </Suspense>
           ),
         },
+        //Collge Route
+        {
+          path: "dashboard/store-question",
+          element: (
+            <Suspense>
+              <StoreQuestions />
+            </Suspense>
+          ),
+        },
+
+
+        
       ],
     },
   ]);

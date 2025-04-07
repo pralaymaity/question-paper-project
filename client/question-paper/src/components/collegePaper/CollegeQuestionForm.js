@@ -17,7 +17,8 @@ const CollegeQuestionForm = () => {
     "GK",
     "JavaScript",
     "Operating System",
-    " Artificial Intelligence",
+    "Artificial Intelligence",
+    "Data Structures & Algorithms"
   ];
 
   //console.log(form);
@@ -38,7 +39,7 @@ const CollegeQuestionForm = () => {
 
       console.log(response);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Question added successfully!");
         alert("Question Added ✔");
       } else {

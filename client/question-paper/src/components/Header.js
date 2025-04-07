@@ -7,10 +7,17 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const location = useLocation(); // Hook to get the current location
+
+  const showMcqNavLinks = [
+    "/dashboard/questionform",
+    "/dashboard/question-storage",
+    "/dashboard/questionlist",
+    "/dashboard/exam-form",
+    "/dashboard/exam-paper/:exam_id",
+  ].includes(location.pathname);
+
   const navigate = useNavigate();
-
   const questionList = useSelector((store) => store.questions.list);
-
   const { isAuthenticated, signOut } = useAuth(); // Custom hook for authentication
 
   if (location.pathname === "/") {
@@ -23,54 +30,71 @@ const Header = () => {
   };
 
   return (
-    <div className=" bg-gray-800 h-20 flex justify-between text-white ">
+    <div className=" bg-teal-500 h-20 flex justify-between text-white ">
       <div className="absolute">
         <img className="h-20 w-20" src={DashBoardLogo} alt="logo" />
       </div>
 
       <div className="relative w-full">
-        <ul className="flex justify-center gap-10 my-6 ">
-          <li className="font-bold text-2xl">
-            {location.pathname === "/question-storage" ? (
-              <button
-                onClick={() => navigate("/dashboard")}
-                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+        {showMcqNavLinks ? (
+          <ul className="flex justify-center gap-10 my-6 ">
+            <li>
+              <Link
+                to="/dashboard"
+                className={`text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3 ${
+                  location.pathname === "/dashboard" ? "bg-blue-100" : ""
+                }`}
               >
                 Home
-              </button>
-            ) : (
-              <Link
-                to="/question-storage"
-                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
-              >               
-                Store
               </Link>
-            )}
-          </li>
+            </li>
 
-          <li className="font-bold text-2xl">
-            {location.pathname === "/questionlist" ? (
-              <button
-                onClick={() => navigate(-1)}
-                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
-              >
-                Go Back
-              </button>
-            ) : (
-              <Link
-                to="/questionlist"
-                className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
-              >
-                📃 ({questionList.length})
-              </Link>
-            )}
-          </li>
-        </ul>
+            <li>
+              {location.pathname === "/dashboard/question-storage" ? (
+                <Link
+                  to="/dashboard/questionform"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Back
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard/question-storage"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Store
+                </Link>
+              )}
+            </li>
+
+            <li>
+              {location.pathname === "/dashboard/questionlist" ? (
+                <Link
+                  to="/dashboard/questionform"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Go Back
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard/questionlist"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  📃 ({questionList.length})
+                </Link>
+              )}
+            </li>
+          </ul>
+        ) : (
+          <div className="h-10"></div>
+        )}
       </div>
 
       {isAuthenticated && (
-        <button className="text-white  font-bold text-lg  p-1 px-3  w-36 rounded-l-lg"
-         onClick={handleSignout}>
+        <button
+          className="text-teal-500 border-2 border-teal-500 bg-white  font-bold text-lg  p-1 px-3  w-36 "
+          onClick={handleSignout}
+        >
           Sign Out
         </button>
       )}

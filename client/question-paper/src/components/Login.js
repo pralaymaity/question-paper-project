@@ -55,7 +55,6 @@ const Login = () => {
           username: email?.current?.value,
           password: password?.current?.value,
         });
-        //console.log(response.data);
 
         const token = response.data.token;
         //console.log('Response data:', response.data);
