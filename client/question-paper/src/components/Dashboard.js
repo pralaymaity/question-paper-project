@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import QuestionForm from "./QuestionForm";
 import { useEffect } from "react";
 import CollegeQuestionForm from "./collegePaper/CollegeQuestionForm";
-import StoreQuestions from "./collegePaper/StoreQuestions";
 import { useNavigate } from "react-router-dom";
 
 
@@ -37,7 +36,10 @@ const Dashboard = () => {
 
           <div
             className="cursor-pointer p-6 bg-white rounded-xl shadow hover:bg-green-100 text-center"
-            onClick={() => setSelectedForm("college")}
+            onClick={() => {
+              setSelectedForm("college")
+              navigate("/dashboard/college-question-form")
+            }}
           >
             <h2 className="text-2xl font-semibold mt-6">College Question Form</h2>
           </div>

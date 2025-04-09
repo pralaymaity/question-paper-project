@@ -11,13 +11,22 @@ const Header = () => {
   const showMcqNavLinks = [
     "/dashboard/questionform",
     "/dashboard/question-storage",
-    "/dashboard/questionlist",
+    "/dashboard/questionform/questionlist",
     "/dashboard/exam-form",
     "/dashboard/exam-paper/:exam_id",
   ].includes(location.pathname);
 
+  const showCollegeNavLinks = [
+    "/dashboard/college-question-form",
+    "/dashboard/store-question",
+    "/dashboard/college-question-form/questionlist",
+  ].includes(location.pathname);
+
   const navigate = useNavigate();
   const questionList = useSelector((store) => store.questions.list);
+  const collegeQuestionList = useSelector((store)=>{
+    return store.collegeQuestion.collegeQuestionStorage;
+  })
   const { isAuthenticated, signOut } = useAuth(); // Custom hook for authentication
 
   if (location.pathname === "/") {
@@ -25,8 +34,8 @@ const Header = () => {
   }
 
   const handleSignout = () => {
-    signOut(); // Perform sign-out logic
-    navigate("/"); // Redirect to home or login page
+    signOut();
+    navigate("/");
   };
 
   return (
@@ -36,7 +45,9 @@ const Header = () => {
       </div>
 
       <div className="relative w-full">
-        {showMcqNavLinks ? (
+
+        {/* mcq header */}
+        {showMcqNavLinks && (
           <ul className="flex justify-center gap-10 my-6 ">
             <li>
               <Link
@@ -68,7 +79,7 @@ const Header = () => {
             </li>
 
             <li>
-              {location.pathname === "/dashboard/questionlist" ? (
+              {location.pathname === "/dashboard/questionform/questionlist" ? (
                 <Link
                   to="/dashboard/questionform"
                   className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
@@ -77,7 +88,7 @@ const Header = () => {
                 </Link>
               ) : (
                 <Link
-                  to="/dashboard/questionlist"
+                  to="/dashboard/questionform/questionlist"
                   className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
                 >
                   📃 ({questionList.length})
@@ -85,9 +96,64 @@ const Header = () => {
               )}
             </li>
           </ul>
-        ) : (
+        )}
+
+        {/* college header */}
+        {showCollegeNavLinks && (
+          <ul className="flex justify-center gap-10 my-6 ">
+            <li>
+              <Link
+                to="/dashboard"
+                className={`text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3 ${
+                  location.pathname === "/dashboard" ? "bg-blue-100" : ""
+                }`}
+              >
+                Home
+              </Link>
+            </li>
+
+            <li>
+              {location.pathname === "/dashboard/store-question" ? (
+                <Link
+                  to="/dashboard/college-question-form"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Back
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard/store-question"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Store
+                </Link>
+              )}
+            </li>
+
+            <li>
+              {location.pathname === "/dashboard/college-question-form/questionlist" ? (
+                <Link
+                  to="/dashboard/college-question-form"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Go Back
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard/college-question-form/questionlist"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  📃 ({collegeQuestionList.length})
+                </Link>
+              )}
+            </li>
+          </ul>
+        )}
+
+        {!showMcqNavLinks && !showCollegeNavLinks && (
           <div className="h-10"></div>
         )}
+
       </div>
 
       {isAuthenticated && (

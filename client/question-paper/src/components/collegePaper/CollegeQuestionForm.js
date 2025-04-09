@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import {storeQuestion} from "../../utils/collegeQuestionSlice"
 const CollegeQuestionForm = () => {
   const [form, setForm] = useState({
     subject: "",
@@ -18,10 +19,10 @@ const CollegeQuestionForm = () => {
     "JavaScript",
     "Operating System",
     "Artificial Intelligence",
-    "Data Structures & Algorithms"
+    "Data Structures & Algorithms",
   ];
 
-  //console.log(form);
+  const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
 
@@ -42,6 +43,8 @@ const CollegeQuestionForm = () => {
       if (response.status === 201) {
         console.log("Question added successfully!");
         alert("Question Added ✔");
+        dispatch(storeQuestion(form));
+
       } else {
         console.log("Failed to add question.");
       }
@@ -49,6 +52,14 @@ const CollegeQuestionForm = () => {
       console.error("Error adding question:", error);
       console.log("Failed to add question.");
     }
+
+    setForm({
+      subject: "",
+      questionText: "",
+      difficulty: "easy",
+      marks: "",
+      group: "A",
+    });
   };
 
   return (
@@ -66,7 +77,9 @@ const CollegeQuestionForm = () => {
           value={form.subject}
           onChange={(e) => setForm({ ...form, subject: e.target.value })}
         >
-          <option value="" hidden>Select Subject</option>
+          <option value="" hidden>
+            Select Subject
+          </option>
           {subjectList.map((sub, idx) => {
             return (
               <option
@@ -78,7 +91,6 @@ const CollegeQuestionForm = () => {
               </option>
             );
           })}
-
         </select>
 
         <textarea
@@ -123,7 +135,7 @@ const CollegeQuestionForm = () => {
           value={form.group}
           onChange={(e) => setForm({ ...form, group: e.target.value })}
         >
-          <option value="" disabled  hidden>
+          <option value="" disabled hidden>
             Select Group
           </option>
           <option className="text-emerald-600 font-bold text-lg" value="A">

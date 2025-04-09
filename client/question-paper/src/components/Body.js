@@ -10,12 +10,17 @@ import Layout from "./Layout";
 const Body = () => {
   const Login = lazy(() => import("./Login"));
   const Dashboard = lazy(() => import("./Dashboard"));
+  //mcq route
   const QuestionList = lazy(() => import("./QuestionList"));
   const QuestionStorage = lazy(() => import("./QuestionStorage"));
   const ExamForm = lazy(() => import("./ExamForm"));
   const ExamPaper = lazy(() => import("./ExamPaper"));
   const QuestionForm = lazy(() => import("./QuestionForm"));
+
+  //college route
+  const CollegeQuestionForm = lazy(()=> import("./collegePaper/CollegeQuestionForm"));
   const StoreQuestions = lazy(()=> import("./collegePaper/StoreQuestions"));
+  
 
   const appRoute = createBrowserRouter([
 
@@ -49,7 +54,7 @@ const Body = () => {
           ),
         },
         {
-          path: "dashboard/questionlist",
+          path: "dashboard/questionform/questionlist",
           element: (
             <Suspense>
               <QuestionList />
@@ -82,10 +87,26 @@ const Body = () => {
         },
         //Collge Route
         {
+          path: "dashboard/college-question-form",
+          element: (
+            <Suspense>
+              <CollegeQuestionForm />
+            </Suspense>
+          ),
+        },
+        {
           path: "dashboard/store-question",
           element: (
             <Suspense>
               <StoreQuestions />
+            </Suspense>
+          ),
+        },
+        {
+          path: "dashboard/college-question-form/questionlist",
+          element: (
+            <Suspense>
+              <QuestionList />
             </Suspense>
           ),
         },
