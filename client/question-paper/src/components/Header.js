@@ -20,6 +20,8 @@ const Header = () => {
     "/dashboard/college-question-form",
     "/dashboard/store-question",
     "/dashboard/college-question-form/questionlist",
+    "/dashboard/generate-paper",
+
   ].includes(location.pathname);
 
   const navigate = useNavigate();
@@ -147,6 +149,27 @@ const Header = () => {
                 </Link>
               )}
             </li>
+
+            <li>
+              {location.pathname === "/dashboard/generate-paper" ? (
+                <Link
+                  to="/dashboard/store-question"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Back
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard/generate-paper"
+                  className="text-slate-950 bg-white font-bold text-lg rounded-md p-1 px-3"
+                >
+                  Show Paper
+                </Link>
+              )}
+            </li>
+
+
+
           </ul>
         )}
 
@@ -155,6 +178,7 @@ const Header = () => {
         )}
 
       </div>
+
 
       {isAuthenticated && (
         <button

@@ -16,6 +16,7 @@ const Body = () => {
   const ExamForm = lazy(() => import("./ExamForm"));
   const ExamPaper = lazy(() => import("./ExamPaper"));
   const QuestionForm = lazy(() => import("./QuestionForm"));
+  const GeneratePaper = lazy(()=> import("./collegePaper/GeneratePpaer"))
 
   //college route
   const CollegeQuestionForm = lazy(()=> import("./collegePaper/CollegeQuestionForm"));
@@ -107,6 +108,14 @@ const Body = () => {
           element: (
             <Suspense>
               <QuestionList />
+            </Suspense>
+          ),
+        },
+        {
+          path: "dashboard/generate-paper",
+          element: (
+            <Suspense>
+              <GeneratePaper />
             </Suspense>
           ),
         },
