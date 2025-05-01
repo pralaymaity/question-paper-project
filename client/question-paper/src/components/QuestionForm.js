@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AnswerOptions from "./AnswerOptions";
 import TrueFalseOptions from "./TrueFalseOptions";
@@ -18,6 +18,9 @@ const QuestionForm = () => {
     { text: "", isCorrect: false },
   ]);
   //console.log(answereOptions);
+
+  console.log(answereOptions);
+
   const [questionSuccess, setQuestionSuccess] = useState("");
 
   const subjectList = ["Java", "Python", "JavaScript", "GK", "DBMS"];
@@ -46,16 +49,27 @@ const QuestionForm = () => {
     setanswereOptions(newOptions);
   };
 
+  useEffect(() => {
+    if (category === "true/false") {
+      setanswereOptions([
+        { text: "True", isCorrect: false },
+        { text: "False", isCorrect: false },
+      ]);
+    }
+  },[category]);   
+
   const handleCorrectAnswerChange = (index) => {
     // here index comes from answereOptions index
 
     if (category === "select one" || category === "true/false") {
+
       const newOptions = answereOptions.map((option, idx) => ({
-        ...option, //(spread opraton) It creates a new object that includes everything from the original option
-        isCorrect: idx === index, //If the correct option's index (idx) matches the selected index (index), isCorrect is set to true
+        ...option,
+        isCorrect: idx === index,
       }));
       setanswereOptions(newOptions);
-      //console.log(newOptions);
+      
+
     } else if (category === "select two") {
       const newOptions = answereOptions.map((option, idx) => {
         // Toggle the isCorrect value for the selected option

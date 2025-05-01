@@ -2,6 +2,8 @@ import React from "react";
 import "../style/true_false.css";
 
 const TrueFalseOptions = ({ handleCorrectAnswerChange }) => {
+  
+  
   return (
     <div className="p-6 my-2 ">
       <p className="font-semibold text-lg text-blue-700">
@@ -16,7 +18,7 @@ const TrueFalseOptions = ({ handleCorrectAnswerChange }) => {
             type="radio"
             name="trueFalse"
             value="True"
-            onChange={() => handleCorrectAnswerChange(0)} // 0 for True
+            onChange={() => handleCorrectAnswerChange(1)} // 1 for True
           />
           <span className="text-cyan-600 text-lg font-semibold">True</span>
         </label>
@@ -29,7 +31,7 @@ const TrueFalseOptions = ({ handleCorrectAnswerChange }) => {
             type="radio"
             name="trueFalse"
             value="False"
-            onChange={() => handleCorrectAnswerChange(1)} // 1 for False
+            onChange={() => handleCorrectAnswerChange(0)} // 0 for False
           />
           <span className="text-cyan-600 text-lg font-semibold">False</span>
         </label>
