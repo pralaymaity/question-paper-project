@@ -23,7 +23,7 @@ const QuestionStorage = sequelize.define("QuestionStorage", {
   sub_question_marks: {
     type: DataTypes.JSONB, // { subquestion: '...', marks: 7 },
     allowNull: false,
-  },
+  },  
   question_group: {
     type: DataTypes.STRING,
     allowNull: true,

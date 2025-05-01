@@ -2,6 +2,10 @@
 const express = require("express");
 require("dotenv").config();
 // require('dotenv').config(); loads environment variables from a .env file into process.env.
+
+
+
+
 const cors = require("cors");
 const { Sequelize, DataTypes } = require("sequelize");
 const User = require("./src/loginUser/models/loginUser");
@@ -38,6 +42,7 @@ const questionRoute = require('./src/collegePaper/questionRoute');
 const subjectRoute = require("./src/collegePaper/subjectRoute");
 const paperRoute = require("./src/collegePaper/paperConRoute");
 
+
 app.use(loginRoute)
 app.use('/api', routes);
 app.use('/api',examRoutes);
@@ -45,6 +50,8 @@ app.use('/api',examPaperRoutes);
 app.use('/api',questionRoute);
 app.use("/take-subject",subjectRoute);
 app.use("/",paperRoute);
+
+
 
 // Initialize Sequelize
 const sequelize = new Sequelize("question-paper", "pralay", 1234, {

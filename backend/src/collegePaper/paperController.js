@@ -21,23 +21,23 @@ const addQuestionToPaper = async (req, res) => {
 
     const { question_group, total_marks } = question;
 
-    if (question_group === "A" && generatedPaper.GroupA.length >= 10) {
+    if (question_group === "A" && generatedPaper.GroupA.length >= 12) {
       return res
         .status(400)
-        .json({ error: "Group A is full with ( 10 ) questions" });
+        .json({ error: "Group A is full with ( 12 ) questions" });
     }
-    if (question_group === "B" && generatedPaper.GroupB.length >= 3) {
+    if (question_group === "B" && generatedPaper.GroupB.length >= 5) {
       return res
         .status(400)
-        .json({ error: "Group B is full with ( 3 )  questions" });
+        .json({ error: "Group B is full with ( 5 )  questions" });
     }
-    if (question_group === "C" && generatedPaper.GroupC.length >= 3) {
+    if (question_group === "C" && generatedPaper.GroupC.length >= 5) {
       return res
         .status(400)
-        .json({ error: "Group C is full with ( 3 ) questions" });
+        .json({ error: "Group C is full with ( 5 ) questions" });
     }
 
-    if (generatedPaper.totaltotal_marks + total_marks > 70) {
+    if (generatedPaper.totaltotal_marks + total_marks > 112) {
       return res.status(400).json({ error: "Total 70 marks is filled" });
     }
 
