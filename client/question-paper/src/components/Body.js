@@ -16,7 +16,7 @@ const Body = () => {
   const ExamForm = lazy(() => import("./ExamForm"));
   const ExamPaper = lazy(() => import("./ExamPaper"));
   const QuestionForm = lazy(() => import("./QuestionForm"));
-  const GeneratePaper = lazy(()=> import("./collegePaper/GeneratePpaer"))
+  const GeneratePaper = lazy(()=> import("./collegePaper/GeneratePaper"))
 
   //college route
   const CollegeQuestionForm = lazy(()=> import("./collegePaper/CollegeQuestionForm"));

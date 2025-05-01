@@ -1,8 +1,27 @@
-/* *{
-    margin: 0;
-    padding: 0;
-} */
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* this is for break the page   */
+@media print {
+    .custom-page-break {
+      page-break-before: always; 
+      break-before: page; 
+}
+}
+
+/* this is for toast msg progress bar */
+@keyframes toast-progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.animate-toast-progress {
+  animation: toast-progress 3s linear forwards;
+}

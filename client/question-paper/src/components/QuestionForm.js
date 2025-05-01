@@ -18,6 +18,7 @@ const QuestionForm = () => {
     { text: "", isCorrect: false },
   ]);
   //console.log(answereOptions);
+  const [questionSuccess, setQuestionSuccess] = useState("");
 
   const subjectList = ["Java", "Python", "JavaScript", "GK", "DBMS"];
 
@@ -70,6 +71,13 @@ const QuestionForm = () => {
     }
   };
 
+  const showToast = (msg) => {
+    setQuestionSuccess(msg);
+    setTimeout(() => {
+      setQuestionSuccess("");
+    }, 3000);
+  };
+
   const handleQuestionForm = async () => {
     if (questionText.trim() === "" || category === "" || marks === "") {
       alert("⚠Please fill in both the question and category and marks⚠");
@@ -103,7 +111,7 @@ const QuestionForm = () => {
 
       if (response.status === 200) {
         console.log("Question added successfully!");
-        alert("Question Added ✔");
+        showToast("Question added✔");
       } else {
         console.log("Failed to add question.");
       }
@@ -136,6 +144,15 @@ const QuestionForm = () => {
               Question Form
             </h2>
 
+            {questionSuccess && (
+              <div className="fixed top-24 right-2 bg-green-800 text-white px-4 py-2 rounded shadow-lg ">
+                <div>{questionSuccess}</div>
+                <div className="mt-2 h-1 bg-white relative overflow-hidden rounded">
+                  <div className="absolute top-0 left-0 h-full bg-green-800 animate-toast-progress"></div>
+                </div>
+              </div>
+            )}
+
             <div className="my-6 px-6">
               <div className="my-4">
                 <label className="font-semibold text-2xl text-amber-500">
@@ -146,9 +163,7 @@ const QuestionForm = () => {
                   value={subject} // Controlled component
                   onChange={(e) => setSubject(e.target.value)}
                 >
-                  <option value="" disabled hidden>
-                    
-                  </option>
+                  <option value="" disabled hidden></option>
                   {subjectList.map((subj, index) => (
                     <option key={index} value={subj.toLowerCase()}>
                       {subj}

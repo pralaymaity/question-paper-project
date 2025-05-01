@@ -11,7 +11,7 @@ const Layout = () => {
       </header>
   
       {/* Main Content (grows to fill space) */}
-      <main className="flex-grow p-6 overflow-auto">
+      <main className="flex-grow p-6">
         <Outlet />
       </main>
   

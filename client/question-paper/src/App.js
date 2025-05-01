@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css"
 import Body from "./components/Body";
 import { AuthProvider } from "./components/AuthProvider";
 import appStore from "./utils/appStore";

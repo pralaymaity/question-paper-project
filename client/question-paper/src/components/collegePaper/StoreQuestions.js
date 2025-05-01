@@ -7,10 +7,11 @@ const StoreQuestions = () => {
   const [questions, setQuestions] = useState([]);
   //console.log(questions);
   const [selectedSubject, setSelectedSubject] = useState(null);
-
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
-
+  const [groupCounts, setGroupCounts] = useState({ A: 0, B: 0, C: 0 });
+  //console.log(groupCounts);
+  const [highlights, setHighlights] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -58,15 +59,24 @@ const StoreQuestions = () => {
   const showToast = (msg) => {
     setErrorMessage(msg);
     setShowError(true);
-    setTimeout(() => setShowError(false), 10000); // hide after 4 sec
+    setTimeout(() => setShowError(false), 4000); // hide after 4 sec
   };
 
-  const handleAddQuestion = async (eachQuestionId) => {
+  const handleAddQuestion = async (eachQuestionId, question_group) => {
     try {
       const res = await axios.post("/add-question", {
         eachQuestionId,
       });
       //console.log("each question id : ", res);
+
+      setGroupCounts((prev) => ({
+        ...prev,
+        [question_group]: prev[question_group] + 1,
+      }));
+
+      setHighlights((prev)=> [...prev, eachQuestionId])
+      
+
     } catch (err) {
       if (err?.response?.status && err?.status === 400) {
         showToast(err.response.data.error);
@@ -97,18 +107,31 @@ const StoreQuestions = () => {
       </div>
 
       {showError && (
-        <div className="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded shadow-lg animate-bounce-in">
+        <div className="fixed top-16 right-4 bg-red-800 text-white px-6 py-3 rounded shadow-lg animate-bounce-in">
           ⚠️ {errorMessage}
         </div>
       )}
 
-      <div className="pl-6 space-y-6">
+      {selectedSubject && (
+        <div className="sticky top-0 ml-6 bg-slate-300 shadow-md z-10 rounded-xl">
+          <div className=" py-3 text-center space-x-4 text-4xl text-teal-900 ">
+            <span className="font-semibold">Group</span>
+            <span>A: {groupCounts.A}</span>
+            <span>B: {groupCounts.B}</span>
+            <span>C: {groupCounts.C}</span>
+          </div>
+        </div>
+      )}
+
+      <div className="pl-6 space-y-6 my-4">
         {selectedSubject &&
           (filteredQuestions.length > 0 ? (
             filteredQuestions.map((item, index) => (
               <div
                 key={index}
-                className="border rounded-xl p-4 shadow-sm bg-slate-100"
+                className={`border rounded-xl p-4 shadow-sm ${
+                  highlights.includes(item.id)  ? "bg-teal-200 text-black" : "bg-slate-100"
+                }`}
               >
                 <h2 className="font-bold text-xl text-blue-800 mb-2">
                   Q[{index + 1}].
@@ -134,8 +157,10 @@ const StoreQuestions = () => {
                 </div>
                 <div className="flex justify-end">
                   <button
-                    onClick={() => handleAddQuestion(item.id)}
-                    className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg"
+                    onClick={() =>
+                      handleAddQuestion(item.id, item.question_group)
+                    }
+                    className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg hover:bg-teal-950 hover:text-white"
                   >
                     Add
                   </button>
