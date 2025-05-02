@@ -158,32 +158,18 @@ const ExamPaper = () => {
     : "Invalid Date"; // invalid if exam_date is not valid
 
   return (
-    <div className="bg-zinc-100 h-auto py-6">
-      <div className="flex justify-between">
-        <p className="mx-4 text-2xl font-bold text-blue-700">
-          Subject : {subject}
-        </p>
-
-        <p className="text-2xl font-bold text-blue-700">
-          Academic Session : {academic_session}{" "}
-        </p>
-
-        <p className="text-2xl font-bold text-blue-700">
-          Duration : {duration}
-        </p>
-
-        <p className="text-2xl font-bold text-blue-700">
-          FullMarks : {fullmarks}
-        </p>
-
-        <p className="mx-4 text-2xl font-bold text-blue-700">
-          Date : {formattedDate}
-        </p>
+    <div className="bg-zinc-100 min-h-screen py-8 px-4">
+      <div className="bg-white rounded-xl shadow-lg p-6 mb-8 flex flex-wrap justify-between text-blue-700 text-xl font-semibold">
+        <p>📘 Subject: {subject}</p>
+        <p>📅 Date: {formattedDate}</p>
+        <p>🎓 Academic Session: {academic_session}</p>
+        <p>⏱️ Duration: {duration} mins</p>
+        <p>📝 Full Marks: {fullmarks}</p>
       </div>
 
-      <div className="py-8">
-        <p className="text-center text-orange-600 font-semibold text-4xl">
-          Scoreboard : {score}
+      <div className="text-center mb-10">
+        <p className="text-4xl font-bold text-orange-600">
+          🎯 Scoreboard: {score}
         </p>
       </div>
 
@@ -307,6 +293,8 @@ const ExamPaper = () => {
         Submit Paper
       </button>
     </div>
+
+    
   );
 };
 

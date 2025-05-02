@@ -1,17 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const ExamForm = () => {
   const location = useLocation();
-  console.log(location);
-  
+  //console.log(location);
+
   const [filterquestions, setFilterQuestions] = useState([]);
   //console.log(filterquestions);
   const selectedQuestionIds = location.state?.selectedQuestionsIds || []; // Expecting an array of IDs
-   console.log(selectedQuestionIds);
-   
+  //console.log(selectedQuestionIds);
+
   const [subject, setSubject] = useState("");
   const [ExamDate, setExamDate] = useState("");
   const [academicSession, setAcademicSession] = useState("");
@@ -61,6 +60,12 @@ const ExamForm = () => {
   };
 
   const handleCreateExam = async () => {
+
+    if (!subject || !ExamDate || !duration || !fullMarks) {
+      alert("⚠Please fill in all the fields");
+      return;
+    }
+
     const examInfo = {
       selectedQuestionIds,
       exam_date: ExamDate, // This should match exactly with the backend
@@ -90,105 +95,110 @@ const ExamForm = () => {
   };
 
   return (
-    <div className="h-auto ">
+    <div className="min-h-screen bg-gradient-to-tr from-blue-50 to-purple-100 py-10 px-4">
       <form
-        className=" bg-slate-50 h-auto  my-10 w-8/12 right-0 left-0 mx-auto rounded-xl"
+        className="bg-white shadow-2xl rounded-2xl max-w-4xl mx-auto p-10"
         onSubmit={(e) => e.preventDefault()}
       >
-        <h1 className="text-center text-green-800 font-bold py-8 text-4xl">
+        <h1 className="text-center text-4xl font-extrabold text-indigo-800 mb-10">
           Exam Form
         </h1>
 
-        <div className="mx-6 my-4">
-          <div className="flex ">
-            <p className="text-3xl text-fuchsia-900 font-semibold">
-              Subject Name :{" "}
-            </p>
+        <div className="space-y-6">
+          {/* Subject Input */}
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <label className="text-2xl font-semibold text-fuchsia-900 w-48">
+              Subject Name:
+            </label>
             <input
-              className="p-2 mx-2 rounded-md border border-cyan-950 w-4/12 outline-none"
+              className="p-3 rounded-md border border-indigo-300 w-full sm:w-2/3 outline-none focus:ring-2 focus:ring-indigo-400"
               type="text"
-              placeholder="Subject"
+              placeholder="Enter subject"
               value={subject}
-              onChange={(e) => {
-                setSubject(e.target.value);
-              }}
+              onChange={(e) => setSubject(e.target.value)}
             />
           </div>
 
-          <div className="flex justify-start space-x-8 my-4">
-            <span className="flex justify-start">
-              <p className="text-xl text-fuchsia-900 font-semibold my-1">
-                Date :{" "}
-              </p>
+          {/* Date and Academic Session */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <label className="text-xl font-medium text-fuchsia-900 mb-1">
+                Exam Date:
+              </label>
               <input
-                className="mx-2 p-2 rounded-md border border-cyan-950  outline-none"
+                className="p-3 rounded-md border border-indigo-300 outline-none focus:ring-2 focus:ring-indigo-400"
                 type="date"
                 value={ExamDate}
                 onChange={handleDateChange}
               />
-            </span>
+            </div>
 
-            <span className="flex justify-start">
-              <p className="text-xl text-fuchsia-900 font-semibold my-1">
-                Academic Session :{" "}
-              </p>
+            <div className="flex flex-col">
+              <label className="text-xl font-medium text-fuchsia-900 mb-1">
+                Academic Session:
+              </label>
               <input
-                className="mx-2 p-2 rounded-md border border-cyan-950  outline-none"
+                className="p-3 rounded-md border border-indigo-300 bg-gray-100 outline-none cursor-not-allowed"
                 type="text"
-                placeholder="year"
                 value={academicSession}
                 readOnly
               />
-            </span>
+            </div>
           </div>
 
-          <div className="flex justify-normal">
-            <div className="flex">
-              <p className="text-xl text-fuchsia-900 font-semibold my-1">
-                Duration :{" "}
-              </p>
+          {/* Duration and Full Marks */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <label className="text-xl font-medium text-fuchsia-900 mb-1">
+                Duration (minutes):
+              </label>
               <input
-                className="mx-2 p-2 rounded-md border border-cyan-950  outline-none"
+                className="p-3 rounded-md border border-indigo-300 outline-none focus:ring-2 focus:ring-indigo-400"
                 type="text"
-                placeholder="Minutes"
+                placeholder="e.g. 90"
                 value={duration}
-                onChange={(e) => {
-                  setDuration(e.target.value);
-                }}
+                onChange={(e) => setDuration(e.target.value)}
               />
             </div>
 
-            <div className="flex mx-5">
-              <p className="text-xl text-fuchsia-900 font-semibold my-1">
-                Full Marks :{" "}
-              </p>
+            <div className="flex flex-col">
+              <label className="text-xl font-medium text-fuchsia-900 mb-1">
+                Full Marks:
+              </label>
               <input
-                className="mx-2 p-2 rounded-md border border-cyan-950  outline-none"
+                className="p-3 rounded-md border border-indigo-300 outline-none focus:ring-2 focus:ring-indigo-400"
                 type="number"
-                placeholder="Marks"
+                placeholder="e.g. 100"
                 value={fullMarks}
-                onChange={(e) => {
-                  setFullMarks(e.target.value);
-                }}
+                onChange={(e) => setFullMarks(e.target.value)}
               />
             </div>
           </div>
-          <div className="my-6">
-            {filterquestions.map((q, index) => {
-              return (
-                <ul className="font-semibold text-lg " key={q.id}>
-                  <li className="font-bold text-xl text-blue-800 my-3">
-                    Q({index + 1}) {q.question}
-                  </li>
-                </ul>
-              );
-            })}
-          </div>
+
+          {/* Questions Preview */}
           {filterquestions.length > 0 && (
-            <div className="my-6">
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold text-indigo-800 mb-4">
+                Selected Questions:
+              </h2>
+              <ul className="space-y-3 pl-4 text-lg text-gray-700">
+                {filterquestions.map((q, index) => (
+                  <li key={q.id} className="ml-1">
+                    <span className="font-medium text-blue-900">
+                      Q({index + 1}) {q.question}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Create Exam Button */}
+          {filterquestions.length > 0 && (
+            <div className="text-center mt-8">
               <button
                 onClick={handleCreateExam}
-                className="p-3 rounded-md font-semibold bg-blue-950 border text-white"
+                className="px-8 py-3 bg-indigo-700 hover:bg-indigo-800 text-white text-lg font-semibold rounded-lg transition-transform transform hover:scale-105 shadow-md"
               >
                 Create Exam
               </button>

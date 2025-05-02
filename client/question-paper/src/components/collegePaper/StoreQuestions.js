@@ -74,9 +74,7 @@ const StoreQuestions = () => {
         [question_group]: prev[question_group] + 1,
       }));
 
-      setHighlights((prev)=> [...prev, eachQuestionId])
-      
-
+      setHighlights((prev) => [...prev, eachQuestionId]);
     } catch (err) {
       if (err?.response?.status && err?.status === 400) {
         showToast(err.response.data.error);
@@ -88,18 +86,21 @@ const StoreQuestions = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Select Subject:</h2>
+      <h2 className="text-3xl font-extrabold mb-6 text-center text-blue-900">
+        Select Subject
+      </h2>
 
-      <div className="flex flex-wrap gap-8 mb-6 justify-center ">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-10">
         {subjects.map((subj) => (
           <button
             key={subj?.id}
             onClick={() => setSelectedSubject(subj?.subject_name)}
-            className={`px-4 py-2 font-semibold text-2xl rounded-md hover:bg-blue-600 ${
-              selectedSubject === subj?.subject_name
-                ? "bg-blue-600 text-white "
-                : "bg-gray-200 text-black"
-            }`}
+            className={`px-6 py-3 text-xl sm:text-2xl rounded-lg font-semibold tracking-wide transition-all duration-300 shadow-md border 
+        ${
+          selectedSubject === subj?.subject_name
+            ? "bg-gradient-to-r from-blue-600 to-blue-800 text-white border-blue-800 scale-105"
+            : "bg-white text-gray-700 hover:bg-blue-100 border-gray-300"
+        }`}
           >
             {subj.subject_name.toUpperCase()}
           </button>
@@ -130,7 +131,9 @@ const StoreQuestions = () => {
               <div
                 key={index}
                 className={`border rounded-xl p-4 shadow-sm ${
-                  highlights.includes(item.id)  ? "bg-teal-200 text-black" : "bg-slate-100"
+                  highlights.includes(item.id)
+                    ? "bg-teal-200 text-black"
+                    : "bg-slate-100"
                 }`}
               >
                 <h2 className="font-bold text-xl text-blue-800 mb-2">
