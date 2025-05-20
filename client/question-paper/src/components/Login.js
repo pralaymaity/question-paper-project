@@ -7,16 +7,21 @@ const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
   //console.log(isSignInForm);
   const [showErrorMessage, setshowErrorMessage] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState("")
 
   const name = useRef();
   const email = useRef();
   const password = useRef();
 
-  const handleButtonClick = async () => {
-    // console.log(name.current.value);
-    // console.log(email.current.value);
-    // console.log(password.current.value);
+  const showToast = (msg)=>{
+    setLoginSuccess(msg)
+    setTimeout(()=>{
+      window.location.href = "http://localhost:3000/dashboard";
+    },3000)
+  }
 
+  const handleButtonClick = async () => {
+    
     const { isValid, message } = checkValidData(
       // checkValidData function performs overall form validation
       //  and returns an object with isValid and message
@@ -40,7 +45,7 @@ const Login = () => {
           username: email?.current?.value,
           password: password?.current?.value,
         });
-        alert("🟢User Registered Successfully🟢");
+        showToast("🟢User Registered Successfully🟢");
         console.log(response.data);
         name.current.value = "";
         email.current.value = "";
@@ -60,11 +65,11 @@ const Login = () => {
         //console.log('Response data:', response.data);
         localStorage.setItem("token", token); // Store the token in localStorage
 
-        console.log("Signed in successfully");
-        alert("✔Signed in successfully");
-        window.location.href = "http://localhost:3000/dashboard";
+        //console.log("Signed in successfully");
+        showToast("✔Signed in successfully");
+        
       } catch (error) {
-        alert("⚠ User not found");
+        showToast("❌User not found❌");
         console.log("Error signing in");
         // showErrorMessage("Error signing in")
       }
@@ -82,6 +87,15 @@ const Login = () => {
           Question Paper Generator Portal
         </h1>
       </div>
+
+      {loginSuccess && (
+        <div className="fixed top-24 right-2 bg-green-800 text-white px-4 py-2 rounded shadow-lg ">
+          <div>{loginSuccess}</div>
+          <div className="mt-2 h-1 bg-white relative overflow-hidden rounded">
+            <div className="absolute top-0 left-0 h-full bg-green-800 animate-toast-progress"></div>
+          </div>
+        </div>
+      )}
 
       <form
         className="absolute  p-12 w-3/12 my-22 mx-auto right-0 left-0 shadow-xl  rounded-lg  border border-teal-600 text-green-950"

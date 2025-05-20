@@ -16,7 +16,7 @@ const TrueFalseOptions = ({ handleCorrectAnswerChange }) => {
             type="radio"
             name="trueFalse"
             value="True"
-            onChange={() => handleCorrectAnswerChange(1)} // 1 for True
+            onChange={() => handleCorrectAnswerChange(0)} 
           />
           <span className="text-cyan-600 text-lg font-semibold">True</span>
         </label>
@@ -29,7 +29,7 @@ const TrueFalseOptions = ({ handleCorrectAnswerChange }) => {
             type="radio"
             name="trueFalse"
             value="False"
-            onChange={() => handleCorrectAnswerChange(0)} // 0 for False
+            onChange={() => handleCorrectAnswerChange(1)}
           />
           <span className="text-cyan-600 text-lg font-semibold">False</span>
         </label>

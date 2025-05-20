@@ -1,177 +1,27 @@
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import html2pdf from "html2pdf.js";
 import { RCC_LOGO } from "../../utils/constant";
-import "../../index.css"
+import "../../index.css";
+import useGeneratePaper from "./hooks/useGeneratePaper";
+import PaperForm from "./PaperForm";
 
 const GeneratePpaer = () => {
-  const [questions, setQuestions] = useState([]);
-  //console.log(questions);
-
-  const pdfRef = useRef();
-
-  const [formData, setFormData] = useState({
-    collegeName: "",
-    academicSession: "",
-    date: "",
-    timeAllotted: "",
-    paperName: "",
-    paperCode: "",
-    totalMarks: "",
-  });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/get-paper");
-
-      let jsonData = res?.data?.paper;
-      setQuestions(jsonData);
-    } catch (err) {
-      console.log("data failed to load", err);
-    }
-  };
-
-  const resetData = async () => {
-    try {
-      const res = await axios.post("http://localhost:3000/reset-paper");
-
-      setQuestions(res.data);
-      console.log("paper reset");
-    } catch (err) {
-      console.log("data failed to reset", err);
-    }
-  };
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleGeneratePDF = async (e) => {
-    e.preventDefault();
-    const clone = pdfRef.current.cloneNode(true);
-
-    // 2. Convert input fields to plain text
-    clone.querySelectorAll("input, textarea, select").forEach((el) => {
-      const text = document.createElement("span");
-      text.textContent = el.value;
-      el.parentNode.replaceChild(text, el);
-    });
-
-    // 3. Generate PDF from transformed clone
-    const opt = {
-      margin: 0,
-      filename: "question-paper.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ['css', 'legacy'] }
-    };
-
-    html2pdf().set(opt).from(clone).save();
-  };
+  const {
+    questions,
+    pdfRef,
+    formData,
+    fetchData,
+    resetData,
+    handleChange,
+    handleGeneratePDF,
+  } = useGeneratePaper();
 
   return (
     <div className="bg-slate-50 py-4 px-6">
       <div ref={pdfRef} className="bg-white p-4 rounded shadow-md">
+        <div className="">
+          <img className="h-20 w-40 mx-auto" src={RCC_LOGO} alt="" />
+        </div>
 
-         <div className="">
-            <img className="h-20 w-40 mx-auto" src={RCC_LOGO} alt="" />
-          </div>
-
-        <form className="grid grid-cols-2 gap-2 ml-4">
-
-          <div className="flex items-center gap-2  col-span-3">
-            <label className="w-30 font-semibold">College Name:</label>
-            <input
-              className="border p-2 rounded flex-1 "
-              name="collegeName"
-              type="text"
-              placeholder="Enter College Name"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <label className="w-30 font-semibold">Academic Session:</label>
-            <input
-              className="border p-2 rounded flex-1"
-              name="academicSession"
-              type="text"
-              placeholder="Enter Academic Session"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <label className="w-30 font-semibold">Date:</label>
-            <input
-              className="border p-2 rounded flex-1"
-              name="date"
-              type="date"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <label className="w-30 font-semibold">Time Allotted:</label>
-            <input
-              className="border p-2 rounded flex-1"
-              name="timeAllotted"
-              type="text"
-              placeholder="Enter Time"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <label className="w-30 font-semibold">Paper Name:</label>
-            <input
-              className="border p-2 rounded flex-1"
-              name="paperName"
-              type="text"
-              placeholder="Enter Paper Name"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <label className="w-30 font-semibold">Paper Code:</label>
-            <input
-              className="border p-2 rounded flex-1"
-              name="paperCode"
-              type="text"
-              placeholder="Enter Paper Code"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <label className="w-30 font-semibold">Total Marks:</label>
-            <input
-              className="border p-2 rounded flex-1"
-              name="totalMarks"
-              type="text"
-              placeholder="Enter Total Marks"
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </form>
-
-        
+        <PaperForm handleChange={handleChange}/>
 
         {/*Group A */}
         <div className="m-4 p-3">
@@ -199,7 +49,7 @@ const GeneratePpaer = () => {
             <p>No questions in Group A</p>
           )}
         </div>
-        
+
         {/*Group B */}
         <div className="m-4 p-3">
           {Array.isArray(questions?.GroupB) && questions.GroupB.length > 0 ? (
@@ -277,7 +127,6 @@ const GeneratePpaer = () => {
         </div>
 
         <div className="text-center font-semibold">*** END OF PAPER ***</div>
-        
       </div>
 
       {/* Buttons below PDF content (not inside pdfRef) */}

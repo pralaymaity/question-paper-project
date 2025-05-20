@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { storeQuestion } from "../../utils/collegeQuestionSlice";
+
 const CollegeQuestionForm = () => {
   const [form, setForm] = useState({
     subject: "",
@@ -49,7 +50,7 @@ const CollegeQuestionForm = () => {
       console.log(response);
 
       if (response.status === 201) {
-        console.log("Question added successfully!");
+        //console.log("Question added successfully!");
         showToast("Question Added ✔");
         dispatch(storeQuestion(form));
       } else {
