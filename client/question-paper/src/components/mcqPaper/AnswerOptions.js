@@ -1,6 +1,4 @@
-
 import OptionItem from './OptionItem';
-import "../style/answereOptions.css"
 
 const AnswerOptions = ({ answereOptions, category, handleAddOption, handleOptionChange, handleCorrectAnswerChange }) => {
   //console.log(answereOptions);

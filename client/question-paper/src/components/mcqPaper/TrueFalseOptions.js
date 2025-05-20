@@ -1,5 +1,3 @@
-import React from "react";
-import "../style/true_false.css";
 
 const TrueFalseOptions = ({ handleCorrectAnswerChange }) => {
   

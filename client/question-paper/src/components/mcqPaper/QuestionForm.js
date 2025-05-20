@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AnswerOptions from "./AnswerOptions";
 import TrueFalseOptions from "./TrueFalseOptions";
-import { addQuestion } from "../utils/questionListSlice";
+import { addQuestion } from "../../utils/questionListSlice";
 import axios from "axios";
-import "../style/questionForm.css";
 
 const QuestionForm = () => {
   const dispatch = useDispatch();

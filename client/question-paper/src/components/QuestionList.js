@@ -1,6 +1,4 @@
 import { useLocation } from "react-router-dom";
-import "../style/questionList.css";
-
 import { useSelector } from "react-redux";
 
 const QuestionList = () => {

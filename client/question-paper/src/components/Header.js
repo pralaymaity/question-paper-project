@@ -1,4 +1,3 @@
-import "../style/header.css";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DashBoardLogo } from "../utils/constant";

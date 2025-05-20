@@ -1,37 +1,35 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "../style/body.css";
 import { Suspense } from "react";
 import { lazy } from "react";
 
 import Layout from "./Layout";
-
-
+import PrivateRoute from "./PrivateRoute";
 
 const Body = () => {
   const Login = lazy(() => import("./Login"));
   const Dashboard = lazy(() => import("./Dashboard"));
   //mcq route
   const QuestionList = lazy(() => import("./QuestionList"));
-  const QuestionStorage = lazy(() => import("./QuestionStorage"));
-  const ExamForm = lazy(() => import("./ExamForm"));
-  const ExamPaper = lazy(() => import("./ExamPaper"));
-  const QuestionForm = lazy(() => import("./QuestionForm"));
-  const GeneratePaper = lazy(()=> import("./collegePaper/GeneratePaper"))
+  const QuestionStorage = lazy(() => import("./mcqPaper/QuestionStorage"));
+  const ExamForm = lazy(() => import("./mcqPaper/ExamForm"));
+  const ExamPaper = lazy(() => import("./mcqPaper/ExamPaper"));
+  const QuestionForm = lazy(() => import("./mcqPaper/QuestionForm"));
+  const GeneratePaper = lazy(() => import("./collegePaper/GeneratePaper"));
 
   //college route
-  const CollegeQuestionForm = lazy(()=> import("./collegePaper/CollegeQuestionForm"));
-  const StoreQuestions = lazy(()=> import("./collegePaper/StoreQuestions"));
-  
+  const CollegeQuestionForm = lazy(() =>
+    import("./collegePaper/CollegeQuestionForm")
+  );
+  const StoreQuestions = lazy(() => import("./collegePaper/StoreQuestions"));
 
   const appRoute = createBrowserRouter([
-
     {
       path: "/",
       element: (
         <Suspense>
           <Login />
         </Suspense>
-      )
+      ),
     },
     {
       path: "/",
@@ -40,88 +38,105 @@ const Body = () => {
         {
           path: "dashboard",
           element: (
-            <Suspense>
-              <Dashboard />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <Dashboard />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         //MCQ route
         {
           path: "dashboard/questionform",
           element: (
-            <Suspense>
-              <QuestionForm />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <QuestionForm />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/questionform/questionlist",
           element: (
-            <Suspense>
-              <QuestionList />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <QuestionList />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/question-storage",
           element: (
-            <Suspense>
-              <QuestionStorage />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <QuestionStorage />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/exam-form",
           element: (
-            <Suspense>
-              <ExamForm />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <ExamForm />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/exam-paper/:exam_id",
           element: (
-            <Suspense>
-              <ExamPaper />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <ExamPaper />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         //Collge Route
         {
           path: "dashboard/college-question-form",
           element: (
-            <Suspense>
-              <CollegeQuestionForm />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <CollegeQuestionForm />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/store-question",
           element: (
-            <Suspense>
-              <StoreQuestions />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <StoreQuestions />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/college-question-form/questionlist",
           element: (
-            <Suspense>
-              <QuestionList />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <QuestionList />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
         {
           path: "dashboard/generate-paper",
           element: (
-            <Suspense>
-              <GeneratePaper />
-            </Suspense>
+            <PrivateRoute>
+              <Suspense>
+                <GeneratePaper />
+              </Suspense>
+            </PrivateRoute>
           ),
         },
-
-
-        
       ],
     },
   ]);
