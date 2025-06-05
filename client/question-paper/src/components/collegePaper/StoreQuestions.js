@@ -1,5 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addQuestion, removeQuestion } from "../../utils/selectQuestionSlice";
+import { useNavigate } from "react-router-dom";
 
 const StoreQuestions = () => {
   const [subjects, setSubjects] = useState([]);
@@ -9,9 +12,17 @@ const StoreQuestions = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
-  const [groupCounts, setGroupCounts] = useState({ A: 0, B: 0, C: 0 });
-  //console.log(groupCounts);
-  const [highlights, setHighlights] = useState([]);
+
+  const highlights = useSelector((state) => {
+    return state.selectedQuestions.highlights;
+  });
+
+  const groupCounts = useSelector((state) => {
+    return state.selectedQuestions.groupCounts;
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -68,19 +79,22 @@ const StoreQuestions = () => {
         eachQuestionId,
       });
       //console.log("each question id : ", res);
-
-      setGroupCounts((prev) => ({
-        ...prev,
-        [question_group]: prev[question_group] + 1,
-      }));
-
-      setHighlights((prev) => [...prev, eachQuestionId]);
+      dispatch(addQuestion({ eachQuestionId, group: question_group }));
     } catch (err) {
       if (err?.response?.status && err?.status === 400) {
         showToast(err.response.data.error);
       }
-
       //console.log("faild to add question-id", err);
+    }
+  };
+
+  const handleRemoveQuestion = async (eachQuestionId, question_group) => {
+    try {
+      await axios.post("/remove-question", { eachQuestionId });
+
+      dispatch(removeQuestion({ eachQuestionId, group: question_group }));
+    } catch (err) {
+      console.log("Question remove faild", err);
     }
   };
 
@@ -115,11 +129,22 @@ const StoreQuestions = () => {
 
       {selectedSubject && (
         <div className="sticky top-0 ml-6 bg-slate-300 shadow-md z-10 rounded-xl">
-          <div className=" py-3 text-center space-x-4 text-4xl text-teal-900 ">
-            <span className="font-semibold">Group</span>
-            <span>A: {groupCounts.A}</span>
-            <span>B: {groupCounts.B}</span>
-            <span>C: {groupCounts.C}</span>
+          <div className="relative flex items-center justify-center py-3">
+            {/* Centered Group counts */}
+            <div className="text-3xl font-semibold text-teal-900 flex gap-6">
+              <span>Group</span>
+              <span>A: {groupCounts.A}</span>
+              <span>B: {groupCounts.B}</span>
+              <span>C: {groupCounts.C}</span>
+            </div>
+
+            {/* Right-aligned Show Paper button */}
+            <button
+              onClick={() => navigate("/dashboard/generate-paper")}
+              className="absolute right-60 bg-teal-900 text-white px-4 py-2 rounded-md text-base font-medium hover:bg-teal-700 "
+            >
+              Show Paper
+            </button>
           </div>
         </div>
       )}
@@ -158,15 +183,26 @@ const StoreQuestions = () => {
                     </p>
                   ))}
                 </div>
-                <div className="flex justify-end">
-                  <button
-                    onClick={() =>
-                      handleAddQuestion(item.id, item.question_group)
-                    }
-                    className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg hover:bg-teal-950 hover:text-white"
-                  >
-                    Add
-                  </button>
+                <div className="flex justify-end gap-4">
+                  {highlights.includes(item.id) ? (
+                    <button
+                      onClick={() =>
+                        handleRemoveQuestion(item.id, item.question_group)
+                      }
+                      className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg hover:bg-teal-950 hover:text-white"
+                    >
+                      Remove
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        handleAddQuestion(item.id, item.question_group)
+                      }
+                      className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg hover:bg-teal-950 hover:text-white"
+                    >
+                      Add
+                    </button>
+                  )}
                 </div>
               </div>
             ))

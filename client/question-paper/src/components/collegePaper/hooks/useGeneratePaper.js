@@ -2,6 +2,10 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import html2pdf from "html2pdf.js";
 
+import {clearAllQuestions} from "../../../utils/selectQuestionSlice"
+import { useDispatch } from "react-redux";
+
+
 const useGeneratePaper = () => {
   const [questions, setQuestions] = useState([]);
   //console.log(questions);
@@ -17,6 +21,8 @@ const useGeneratePaper = () => {
     paperCode: "",
     totalMarks: "",
   });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
@@ -38,7 +44,9 @@ const useGeneratePaper = () => {
       const res = await axios.post("http://localhost:3000/reset-paper");
 
       setQuestions(res.data);
+      dispatch(clearAllQuestions())
       console.log("paper reset");
+
     } catch (err) {
       console.log("data failed to reset", err);
     }

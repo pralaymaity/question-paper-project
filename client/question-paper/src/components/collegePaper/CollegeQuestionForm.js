@@ -112,7 +112,7 @@ const CollegeQuestionForm = () => {
 
         <textarea
           value={form.questionText}
-          placeholder="Write Question (sub questions must be splitted )"
+          placeholder="sub questions must be splitted by \n"
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setForm({ ...form, questionText: e.target.value })}
         />
@@ -142,7 +142,7 @@ const CollegeQuestionForm = () => {
         <input
           type="text"
           value={form.marks}
-          placeholder="Marks"
+          placeholder="Marks (2+2+1)"
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setForm({ ...form, marks: e.target.value })}
         />
