@@ -30,7 +30,7 @@ const useGeneratePaper = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/get-paper");
+      const res = await axios.get("http://localhost:9000/get-paper");
 
       let jsonData = res?.data?.paper;
       setQuestions(jsonData);
@@ -41,7 +41,7 @@ const useGeneratePaper = () => {
 
   const resetData = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/reset-paper");
+      const res = await axios.post("http://localhost:9000/reset-paper");
 
       setQuestions(res.data);
       dispatch(clearAllQuestions())

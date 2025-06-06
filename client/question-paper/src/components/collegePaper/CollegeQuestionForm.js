@@ -39,15 +39,15 @@ const CollegeQuestionForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/store-question", form, {
+      const response = await axios.post("http://localhost:9000/api/store-question", form, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true,
-        // Ensures cookies or other credentials are sent along with the request
+        
+        
       });
 
-      console.log(response);
+      //console.log(response);
 
       if (response.status === 201) {
         //console.log("Question added successfully!");

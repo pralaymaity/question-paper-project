@@ -32,7 +32,7 @@ const StoreQuestions = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:3000/api/take-question",
+        "http://localhost:9000/api/take-question",
         {
           headers: {
             Authorization: `Bearer ${token}`, // Send the token in the Bearer format
@@ -53,7 +53,7 @@ const StoreQuestions = () => {
 
   const fetchSubject = async () => {
     try {
-      const subjects = await axios.get("http://localhost:3000/take-subject");
+      const subjects = await axios.get("http://localhost:9000/take-subject");
       let jsonData = subjects.data;
       setSubjects(jsonData);
     } catch (err) {
@@ -75,7 +75,7 @@ const StoreQuestions = () => {
 
   const handleAddQuestion = async (eachQuestionId, question_group) => {
     try {
-      const res = await axios.post("/add-question", {
+      const res = await axios.post("http://localhost:9000/add-question", {
         eachQuestionId,
       });
       //console.log("each question id : ", res);
@@ -90,7 +90,7 @@ const StoreQuestions = () => {
 
   const handleRemoveQuestion = async (eachQuestionId, question_group) => {
     try {
-      await axios.post("/remove-question", { eachQuestionId });
+      await axios.post("http://localhost:9000/remove-question", { eachQuestionId });
 
       dispatch(removeQuestion({ eachQuestionId, group: question_group }));
     } catch (err) {

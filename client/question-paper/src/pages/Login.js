@@ -1,4 +1,3 @@
-
 import { useRef, useState } from "react";
 import axios from "axios";
 import { checkValidData } from "../utils/validate";
@@ -7,21 +6,20 @@ const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
   //console.log(isSignInForm);
   const [showErrorMessage, setshowErrorMessage] = useState("");
-  const [loginSuccess, setLoginSuccess] = useState("")
+  const [loginSuccess, setLoginSuccess] = useState("");
 
   const name = useRef();
   const email = useRef();
   const password = useRef();
 
-  const showToast = (msg)=>{
-    setLoginSuccess(msg)
-    setTimeout(()=>{
+  const showToast = (msg) => {
+    setLoginSuccess(msg);
+    setTimeout(() => {
       window.location.href = "http://localhost:3000/dashboard";
-    },3000)
-  }
+    }, 3000);
+  };
 
   const handleButtonClick = async () => {
-    
     const { isValid, message } = checkValidData(
       // checkValidData function performs overall form validation
       //  and returns an object with isValid and message
@@ -39,14 +37,13 @@ const Login = () => {
 
     if (!isSignInForm) {
       try {
-        const response = await axios.post("/signup", {
-          //the url is on the pckj.json file "proxy"
+        const response = await axios.post("http://localhost:9000/signup", {
           name: name?.current?.value,
           username: email?.current?.value,
           password: password?.current?.value,
         });
         showToast("🟢User Registered Successfully🟢");
-        console.log(response.data);
+        //console.log(response.data);
         name.current.value = "";
         email.current.value = "";
         password.current.value = "";
@@ -55,19 +52,19 @@ const Login = () => {
       }
     } else {
       try {
-        const response = await axios.post("/signin", {
+        const response = await axios.post("http://localhost:9000/signin", {
           // name: name?.current.value,
           username: email?.current?.value,
           password: password?.current?.value,
         });
+        console.log(response);
 
         const token = response.data.token;
-        //console.log('Response data:', response.data);
+        
         localStorage.setItem("token", token); // Store the token in localStorage
 
         //console.log("Signed in successfully");
         showToast("✔Signed in successfully");
-        
       } catch (error) {
         showToast("❌User not found❌");
         console.log("Error signing in");

@@ -2,25 +2,25 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 import { lazy } from "react";
 
-import Layout from "./Layout";
-import PrivateRoute from "./PrivateRoute";
+import Layout from "../layout/Layout";
+import PrivateRoute from "../features/auth/PrivateRoute";
 
 const Body = () => {
-  const Login = lazy(() => import("./Login"));
-  const Dashboard = lazy(() => import("./Dashboard"));
+  const Login = lazy(() => import("../pages/Login"));
+  const Dashboard = lazy(() => import("../pages/Dashboard"));
   //mcq route
-  const QuestionList = lazy(() => import("./QuestionList"));
-  const QuestionStorage = lazy(() => import("./mcqPaper/QuestionStorage"));
-  const ExamForm = lazy(() => import("./mcqPaper/ExamForm"));
-  const ExamPaper = lazy(() => import("./mcqPaper/ExamPaper"));
-  const QuestionForm = lazy(() => import("./mcqPaper/QuestionForm"));
-  const GeneratePaper = lazy(() => import("./collegePaper/GeneratePaper"));
+  const QuestionList = lazy(() => import("../features/redux/QuestionList"));
+  const QuestionStorage = lazy(() => import("../components/mcqPaper/QuestionStorage"));
+  const ExamForm = lazy(() => import("../components/mcqPaper/ExamForm"));
+  const ExamPaper = lazy(() => import("../components/mcqPaper/ExamPaper"));
+  const QuestionForm = lazy(() => import("../components/mcqPaper/QuestionForm"));
+  const GeneratePaper = lazy(() => import("../components/collegePaper/GeneratePaper"));
 
   //college route
   const CollegeQuestionForm = lazy(() =>
-    import("./collegePaper/CollegeQuestionForm")
+    import("../components/collegePaper/CollegeQuestionForm")
   );
-  const StoreQuestions = lazy(() => import("./collegePaper/StoreQuestions"));
+  const StoreQuestions = lazy(() => import("../components/collegePaper/StoreQuestions"));
 
   const appRoute = createBrowserRouter([
     {

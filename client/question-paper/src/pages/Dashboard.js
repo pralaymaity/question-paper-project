@@ -1,7 +1,8 @@
 import { useState } from "react";
-import QuestionForm from "./mcqPaper/QuestionForm";
-import CollegeQuestionForm from "./collegePaper/CollegeQuestionForm";
+import QuestionForm from "../components/mcqPaper/QuestionForm";
+import CollegeQuestionForm from "../components/collegePaper/CollegeQuestionForm";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Dashboard = () => {
   const [selectedForm, setSelectedForm] = useState(null);

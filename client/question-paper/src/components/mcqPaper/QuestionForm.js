@@ -50,7 +50,6 @@ const QuestionForm = () => {
         { text: "False", isCorrect: false },
       ]);
     }
-    
   }, [category]);
 
   const handleCorrectAnswerChange = (index) => {
@@ -67,7 +66,6 @@ const QuestionForm = () => {
         // Toggle the isCorrect value for the selected option
         if (idx === index) {
           return { ...option, isCorrect: !option.isCorrect };
-          //spread operator
         }
         return option;
       });
@@ -107,13 +105,15 @@ const QuestionForm = () => {
       answereOptions,
     };
     try {
-      const response = await axios.post("/api/add-question", questionData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-        // Ensures cookies or other credentials are sent along with the request
-      });
+      const response = await axios.post(
+        "http://localhost:9000/api/add-question",
+        questionData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         console.log("Question added successfully!");

@@ -1,7 +1,7 @@
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DashBoardLogo } from "../utils/constant";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../features/auth/AuthProvider";
 import { useSelector } from "react-redux";
 
 const Header = () => {

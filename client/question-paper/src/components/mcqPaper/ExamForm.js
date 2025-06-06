@@ -28,7 +28,7 @@ const ExamForm = () => {
     try {
       const ids = selectedQuestionIds.join(",");
       const response = await axios.get(
-        `http://localhost:3000/api/add-questions/${ids}`
+        `http://localhost:9000/api/add-questions/${ids}`
       );
       setFilterQuestions(response.data);
     } catch (error) {
@@ -76,7 +76,7 @@ const ExamForm = () => {
     };
 
     try {
-      const response = await axios.post("/api/create-exam", examInfo);
+      const response = await axios.post("http://localhost:9000/api/create-exam", examInfo);
 
       const exam_id = response?.data?.exam?.exam_id;
 

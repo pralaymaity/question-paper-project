@@ -1,6 +1,6 @@
 import "./index.css"
-import Body from "./components/Body";
-import { AuthProvider } from "./components/AuthProvider";
+import Body from "../src/routes/Body";
+import { AuthProvider } from "../src/features/auth/AuthProvider";
 import appStore from "./utils/appStore";
 import { Provider } from "react-redux";
 

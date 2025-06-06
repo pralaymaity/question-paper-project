@@ -4,16 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 const QuestionStorage = () => {
   const [originalData, setOriginalData] = useState([]);
-  //console.log(originalData);
 
   const [filterData, setFilterData] = useState([]);
-  //console.log(filterData);
 
   const [searchText, setSearchText] = useState("");
-  //console.log(searchText);
+
   const [searchMarks, setSearchMarks] = useState("");
+
   const [selectedQuestionsIds, setselectedQuestionsIds] = useState([]);
-  //console.log(selectedQuestionsIds);
 
   const navigate = useNavigate();
 
@@ -25,15 +23,15 @@ const QuestionStorage = () => {
     try {
       const token = localStorage.getItem("token"); // Ensure you have the token saved in localStorage or a similar place
       //console.log(token);
-      
+
       const questionStorage = await axios.get(
-        "http://localhost:3000/api/get-question",
+        "http://localhost:9000/api/get-question",
         {
           headers: {
             Authorization: `Bearer ${token}`, // Send the token in the Bearer format
           },
         }
-        // If you include headers (like the Authorization header) in any HTTP request (GET, POST, PUT, DELETE, etc.), 
+        // If you include headers (like the Authorization header) in any HTTP request (GET, POST, PUT, DELETE, etc.),
         // they will automatically be sent to the server along with the request.
       );
 
@@ -52,11 +50,11 @@ const QuestionStorage = () => {
   };
 
   const handleNavigateExamForm = () => {
-    // Navigate to ExamForm component, passing the selectedQuestionsIds
-    console.log(selectedQuestionsIds);
     
+    //console.log(selectedQuestionsIds);
+
     navigate("/dashboard/exam-form", { state: { selectedQuestionsIds } });
-    // now go to Exam form component and console the useLocation variable. 
+    // now go to Exam form component and console the useLocation variable.
   };
 
   return (
@@ -135,7 +133,6 @@ const QuestionStorage = () => {
               })
               .join(" , ");
           } else {
-            
             correctAns = list.questions_details.answereOptions.find(
               (option) => {
                 return option.isCorrect;

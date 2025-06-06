@@ -18,7 +18,7 @@ const useExamPaper = () => {
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get(`/api/exam/${exam_id}`);
+      const response = await axios.get(`http://localhost:9000/api/exam/${exam_id}`);
       setPaper(response.data);
       // You can now display the exam details and questions with their options
     } catch (error) {
