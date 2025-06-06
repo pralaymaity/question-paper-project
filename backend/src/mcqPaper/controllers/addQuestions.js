@@ -1,5 +1,5 @@
-const Subject = require("./models/subject"); 
-const Question = require("./models/questions"); 
+const Subject = require("../models/subject"); 
+const Question = require("../models/questions"); 
 
 const addQuestion = async (req, res) => {
   //   console.log("reques is coming");

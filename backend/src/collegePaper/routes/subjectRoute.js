@@ -1,6 +1,6 @@
 const express = require("express");
 const subjectRoute = express.Router();
-const SubjectPaper = require("./models/subjectPaper");
+const SubjectPaper = require("../models/subjectPaper");
 
 subjectRoute.get("/" , async (req , res)=>{
 

@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
-const authenticate = require('../auth')
-const storeQuestion = require('./storeQuestion');
-const QuestionStorage = require('./models/questionStorage');
-const SubjectPaper = require('./models/subjectPaper');
+const authenticate = require('../../middleware/auth')
+const storeQuestion = require('../controllers/storeQuestion');
+const QuestionStorage = require('../models/questionStorage');
+const SubjectPaper = require('../models/subjectPaper');
 
 
 router.post( "/store-question" , authenticate , storeQuestion  )

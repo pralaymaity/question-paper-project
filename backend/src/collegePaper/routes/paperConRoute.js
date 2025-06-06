@@ -5,7 +5,7 @@ const {
   removeQuestionFromPaper,
   getGeneratedPaper,
   resetGeneratedPaper,
-} = require("./paperController");
+} = require("../controllers/paperController");
 
 paperRoute.post("/add-question", addQuestionToPaper);
 paperRoute.post("/remove-question", removeQuestionFromPaper);

@@ -1,22 +1,12 @@
-const express = require("express");
 require("dotenv").config();
 // require('dotenv').config(); loads environment variables from a .env file into process.env.
 
+const express = require("express");
 const cors = require("cors");
-const { Sequelize, DataTypes } = require("sequelize");
-const User = require("./src/loginUser/models/loginUser");
-const Subject = require("./src/mcqPaper/models/subject");
-const Question = require("./src/mcqPaper/models/questions");
-const ExamForm = require("./src/mcqPaper/models/examForm");
-const ExamQuestions = require("./src/mcqPaper/models/examQuestions");
-const SubjectPaper = require("./src/collegePaper/models/subjectPaper");
-const QuestionStorage = require("./src/collegePaper/models/questionStorage");
-
 const app = express();
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  credentials: true, // Allow credentials (cookies, etc.)
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -27,14 +17,24 @@ app.options("*", cors(corsOptions)); // Handle preflight requests for all routes
 // Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 
+//models
+const { Sequelize, DataTypes } = require("sequelize");
+const User = require("./src/loginUser/models/loginUser");
+const Subject = require("./src/mcqPaper/models/subject");
+const Question = require("./src/mcqPaper/models/questions");
+const ExamForm = require("./src/mcqPaper/models/examForm");
+const ExamQuestions = require("./src/mcqPaper/models/examQuestions");
+const SubjectPaper = require("./src/collegePaper/models/subjectPaper");
+const QuestionStorage = require("./src/collegePaper/models/questionStorage");
+
 // Main API routes
-const loginRoute = require("./src/loginUser/loginRoute");
-const routes = require("./src/mcqPaper/router");
-const examRoutes = require("./src/mcqPaper/examRoutes");
-const examPaperRoutes = require("./src/mcqPaper/examPaperRoutes");
-const questionRoute = require("./src/collegePaper/questionRoute");
-const subjectRoute = require("./src/collegePaper/subjectRoute");
-const paperRoute = require("./src/collegePaper/paperConRoute");
+const loginRoute = require("./src/loginUser/routes/loginRoute");
+const routes = require("./src/mcqPaper/routes/router");
+const examRoutes = require("./src/mcqPaper/routes/examRoutes");
+const examPaperRoutes = require("./src/mcqPaper/routes/examPaperRoutes");
+const questionRoute = require("./src/collegePaper/routes/questionRoute");
+const subjectRoute = require("./src/collegePaper/routes/subjectRoute");
+const paperRoute = require("./src/collegePaper/routes/paperConRoute");
 
 app.use(loginRoute);
 app.use("/api", routes);

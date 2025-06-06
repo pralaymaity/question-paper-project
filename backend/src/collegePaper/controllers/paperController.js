@@ -1,5 +1,5 @@
 const express = require("express");
-const QuestionStorage = require("./models/questionStorage");
+const QuestionStorage = require("../models/questionStorage");
 
 // In-memory generated paper
 let generatedPaper = {

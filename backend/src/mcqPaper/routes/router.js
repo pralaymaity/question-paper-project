@@ -1,11 +1,11 @@
 
 const express = require('express');
 const router = express.Router();
-const { addQuestion } = require('./addQuestions');
-const authenticate = require('../auth');
+const { addQuestion } = require('../controllers/addQuestions');
+const authenticate = require('../../middleware/auth');
 
-const Question = require('./models/questions'); 
-const Subject = require('./models/subject');
+const Question = require('../models/questions'); 
+const Subject = require('../models/subject');
 
 
 router.post('/add-question',  authenticate, addQuestion);

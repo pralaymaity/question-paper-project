@@ -1,5 +1,5 @@
-const SubjectPaper = require("./models/subjectPaper");
-const QuestionStorage = require("./models/questionStorage");
+const SubjectPaper = require("../models/subjectPaper");
+const QuestionStorage = require("../models/questionStorage");
 
 const storeQuestion = async (req, res) => {
   const { subject, questionText, difficulty, marks, group } = req.body;
