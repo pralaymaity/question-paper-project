@@ -22,6 +22,7 @@ const CollegeQuestionForm = () => {
     "Operating System",
     "Artificial Intelligence",
     "Data Structures & Algorithms",
+    "Android"
   ];
 
   const dispatch = useDispatch();

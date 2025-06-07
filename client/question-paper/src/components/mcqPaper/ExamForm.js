@@ -7,7 +7,7 @@ const ExamForm = () => {
   //console.log(location);
 
   const [filterquestions, setFilterQuestions] = useState([]);
-  //console.log(filterquestions);
+  console.log(filterquestions);
   const selectedQuestionIds = location.state?.selectedQuestionsIds || []; // Expecting an array of IDs
   //console.log(selectedQuestionIds);
 
@@ -23,6 +23,14 @@ const ExamForm = () => {
       fetchQuestions();
     }
   }, []);
+
+  useEffect(() => {
+    const totalMarks = filterquestions.reduce((sum, question) => {
+      return sum + (question?.questions_details?.marks || 0); 
+    }, 0);
+
+    setFullMarks(totalMarks);
+  }, [filterquestions]);
 
   const fetchQuestions = async () => {
     try {
@@ -60,7 +68,6 @@ const ExamForm = () => {
   };
 
   const handleCreateExam = async () => {
-
     if (!subject || !ExamDate || !duration || !fullMarks) {
       alert("⚠Please fill in all the fields");
       return;
@@ -76,7 +83,10 @@ const ExamForm = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:9000/api/create-exam", examInfo);
+      const response = await axios.post(
+        "http://localhost:9000/api/create-exam",
+        examInfo
+      );
 
       const exam_id = response?.data?.exam?.exam_id;
 
@@ -170,7 +180,6 @@ const ExamForm = () => {
                 type="number"
                 placeholder="e.g. 100"
                 value={fullMarks}
-                onChange={(e) => setFullMarks(e.target.value)}
               />
             </div>
           </div>

@@ -65,7 +65,7 @@ const QuestionStorage = () => {
             className="w-6/12 p-3 rounded-md border text-slate-900  border-blue-500 outline-none"
             type="text"
             value={searchText}
-            placeholder="Search"
+            placeholder="Search Subject"
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
