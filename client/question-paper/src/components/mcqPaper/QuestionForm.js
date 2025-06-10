@@ -4,6 +4,7 @@ import AnswerOptions from "./AnswerOptions";
 import TrueFalseOptions from "./TrueFalseOptions";
 import { addQuestion } from "../../utils/questionListSlice";
 import axios from "axios";
+import SideBar from "./SideBar";
 
 const QuestionForm = () => {
   const dispatch = useDispatch();
@@ -140,6 +141,7 @@ const QuestionForm = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-100 py-10 px-4">
+      <SideBar />
       <form
         className="relative mx-auto bg-white shadow-2xl py-12 px-10 w-full max-w-4xl rounded-2xl border border-gray-200 transition-all duration-300"
         onSubmit={(e) => e.preventDefault()}

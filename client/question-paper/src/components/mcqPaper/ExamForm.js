@@ -7,7 +7,7 @@ const ExamForm = () => {
   //console.log(location);
 
   const [filterquestions, setFilterQuestions] = useState([]);
-  console.log(filterquestions);
+  //console.log(filterquestions);
   const selectedQuestionIds = location.state?.selectedQuestionsIds || []; // Expecting an array of IDs
   //console.log(selectedQuestionIds);
 
@@ -26,7 +26,7 @@ const ExamForm = () => {
 
   useEffect(() => {
     const totalMarks = filterquestions.reduce((sum, question) => {
-      return sum + (question?.questions_details?.marks || 0); 
+      return sum + (question?.questions_details?.marks || 0);
     }, 0);
 
     setFullMarks(totalMarks);
@@ -106,6 +106,7 @@ const ExamForm = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-blue-50 to-purple-100 py-10 px-4">
+      
       <form
         className="bg-white shadow-2xl rounded-2xl max-w-4xl mx-auto p-10"
         onSubmit={(e) => e.preventDefault()}
@@ -180,6 +181,7 @@ const ExamForm = () => {
                 type="number"
                 placeholder="e.g. 100"
                 value={fullMarks}
+                readOnly
               />
             </div>
           </div>

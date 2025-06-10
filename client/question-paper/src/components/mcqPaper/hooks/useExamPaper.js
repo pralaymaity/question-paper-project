@@ -4,6 +4,8 @@ import axios from "axios";
 
 const useExamPaper = () => {
   const { exam_id } = useParams();
+  console.log(exam_id);
+  
   const [paper, setPaper] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   console.log(selectedAnswers);
