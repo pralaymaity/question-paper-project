@@ -35,6 +35,8 @@ const examPaperRoutes = require("./src/mcqPaper/routes/examPaperRoutes");
 const questionRoute = require("./src/collegePaper/routes/questionRoute");
 const subjectRoute = require("./src/collegePaper/routes/subjectRoute");
 const paperRoute = require("./src/collegePaper/routes/paperConRoute");
+const sideBarRouter = require("./src/mcqPaper/routes/sideBarRoute");
+const subjectsRouter = require("./src/mcqPaper/routes/subjectRoute");
 
 app.use(loginRoute);
 app.use("/api", routes);
@@ -43,6 +45,8 @@ app.use("/api", examPaperRoutes);
 app.use("/api", questionRoute);
 app.use("/take-subject", subjectRoute);
 app.use("/", paperRoute);
+app.use("/api",sideBarRouter);
+app.use("/api",subjectsRouter);
 
 // Initialize Sequelize
 const sequelize = new Sequelize("question-paper", "pralay", 1234, {
