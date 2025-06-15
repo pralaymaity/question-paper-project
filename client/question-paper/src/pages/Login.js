@@ -3,6 +3,9 @@ import axios from "axios";
 import { checkValidData } from "../utils/validate";
 
 const Login = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [isSignInForm, setisSignInForm] = useState(true);
   //console.log(isSignInForm);
   const [showErrorMessage, setshowErrorMessage] = useState("");
@@ -37,7 +40,7 @@ const Login = () => {
 
     if (!isSignInForm) {
       try {
-        const response = await axios.post("http://localhost:9000/signup", {
+        const response = await axios.post(`${apiUrl}/signup`, {
           name: name?.current?.value,
           username: email?.current?.value,
           password: password?.current?.value,
@@ -48,19 +51,25 @@ const Login = () => {
         email.current.value = "";
         password.current.value = "";
       } catch (error) {
-        console.log("🔴Registration Faild🔴");
+        if (error.response && error.response.status === 409) {
+          showToast(`❌ ${error.response.data}`);
+        } else {
+          console.log("🔴Registration Faild🔴");
+        }
+
+        
       }
     } else {
       try {
-        const response = await axios.post("http://localhost:9000/signin", {
+        const response = await axios.post(`${apiUrl}/signin`, {
           // name: name?.current.value,
           username: email?.current?.value,
           password: password?.current?.value,
         });
-        console.log(response);
+        //console.log(response);
 
         const token = response.data.token;
-        
+
         localStorage.setItem("token", token); // Store the token in localStorage
 
         //console.log("Signed in successfully");

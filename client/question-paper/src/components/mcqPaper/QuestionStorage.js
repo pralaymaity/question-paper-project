@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const QuestionStorage = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [originalData, setOriginalData] = useState([]);
 
   const [filterData, setFilterData] = useState([]);
@@ -25,7 +28,7 @@ const QuestionStorage = () => {
       //console.log(token);
 
       const questionStorage = await axios.get(
-        "http://localhost:9000/api/get-question",
+        `${apiUrl}/api/get-question`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Send the token in the Bearer format

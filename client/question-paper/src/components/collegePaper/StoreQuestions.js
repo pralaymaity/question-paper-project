@@ -5,6 +5,9 @@ import { addQuestion, removeQuestion } from "../../utils/selectQuestionSlice";
 import { useNavigate } from "react-router-dom";
 
 const StoreQuestions = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [subjects, setSubjects] = useState([]);
   //console.log(subjects);
   const [questions, setQuestions] = useState([]);
@@ -32,7 +35,7 @@ const StoreQuestions = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:9000/api/take-question",
+        `${apiUrl}/api/take-question`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Send the token in the Bearer format
@@ -53,7 +56,7 @@ const StoreQuestions = () => {
 
   const fetchSubject = async () => {
     try {
-      const subjects = await axios.get("http://localhost:9000/take-subject");
+      const subjects = await axios.get(`${apiUrl}/take-subject`);
       let jsonData = subjects.data;
       setSubjects(jsonData);
     } catch (err) {
@@ -75,7 +78,7 @@ const StoreQuestions = () => {
 
   const handleAddQuestion = async (eachQuestionId, question_group) => {
     try {
-      const res = await axios.post("http://localhost:9000/add-question", {
+      const res = await axios.post(`${apiUrl}/add-question`, {
         eachQuestionId,
       });
       //console.log("each question id : ", res);
@@ -90,7 +93,7 @@ const StoreQuestions = () => {
 
   const handleRemoveQuestion = async (eachQuestionId, question_group) => {
     try {
-      await axios.post("http://localhost:9000/remove-question", { eachQuestionId });
+      await axios.post(`${apiUrl}/remove-question`, { eachQuestionId });
 
       dispatch(removeQuestion({ eachQuestionId, group: question_group }));
     } catch (err) {

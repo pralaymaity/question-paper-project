@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AnswerOptions from "./AnswerOptions";
 import TrueFalseOptions from "./TrueFalseOptions";
@@ -7,6 +7,9 @@ import axios from "axios";
 import SideBar from "./SideBar";
 
 const QuestionForm = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const dispatch = useDispatch();
 
   const [questionText, setquestionText] = useState("");
@@ -107,7 +110,7 @@ const QuestionForm = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:9000/api/add-question",
+        `${apiUrl}/api/add-question`,
         questionData,
         {
           headers: {

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import useExamPaper from "./hooks/useExamPaper";
 
 const ExamPaper = () => {
@@ -14,6 +15,35 @@ const ExamPaper = () => {
 
   const { subject, academic_session, duration, fullmarks, exam_date } = paper;
 
+  const [timeLeft, setTimeLeft] = useState(null);
+
+  useEffect(() => {
+    if (paper && duration && !isSubmitted) {
+      setTimeLeft(duration * 60); // convert minutes to seconds
+    }
+  }, [paper, duration, isSubmitted]);
+
+  useEffect(() => {
+    if (timeLeft === null || isSubmitted) return;
+
+    if (timeLeft === 0) {
+      handleSubmit();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, isSubmitted, handleSubmit]);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  };
+
   const formattedDate = exam_date
     ? new Date(exam_date).toISOString().split("T")[0]
     : "Invalid Date";
@@ -28,6 +58,14 @@ const ExamPaper = () => {
         <p>📝 Full Marks: {fullmarks}</p>
       </div>
 
+      {timeLeft !== null && !isSubmitted && (
+        <div className="fixed top-64 right-6 z-50 animate-slide-in p-4 bg-white shadow-lg border border-red-400 rounded-xl">
+          <p className="text-2xl font-bold text-teal-600">
+            ⏳ Time Remaining: {formatTime(timeLeft)}
+          </p>
+        </div>
+      )}
+
       <div className="text-center mb-10">
         <p className="text-4xl font-bold text-orange-600">
           🎯 Scoreboard: {score}
@@ -39,13 +77,9 @@ const ExamPaper = () => {
           const { question, questions_details } = data;
           const { category, answereOptions } = questions_details;
 
-          console.log(paper);
-
-          // For True/False, we directly work with isCorrect
           const correctAnswer = answereOptions.find(
             (option) => option.isCorrect
-          ); // Get the correct answer for true/false
-          console.log(correctAnswer);
+          );
 
           return (
             <ul key={index} className="py-3">
@@ -62,10 +96,9 @@ const ExamPaper = () => {
                     const isSelected =
                       selectedAnswers[index]?.includes(option) || false;
 
-                    const correctAnswer = answereOptions.find(
-                      (o) => o.isCorrect
-                    );
-                    const correctText = correctAnswer ? correctAnswer.text : null;
+                    const correctText = correctAnswer
+                      ? correctAnswer.text
+                      : null;
 
                     const isCorrectAnswer = option === correctText;
 
@@ -146,6 +179,7 @@ const ExamPaper = () => {
           );
         })}
       </div>
+
       <button
         onClick={handleSubmit}
         className="my-4 mx-10 p-2 bg-blue-500 text-white rounded"

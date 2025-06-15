@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const ExamForm = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const location = useLocation();
   //console.log(location);
 
@@ -36,7 +39,7 @@ const ExamForm = () => {
     try {
       const ids = selectedQuestionIds.join(",");
       const response = await axios.get(
-        `http://localhost:9000/api/add-questions/${ids}`
+        `${apiUrl}/api/add-questions/${ids}`
       );
       setFilterQuestions(response.data);
     } catch (error) {
@@ -84,7 +87,7 @@ const ExamForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:9000/api/create-exam",
+        `${apiUrl}/api/create-exam`,
         examInfo
       );
 

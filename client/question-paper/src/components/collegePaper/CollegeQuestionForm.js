@@ -5,6 +5,9 @@ import { useDispatch } from "react-redux";
 import { storeQuestion } from "../../utils/collegeQuestionSlice";
 
 const CollegeQuestionForm = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [form, setForm] = useState({
     subject: "",
     questionText: "",

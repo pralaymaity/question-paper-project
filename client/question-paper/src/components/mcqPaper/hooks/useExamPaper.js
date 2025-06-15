@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const useExamPaper = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const { exam_id } = useParams();
-  console.log(exam_id);
+  //console.log(exam_id);
   
   const [paper, setPaper] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  console.log(selectedAnswers);
+  //console.log(selectedAnswers);
 
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState({}); // State to hold feedback for each question
@@ -20,7 +23,7 @@ const useExamPaper = () => {
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get(`http://localhost:9000/api/exam/${exam_id}`);
+      const response = await axios.get(`${apiUrl}/api/exam/${exam_id}`);
       setPaper(response.data);
       // You can now display the exam details and questions with their options
     } catch (error) {

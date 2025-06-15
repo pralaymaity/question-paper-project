@@ -7,6 +7,9 @@ import { useDispatch } from "react-redux";
 
 
 const useGeneratePaper = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [questions, setQuestions] = useState([]);
   //console.log(questions);
 

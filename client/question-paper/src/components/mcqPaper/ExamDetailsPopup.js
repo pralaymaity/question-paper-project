@@ -27,10 +27,10 @@ const ExamDetailsPopup = ({
 
         
         <div className="space-y-3 mb-6 text-gray-700">
-          <p>
+          <p className="text-2xl">
             <span className="font-semibold">Full Marks:</span> {fullmarks}
           </p>
-          <p>
+          <p className="text-2xl">
             <span className="font-semibold">Duration:</span> {duration} minutes
           </p>
         </div>

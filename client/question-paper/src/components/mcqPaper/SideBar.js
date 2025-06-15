@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import ExamDetailsPopup from "./ExamDetailsPopup";
 
 const SideBar = () => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [showSubjects, setShowSubjects] = useState(false);
   const [subjectList, setSubjectList] = useState([]);
   //console.log(subjectList);
@@ -22,7 +25,7 @@ const SideBar = () => {
   const handleSubjects = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:9000/api/get-subjects"
+        `${apiUrl}/api/get-subjects`
       );
 
       const subjectNames = response?.data;
@@ -35,7 +38,7 @@ const SideBar = () => {
   const handleSubjectClick = async (subject) => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/api/demoExam/${subject}`
+        `${apiUrl}/api/demoExam/${subject}`
       );
 
       const { exam_id, fullmarks, duration } = response?.data;
@@ -70,7 +73,7 @@ const SideBar = () => {
     setShowPopup(false); // Close the popup
   };
 
-  // --- Function to handle closing the popup (e.g., "Cancel" button or backdrop click) ---
+  // --- Function to handle closing the popup 
   const handleClosePopup = () => {
     setShowPopup(false);
     setSelectedExamDetails(null); // Clear details
@@ -134,7 +137,7 @@ const SideBar = () => {
       {/* Hamburger Button */}
       {!isSidebarOpen && (
         <button
-          className="absolute top-26 left-4 z-50 bg-teal-500 text-white px-3 py-2 rounded-md shadow-lg text-xl"
+          className="absolute top-26 left-4 z-50 bg-green-950 text-white px-3 py-2 rounded-md shadow-lg text-xl"
           onClick={() => setIsSidebarOpen(true)}
         >
           ☰
