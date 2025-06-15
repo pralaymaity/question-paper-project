@@ -1,10 +1,9 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const User = require('../models/loginUser')
+const User = require("../models/loginUser");
 const router = express.Router();
-const authenticate = require("../../middleware/auth")
-
+const authenticate = require("../../middleware/auth");
 
 // Sign in  route
 router.post("/signin", async (req, res) => {
@@ -16,9 +15,6 @@ router.post("/signin", async (req, res) => {
     const user = await User.findOne({ where: { username } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      
-      
-
       const token = jwt.sign(
         { username: user.username, name: user.name },
         process.env.JWT_SECRET,
@@ -28,7 +24,6 @@ router.post("/signin", async (req, res) => {
       );
       //user.username refers to the username stored in the database for the logged-in user.
       //user.name is the full name of the user from the database.
-
 
       res.json({ token });
     } else {
@@ -41,26 +36,34 @@ router.post("/signin", async (req, res) => {
 
 // sign up route
 router.post("/signup", async (req, res) => {
-  //console.log("Sign up is working fine.........", req.body);
-
   try {
     const { name, username, password } = req.body;
+
+    if (!name || !username || !password) {
+      return res.status(400).send("All fields are required.");
+    }
+
+    // Check if username already exists
+    const existingUser = await User.findOne({ where: { username } });
+
+    if (existingUser) {
+      return res.status(409).send("Email already taken.");
+    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    await User.create({ name, username, password: hashedPassword });
+    await User.create({
+      name,
+      username,
+      password: hashedPassword,
+    });
 
     res.status(201).send("User created successfully!");
   } catch (error) {
-    console.error(error);
-
-    if (error.name === "SequelizeUniqueConstraintError") {
-      return res.status(400).send("Email already taken.");
-    }
-
-    res.status(400).send("Error creating user.");
+    console.error("Signup error:", error);
+    res.status(500).send("Internal server error.");
   }
 });
 

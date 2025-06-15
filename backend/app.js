@@ -6,13 +6,14 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3000", 
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
-
+app.options("*", cors(corsOptions));  //Handle preflight requests for all routes
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handle preflight requests for all routes
+// app.options("*", cors(corsOptions));  //Handle preflight requests for all routes
 
 // Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
@@ -26,6 +27,12 @@ const ExamForm = require("./src/mcqPaper/models/examForm");
 const ExamQuestions = require("./src/mcqPaper/models/examQuestions");
 const SubjectPaper = require("./src/collegePaper/models/subjectPaper");
 const QuestionStorage = require("./src/collegePaper/models/questionStorage");
+
+app.use((req, res, next) => {
+  console.log("🔥 Incoming request from:", req.headers.origin);
+  next();
+});
+
 
 // Main API routes
 const loginRoute = require("./src/loginUser/routes/loginRoute");
@@ -75,6 +82,6 @@ app.get("/", (req, res) => {
   res.send("Hello World!!");
 });
 
-app.listen(9000, () => {
-  console.log("Server is running on port 9000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
