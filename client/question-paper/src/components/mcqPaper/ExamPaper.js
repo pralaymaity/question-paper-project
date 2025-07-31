@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useExamPaper from "./hooks/useExamPaper";
+import TimerDisplay from "./TimerDisplay";
 
 const ExamPaper = () => {
   const {
@@ -12,6 +13,12 @@ const ExamPaper = () => {
     handleAnswerChange,
     handleSubmit,
   } = useExamPaper();
+
+  //for one time print the paper
+  useEffect(()=>{
+    console.log("Paper fetched:", paper);
+  },[paper])
+  
 
   const { subject, academic_session, duration, fullmarks, exam_date } = paper;
 
@@ -44,9 +51,9 @@ const ExamPaper = () => {
     return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
 
-  const formattedDate = exam_date
-    ? new Date(exam_date).toISOString().split("T")[0]
-    : "Invalid Date";
+  const formattedDate = exam_date ? new Date(exam_date).toISOString().split("T")[0] : "Invalid Date";
+    
+    
 
   return (
     <div className="bg-zinc-100 min-h-screen py-8 px-4">
@@ -58,13 +65,7 @@ const ExamPaper = () => {
         <p>📝 Full Marks: {fullmarks}</p>
       </div>
 
-      {timeLeft !== null && !isSubmitted && (
-        <div className="fixed top-64 right-6 z-50 animate-slide-in p-4 bg-white shadow-lg border border-red-400 rounded-xl">
-          <p className="text-2xl font-bold text-teal-600">
-            ⏳ Time Remaining: {formatTime(timeLeft)}
-          </p>
-        </div>
-      )}
+      {timeLeft !== null && !isSubmitted && <TimerDisplay timeLeft={timeLeft} />}
 
       <div className="text-center mb-10">
         <p className="text-4xl font-bold text-orange-600">
@@ -74,6 +75,8 @@ const ExamPaper = () => {
 
       <div className="py-4 px-10">
         {paper?.Questions?.map((data, index) => {
+          // console.log(index);
+          
           const { question, questions_details } = data;
           const { category, answereOptions } = questions_details;
 
@@ -93,14 +96,14 @@ const ExamPaper = () => {
               {category === "true/false" && (
                 <div className="py-2 px-6">
                   {["True", "False"].map((option, idx) => {
-                    const isSelected =
-                      selectedAnswers[index]?.includes(option) || false;
 
-                    const correctText = correctAnswer
-                      ? correctAnswer.text
-                      : null;
-
+                    const isSelected = selectedAnswers[index]?.includes(option) || false;
+                    //What the user chose
+                                                         
+                    const correctText = correctAnswer ? correctAnswer.text : null;
+                                            
                     const isCorrectAnswer = option === correctText;
+                    //What the system says is correct
 
                     return (
                       <div
@@ -118,6 +121,7 @@ const ExamPaper = () => {
                         <input
                           type="radio"
                           name={`question-${index}`}
+                          // All radio buttons would be treated as independent if not name include
                           value={option}
                           checked={isSelected}
                           onChange={() => handleAnswerChange(index, option)}
@@ -135,9 +139,9 @@ const ExamPaper = () => {
               {(category === "select one" || category === "select two") && (
                 <div className="py-2 px-6">
                   {answereOptions.map((option, idx) => {
-                    const isSelected =
-                      selectedAnswers[index]?.includes(option.text) || false;
 
+                    const isSelected = selectedAnswers[index]?.includes(option.text) || false;
+                      
                     const isCorrectAnswer = option.isCorrect;
 
                     return (
@@ -148,10 +152,8 @@ const ExamPaper = () => {
                             ? "bg-green-500 rounded w-2/12"
                             : isSubmitted && isSelected && !isCorrectAnswer
                             ? "bg-red-500 rounded w-2/12"
-                            : isSubmitted &&
-                              isCorrectAnswer &&
-                              !isSelected &&
-                              feedback[index] !== undefined
+                            : isSubmitted && isCorrectAnswer && !isSelected && feedback[index] !== undefined
+                                                                                          
                             ? "bg-blue-500 rounded w-2/12"
                             : ""
                         }`}

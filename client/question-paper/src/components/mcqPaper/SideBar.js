@@ -1,15 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ExamDetailsPopup from "./ExamDetailsPopup";
 
 const SideBar = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [showSubjects, setShowSubjects] = useState(false);
   const [subjectList, setSubjectList] = useState([]);
-  //console.log(subjectList);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // State for popup management
@@ -24,9 +23,7 @@ const SideBar = () => {
 
   const handleSubjects = async () => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/api/get-subjects`
-      );
+      const response = await axios.get(`${apiUrl}/api/get-subjects`);
 
       const subjectNames = response?.data;
       setSubjectList(subjectNames);
@@ -35,23 +32,28 @@ const SideBar = () => {
     }
   };
 
+  const subjectMap = {
+    javascript: "JavaScript",
+    java: "Java",
+    gk: "GK",
+    dbms:"DBMS",
+    python: "Python",
+  };
+
   const handleSubjectClick = async (subject) => {
     try {
+      const formattedSubject = subjectMap[subject.toLowerCase()];
       const response = await axios.get(
-        `${apiUrl}/api/demoExam/${subject}`
+        `${apiUrl}/api/demoExam/${formattedSubject}`
       );
 
       const { exam_id, fullmarks, duration } = response?.data;
 
       if (exam_id && fullmarks !== undefined && duration !== undefined) {
-        
         setSelectedExamDetails({ exam_id, fullmarks, duration });
         setShowPopup(true);
-
       } else {
-        alert(
-          `something wrong in response data`
-        );
+        alert(`something wrong in response data`);
       }
 
       // Close the subject list and sidebar after selection
@@ -70,14 +72,13 @@ const SideBar = () => {
 
   const handleStartExam = (examId) => {
     navigate(`/dashboard/exam-paper/${examId}`); // Navigate to the exam paper
-    setShowPopup(false); // Close the popup
+    setShowPopup(false); 
   };
 
-  // --- Function to handle closing the popup 
+  // --- Function to handle closing the popup
   const handleClosePopup = () => {
     setShowPopup(false);
     setSelectedExamDetails(null); // Clear details
-    
   };
 
   return (
@@ -144,7 +145,6 @@ const SideBar = () => {
         </button>
       )}
 
-
       {/* NEW: Exam Details Popup (rendered outside the sidebar to ensure it's on top) */}
       {showPopup && selectedExamDetails && (
         <ExamDetailsPopup
@@ -152,7 +152,7 @@ const SideBar = () => {
           duration={selectedExamDetails.duration}
           examId={selectedExamDetails.exam_id}
           onStartExam={handleStartExam} // Passed down to popup
-          onClose={handleClosePopup}   // Passed down to popup
+          onClose={handleClosePopup} // Passed down to popup
         />
       )}
     </div>

@@ -3,15 +3,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const useExamPaper = () => {
-
-  const apiUrl = process.env.REACT_APP_API_URL
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const { exam_id } = useParams();
   //console.log(exam_id);
-  
+
   const [paper, setPaper] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  //console.log(selectedAnswers);
+  // console.log(selectedAnswers);
 
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState({}); // State to hold feedback for each question
@@ -32,11 +31,16 @@ const useExamPaper = () => {
   };
 
   const handleAnswerChange = (questionIndex, selectedOption) => {
+   
+
     setSelectedAnswers((prev) => {
+     
       const currentAnswers = prev[questionIndex] || [];
+      //first time current ans is empty
 
       const questionDetails =
         paper?.Questions[questionIndex]?.questions_details;
+
       const category = questionDetails?.category; // Safely get the category
 
       if (!category) {
@@ -50,6 +54,7 @@ const useExamPaper = () => {
         };
       } else if (category === "select two") {
         if (currentAnswers.includes(selectedOption)) {
+          //This logic toggles the selected option: removes it if already selected.
           return {
             ...prev,
             [questionIndex]: currentAnswers.filter(
@@ -57,6 +62,7 @@ const useExamPaper = () => {
             ),
           };
         } else {
+          //adds it if not present,
           return {
             ...prev,
             [questionIndex]: [...currentAnswers, selectedOption],
@@ -74,9 +80,14 @@ const useExamPaper = () => {
 
   const handleSubmit = () => {
     const totalScore = paper?.Questions?.reduce((acc, question, index) => {
+      //console.log(index);
+      
       const selectedAnswer = selectedAnswers[index] || [];
-
+      // console.log(selectedAnswer);
+      
+      // Select true/false category
       if (question?.questions_details?.category === "true/false") {
+
         const correctOption = question.questions_details.answereOptions.find(
           (option) => option.isCorrect
         );
@@ -111,7 +122,7 @@ const useExamPaper = () => {
 
         return acc + (isCorrect ? question?.questions_details?.marks : 0);
       }
-
+      // Select One category
       if (question?.questions_details?.category === "select two") {
         const correctOptions = question.questions_details.answereOptions
           .filter((option) => option.isCorrect)
