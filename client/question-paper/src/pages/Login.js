@@ -24,8 +24,7 @@ const Login = () => {
 
   const handleButtonClick = async () => {
     const { isValid, message } = checkValidData(
-      // checkValidData function performs overall form validation
-      //  and returns an object with isValid and message
+      
       email?.current?.value,
       password?.current?.value,
       name?.current?.value,
@@ -75,6 +74,7 @@ const Login = () => {
         //console.log("Signed in successfully");
         showToast("✔Signed in successfully");
       } catch (error) {
+        localStorage.removeItem("token");
         showToast("❌User not found❌");
         console.log("Error signing in");
         // showErrorMessage("Error signing in")
