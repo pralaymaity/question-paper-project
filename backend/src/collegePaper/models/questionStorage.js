@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../../sequelize");
+const sequelize = require("../../config/config");
 
 const SubjectPaper = require("../models/subjectPaper");
 const QuestionStorage = sequelize.define("QuestionStorage", {
