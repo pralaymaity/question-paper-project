@@ -56,10 +56,7 @@ app.use("/api",sideBarRouter);
 app.use("/api",subjectsRouter);
 
 // Initialize Sequelize
-const sequelize = new Sequelize("question-paper", "pralay", 1234, {
-  host: "postgres",
-  dialect: "postgres",
-});
+const sequelize = require("./src/config/config");
 (async function () {
   try {
     await sequelize.authenticate();
