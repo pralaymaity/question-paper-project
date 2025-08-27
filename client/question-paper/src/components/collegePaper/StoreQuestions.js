@@ -74,7 +74,7 @@ const StoreQuestions = () => {
 
   const handleAddQuestion = async (eachQuestionId, question_group) => {
     try {
-      const res = await axios.post(`${apiUrl}/add-question`, {
+      const res = await axios.post(`${apiUrl}/api/add-question`, {
         eachQuestionId,
       });
       //console.log("each question id : ", res);
@@ -89,7 +89,7 @@ const StoreQuestions = () => {
 
   const handleRemoveQuestion = async (eachQuestionId, question_group) => {
     try {
-      await axios.post(`${apiUrl}/remove-question`, { eachQuestionId });
+      await axios.post(`${apiUrl}/api/remove-question`, { eachQuestionId });
 
       dispatch(removeQuestion({ eachQuestionId, group: question_group }));
     } catch (err) {
