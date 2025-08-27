@@ -5,6 +5,7 @@ import { checkValidData } from "../utils/validate";
 const Login = () => {
 
   const apiUrl = process.env.REACT_APP_API_URL;
+  const frontEndUrl = process.env.REACT_APP_FRONTEND_URL
 
   const [isSignInForm, setisSignInForm] = useState(true);
   //console.log(isSignInForm);
@@ -18,7 +19,7 @@ const Login = () => {
   const showToast = (msg) => {
     setLoginSuccess(msg);
     setTimeout(() => {
-      window.location.href = "http://localhost:3000/dashboard";
+      window.location.href = `${frontEndUrl}/dashboard`;
     }, 3000);
   };
 
