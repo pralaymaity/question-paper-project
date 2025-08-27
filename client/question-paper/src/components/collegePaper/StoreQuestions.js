@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const StoreQuestions = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  
+
   const [subjects, setSubjects] = useState([]);
   console.log(subjects);
   const [questions, setQuestions] = useState([]);
@@ -73,10 +73,17 @@ const StoreQuestions = () => {
   };
 
   const handleAddQuestion = async (eachQuestionId, question_group) => {
+    const token = localStorage.getItem("token");
     try {
-      const res = await axios.post(`${apiUrl}/api/add-question`, {
-        eachQuestionId,
-      });
+      const res = await axios.post(
+        `${apiUrl}/api/add-question`,
+        {
+          eachQuestionId,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       //console.log("each question id : ", res);
       dispatch(addQuestion({ eachQuestionId, group: question_group }));
     } catch (err) {
@@ -88,8 +95,15 @@ const StoreQuestions = () => {
   };
 
   const handleRemoveQuestion = async (eachQuestionId, question_group) => {
+    const token = localStorage.getItem("token");
     try {
-      await axios.post(`${apiUrl}/api/remove-question`, { eachQuestionId });
+      await axios.post(
+        `${apiUrl}/api/remove-question`,
+        { eachQuestionId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       dispatch(removeQuestion({ eachQuestionId, group: question_group }));
     } catch (err) {
