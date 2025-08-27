@@ -4,9 +4,8 @@ import { checkValidData } from "../utils/validate";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
-  const frontEndUrl = process.env.REACT_APP_FRONTEND_URL
+  
 
   const [isSignInForm, setisSignInForm] = useState(true);
   //console.log(isSignInForm);
@@ -22,13 +21,12 @@ const Login = () => {
   const showToast = (msg) => {
     setLoginSuccess(msg);
     setTimeout(() => {
-      navigate("/dashboard")
+      navigate("/dashboard");
     }, 3000);
   };
 
   const handleButtonClick = async () => {
     const { isValid, message } = checkValidData(
-      
       email?.current?.value,
       password?.current?.value,
       name?.current?.value,
@@ -59,8 +57,6 @@ const Login = () => {
         } else {
           console.log("🔴Registration Faild🔴");
         }
-
-        
       }
     } else {
       try {
@@ -106,6 +102,12 @@ const Login = () => {
           </div>
         </div>
       )}
+
+      <div className="mt-4 w-full max-w-md mx-4 p-4 bg-green-100 border-l-4 border-green-700 rounded shadow-md relative">
+        <p className="text-red-800 font-medium">
+          * After SignIn/SignUp,plese wait for 30 seconds to start the server...⏳
+        </p>
+      </div>
 
       <form
         className="absolute  p-12 w-3/12 my-22 mx-auto right-0 left-0 shadow-xl  rounded-lg  border border-teal-600 text-green-950"
