@@ -43,7 +43,7 @@ const CollegeQuestionForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:9000/api/store-question", form, {
+      const response = await axios.post(`${apiUrl}/api/store-question`, form, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
