@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 const StoreQuestions = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-
+  
   const [subjects, setSubjects] = useState([]);
-  //console.log(subjects);
+  console.log(subjects);
   const [questions, setQuestions] = useState([]);
-  //console.log(questions);
+  console.log(questions);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
@@ -52,7 +52,7 @@ const StoreQuestions = () => {
 
   const fetchSubject = async () => {
     try {
-      const subjects = await axios.get(`${apiUrl}/take-subject`);
+      const subjects = await axios.get(`${apiUrl}/api/take-subject`);
       let jsonData = subjects.data;
       setSubjects(jsonData);
     } catch (err) {
