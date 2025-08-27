@@ -90,12 +90,11 @@ const QuestionStorage = () => {
                 alert("⚠ Fill the both fields");
               } else {
                 const filterSubject = originalData.filter((sub) => {
-                  return sub?.Subject.subject_name
-                    ?.toLowerCase()
-                    .includes(searchText.toLowerCase());
+                  return sub?.Subject.subject_name ?.toLowerCase().includes(searchText.toLowerCase());                                        
                 });
 
                 const marks = Number.parseInt(searchMarks);
+                
                 const finalDataWithMarks = filterSubject.filter((mark) => {
                   return mark?.questions_details?.marks === marks;
                 });

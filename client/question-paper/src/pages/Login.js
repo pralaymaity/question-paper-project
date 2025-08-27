@@ -134,7 +134,7 @@ const Login = () => {
         <input
           className="w-full outline-none border-2 border-teal-500 text-black p-2 my-1 rounded-md"
           ref={email}
-          type="email"
+          type="text"
           placeholder="Email"
           onChange={() => {
             checkValidData(

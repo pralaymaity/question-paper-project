@@ -13,7 +13,8 @@ const SideBar = () => {
 
   // State for popup management
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedExamDetails, setSelectedExamDetails] = useState(null); // Stores { exam_id, fullmarks, duration }
+  const [selectedExamDetails, setSelectedExamDetails] = useState(null);
+  // Stores { exam_id, fullmarks, duration }
 
   const navigate = useNavigate();
 
@@ -43,6 +44,7 @@ const SideBar = () => {
   const handleSubjectClick = async (subject) => {
     try {
       const formattedSubject = subjectMap[subject.toLowerCase()];
+
       const response = await axios.get(
         `${apiUrl}/api/demoExam/${formattedSubject}`
       );
@@ -58,11 +60,7 @@ const SideBar = () => {
 
       // Close the subject list and sidebar after selection
       setShowSubjects(false);
-      // setIsSidebarOpen(false); // You might want to keep sidebar open if popup is overlay
-
-      //const exam_id = response?.data?.exam_id;
-
-      //console.log(response);
+      // setIsSidebarOpen(false); // You might want to keep sidebar open if popup is overlay     
 
       //navigate(`/dashboard/exam-paper/${exam_id}`);
     } catch (error) {
