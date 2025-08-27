@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import { checkValidData } from "../utils/validate";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -12,6 +13,8 @@ const Login = () => {
   const [showErrorMessage, setshowErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState("");
 
+  const navigate = useNavigate();
+
   const name = useRef();
   const email = useRef();
   const password = useRef();
@@ -19,7 +22,7 @@ const Login = () => {
   const showToast = (msg) => {
     setLoginSuccess(msg);
     setTimeout(() => {
-      window.location.href = `${frontEndUrl}/dashboard`;
+      navigate("/dashboard")
     }, 3000);
   };
 
