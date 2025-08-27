@@ -2,7 +2,7 @@ const express = require("express");
 const subjectRoute = express.Router();
 const SubjectPaper = require("../models/subjectPaper");
 
-subjectRoute.get("/" , async (req , res)=>{
+subjectRoute.get("/take-subject" , async (req , res)=>{
 
     try{
         const subjectPaper = await SubjectPaper.findAll()
