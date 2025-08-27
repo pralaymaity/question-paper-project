@@ -5,8 +5,13 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+const allowOrigins = [
+  "http://localhost:3000",
+  "https://question-paper-project.onrender.com"
+]
+
 const corsOptions = {
-  origin: "http://localhost:3000", 
+  origin: allowOrigins, 
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
