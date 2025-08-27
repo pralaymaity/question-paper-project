@@ -5,7 +5,6 @@ import { addQuestion, removeQuestion } from "../../utils/selectQuestionSlice";
 import { useNavigate } from "react-router-dom";
 
 const StoreQuestions = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [subjects, setSubjects] = useState([]);
@@ -34,14 +33,11 @@ const StoreQuestions = () => {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${apiUrl}/api/take-question`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Send the token in the Bearer format
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/api/take-question`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send the token in the Bearer format
+        },
+      });
 
       let jsonData = response.data;
       setQuestions(jsonData);
@@ -103,48 +99,51 @@ const StoreQuestions = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-3xl font-extrabold mb-6 text-center text-blue-900">
+      <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-blue-900">
         Select Subject
       </h2>
 
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-10">
+      {/* Subject Buttons */}
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8 mb-10">
         {subjects.map((subj) => (
           <button
             key={subj?.id}
             onClick={() => setSelectedSubject(subj?.subject_name)}
-            className={`px-6 py-3 text-xl sm:text-2xl rounded-lg font-semibold tracking-wide transition-all duration-300 shadow-md border 
-        ${
-          selectedSubject === subj?.subject_name
-            ? "bg-gradient-to-r from-blue-600 to-blue-800 text-white border-blue-800 scale-105"
-            : "bg-white text-gray-700 hover:bg-blue-100 border-gray-300"
-        }`}
+            className={`px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-xl md:text-2xl rounded-lg font-semibold tracking-wide transition-all duration-300 shadow-md border 
+          ${
+            selectedSubject === subj?.subject_name
+              ? "bg-gradient-to-r from-blue-600 to-blue-800 text-white border-blue-800 scale-105"
+              : "bg-white text-gray-700 hover:bg-blue-100 border-gray-300"
+          }`}
           >
             {subj.subject_name.toUpperCase()}
           </button>
         ))}
       </div>
 
+      {/* Error Message */}
       {showError && (
-        <div className="fixed top-16 right-4 bg-red-800 text-white px-6 py-3 rounded shadow-lg animate-bounce-in">
+        <div className="fixed top-16 right-4 bg-red-800 text-white px-4 sm:px-6 py-2 sm:py-3 rounded shadow-lg animate-bounce-in text-sm sm:text-base">
           ⚠️ {errorMessage}
         </div>
       )}
 
+      {/* Sticky Group Header */}
       {selectedSubject && (
-        <div className="sticky top-0 ml-6 bg-slate-300 shadow-md z-10 rounded-xl">
-          <div className="relative flex items-center justify-center py-3">
-            {/* Centered Group counts */}
-            <div className="text-3xl font-semibold text-teal-900 flex gap-6">
+        <div className="sticky top-0 bg-slate-300 shadow-md z-10 rounded-xl">
+          <div className="flex flex-col sm:flex-row items-center justify-between py-3 px-4">
+            {/* Group counts */}
+            <div className="text-xl sm:text-2xl font-semibold text-teal-900 flex flex-wrap justify-center gap-4 sm:gap-6">
               <span>Group</span>
               <span>A: {groupCounts.A}</span>
               <span>B: {groupCounts.B}</span>
               <span>C: {groupCounts.C}</span>
             </div>
 
-            {/* Right-aligned Show Paper button */}
+            {/* Show Paper button */}
             <button
               onClick={() => navigate("/dashboard/generate-paper")}
-              className="absolute right-60 bg-teal-900 text-white px-4 py-2 rounded-md text-base font-medium hover:bg-teal-700 "
+              className="mt-3 sm:mt-0 bg-teal-900 text-white px-4 py-2 rounded-md text-sm sm:text-base font-medium hover:bg-teal-700"
             >
               Show Paper
             </button>
@@ -152,7 +151,8 @@ const StoreQuestions = () => {
         </div>
       )}
 
-      <div className="pl-6 space-y-6 my-4">
+      {/* Questions */}
+      <div className="space-y-6 my-4">
         {selectedSubject &&
           (filteredQuestions.length > 0 ? (
             filteredQuestions.map((item, index) => (
@@ -164,35 +164,38 @@ const StoreQuestions = () => {
                     : "bg-slate-100"
                 }`}
               >
-                <h2 className="font-bold text-xl text-blue-800 mb-2">
+                <h2 className="font-bold text-lg sm:text-xl text-blue-800 mb-2">
                   Q[{index + 1}].
                 </h2>
 
-                <div className="flex gap-8 pl-4">
-                  <h2 className="font-bold text-xl text-teal-600 mb-2">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-8 pl-2 sm:pl-4">
+                  <h2 className="font-bold text-base sm:text-xl text-teal-600">
                     Group: {item.question_group}
                   </h2>
-                  <h2 className="font-bold text-xl text-teal-600 mb-2">
+                  <h2 className="font-bold text-base sm:text-xl text-teal-600">
                     Total: {item.total_marks}
                   </h2>
-                  <h2 className="font-bold text-xl text-teal-600 mb-2">
+                  <h2 className="font-bold text-base sm:text-xl text-teal-600">
                     {item.difficulty}
                   </h2>
                 </div>
-                <div className="pl-4 space-y-2 my-4 text-lg">
+
+                <div className="pl-2 sm:pl-4 space-y-2 my-4 text-base sm:text-lg">
                   {item.sub_question_marks.map((subq, inx) => (
                     <p key={inx}>
                       {subq.subquestion} ?&nbsp;&nbsp;&nbsp;&nbsp; {subq.marks}
                     </p>
                   ))}
                 </div>
-                <div className="flex justify-end gap-4">
+
+                {/* Add/Remove buttons */}
+                <div className="flex justify-end gap-3 sm:gap-4">
                   {highlights.includes(item.id) ? (
                     <button
                       onClick={() =>
                         handleRemoveQuestion(item.id, item.question_group)
                       }
-                      className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg hover:bg-teal-950 hover:text-white"
+                      className="p-2 sm:p-3 w-28 sm:w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-sm sm:text-lg hover:bg-teal-950 hover:text-white"
                     >
                       Remove
                     </button>
@@ -201,7 +204,7 @@ const StoreQuestions = () => {
                       onClick={() =>
                         handleAddQuestion(item.id, item.question_group)
                       }
-                      className="p-3 w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-lg hover:bg-teal-950 hover:text-white"
+                      className="p-2 sm:p-3 w-28 sm:w-36 cursor-pointer bg-white border border-teal-950 rounded-md text-teal-950 font-semibold text-sm sm:text-lg hover:bg-teal-950 hover:text-white"
                     >
                       Add
                     </button>
@@ -210,7 +213,7 @@ const StoreQuestions = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-600 text-lg">
+            <p className="text-center text-gray-600 text-base sm:text-lg">
               No questions available.
             </p>
           ))}

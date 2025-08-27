@@ -15,10 +15,9 @@ const ExamPaper = () => {
   } = useExamPaper();
 
   //for one time print the paper
-  useEffect(()=>{
+  useEffect(() => {
     console.log("Paper fetched:", paper);
-  },[paper])
-  
+  }, [paper]);
 
   const { subject, academic_session, duration, fullmarks, exam_date } = paper;
 
@@ -51,32 +50,36 @@ const ExamPaper = () => {
     return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
 
-  const formattedDate = exam_date ? new Date(exam_date).toISOString().split("T")[0] : "Invalid Date";
-    
-    
+  const formattedDate = exam_date
+    ? new Date(exam_date).toISOString().split("T")[0]
+    : "Invalid Date";
 
   return (
-    <div className="bg-zinc-100 min-h-screen py-8 px-4">
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8 flex flex-wrap justify-between text-blue-700 text-xl font-semibold">
+    <div className="bg-zinc-100 min-h-screen py-6 px-4 sm:px-8">
+      {/* Exam Header */}
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-blue-700 text-base sm:text-xl font-semibold">
         <p>📘 Subject: {subject}</p>
         <p>📅 Date: {formattedDate}</p>
-        <p>🎓 Academic Session: {academic_session}</p>
+        <p>🎓 Session: {academic_session}</p>
         <p>⏱️ Duration: {duration} mins</p>
         <p>📝 Full Marks: {fullmarks}</p>
       </div>
 
-      {timeLeft !== null && !isSubmitted && <TimerDisplay timeLeft={timeLeft} />}
+      {/* Timer */}
+      {timeLeft !== null && !isSubmitted && (
+        <TimerDisplay timeLeft={timeLeft} />
+      )}
 
-      <div className="text-center mb-10">
-        <p className="text-4xl font-bold text-orange-600">
+      {/* Scoreboard */}
+      <div className="text-center mb-8">
+        <p className="text-2xl sm:text-4xl font-bold text-orange-600">
           🎯 Scoreboard: {score}
         </p>
       </div>
 
-      <div className="py-4 px-10">
+      {/* Questions */}
+      <div className="py-4 px-2 sm:px-6">
         {paper?.Questions?.map((data, index) => {
-          // console.log(index);
-          
           const { question, questions_details } = data;
           const { category, answereOptions } = questions_details;
 
@@ -86,48 +89,48 @@ const ExamPaper = () => {
 
           return (
             <ul key={index} className="py-3">
-              <li className="font-semibold text-2xl text-fuchsia-800 flex justify-between">
+              <li className="font-semibold text-lg sm:text-2xl text-fuchsia-800 flex justify-between flex-wrap gap-2">
                 <span>
                   Q({index + 1}) {question}
                 </span>
-                <span>{questions_details.marks}</span>
+                <span className="text-right">{questions_details.marks}</span>
               </li>
 
+              {/* True/False */}
               {category === "true/false" && (
-                <div className="py-2 px-6">
+                <div className="py-2 space-y-2">
                   {["True", "False"].map((option, idx) => {
+                    const isSelected =
+                      selectedAnswers[index]?.includes(option) || false;
 
-                    const isSelected = selectedAnswers[index]?.includes(option) || false;
-                    //What the user chose
-                                                         
-                    const correctText = correctAnswer ? correctAnswer.text : null;
-                                            
+                    const correctText = correctAnswer
+                      ? correctAnswer.text
+                      : null;
                     const isCorrectAnswer = option === correctText;
-                    //What the system says is correct
 
                     return (
                       <div
                         key={idx}
-                        className={`flex justify-start py-2 ${
+                        className={`flex items-center py-2 px-3 rounded w-full sm:w-6/12 md:w-4/12 ${
                           isSubmitted && isSelected && isCorrectAnswer
-                            ? "bg-green-500 rounded w-2/12"
+                            ? "bg-green-500"
                             : isSubmitted && isSelected && !isCorrectAnswer
-                            ? "bg-red-500 rounded w-2/12"
-                            : isSubmitted && !isSelected && isCorrectAnswer
-                            ? "bg-blue-500 rounded w-2/12"
-                            : ""
+                            ? "bg-red-500"
+                            : isSubmitted &&
+                              !isSelected &&
+                              isCorrectAnswer &&
+                              "bg-blue-500"
                         }`}
                       >
                         <input
                           type="radio"
                           name={`question-${index}`}
-                          // All radio buttons would be treated as independent if not name include
                           value={option}
                           checked={isSelected}
                           onChange={() => handleAnswerChange(index, option)}
-                          className="w-6 h-6 text-blue-600 form-radio"
+                          className="w-5 h-5 text-blue-600"
                         />
-                        <span className="mx-2 text-xl font-semibold text-teal-800">
+                        <span className="ml-2 text-base sm:text-xl font-semibold text-teal-800">
                           {option}
                         </span>
                       </div>
@@ -136,26 +139,28 @@ const ExamPaper = () => {
                 </div>
               )}
 
+              {/* Select One / Select Two */}
               {(category === "select one" || category === "select two") && (
-                <div className="py-2 px-6">
+                <div className="py-2 space-y-2">
                   {answereOptions.map((option, idx) => {
+                    const isSelected =
+                      selectedAnswers[index]?.includes(option.text) || false;
 
-                    const isSelected = selectedAnswers[index]?.includes(option.text) || false;
-                      
                     const isCorrectAnswer = option.isCorrect;
 
                     return (
                       <div
                         key={idx}
-                        className={`flex justify-start py-2 ${
+                        className={`flex items-center py-2 px-3 rounded w-full sm:w-8/12 md:w-6/12 ${
                           isSubmitted && isSelected && isCorrectAnswer
-                            ? "bg-green-500 rounded w-2/12"
+                            ? "bg-green-500"
                             : isSubmitted && isSelected && !isCorrectAnswer
-                            ? "bg-red-500 rounded w-2/12"
-                            : isSubmitted && isCorrectAnswer && !isSelected && feedback[index] !== undefined
-                                                                                          
-                            ? "bg-blue-500 rounded w-2/12"
-                            : ""
+                            ? "bg-red-500"
+                            : isSubmitted &&
+                              isCorrectAnswer &&
+                              !isSelected &&
+                              feedback[index] !== undefined &&
+                              "bg-blue-500"
                         }`}
                       >
                         <input
@@ -164,12 +169,13 @@ const ExamPaper = () => {
                           }
                           name={`question-${index}`}
                           value={option.text}
+                          checked={isSelected}
                           onChange={() =>
                             handleAnswerChange(index, option.text)
                           }
-                          className="w-6 h-6 text-blue-600 form-checkbox"
+                          className="w-5 h-5 text-blue-600"
                         />
-                        <span className="mx-2 text-xl font-semibold text-teal-800">
+                        <span className="ml-2 text-base sm:text-xl font-semibold text-teal-800">
                           {option.text}
                         </span>
                       </div>
@@ -182,12 +188,15 @@ const ExamPaper = () => {
         })}
       </div>
 
-      <button
-        onClick={handleSubmit}
-        className="my-4 mx-10 p-2 bg-blue-500 text-white rounded"
-      >
-        Submit Paper
-      </button>
+      {/* Submit Button */}
+      <div className="flex justify-center">
+        <button
+          onClick={handleSubmit}
+          className="my-4 w-full sm:w-auto px-6 py-2 bg-blue-500 text-white text-lg rounded"
+        >
+          Submit Paper
+        </button>
+      </div>
     </div>
   );
 };

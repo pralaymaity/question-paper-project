@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const QuestionStorage = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [originalData, setOriginalData] = useState([]);
@@ -53,7 +52,6 @@ const QuestionStorage = () => {
   };
 
   const handleNavigateExamForm = () => {
-    
     //console.log(selectedQuestionsIds);
 
     navigate("/dashboard/exam-form", { state: { selectedQuestionsIds } });
@@ -62,44 +60,44 @@ const QuestionStorage = () => {
 
   return (
     <div className=" bg-slate-50">
-      <div className="py-4 px-8 flex justify-between items-center mb-4">
-        <div className="flex space-x-8">
+      <div className="py-4 px-4 sm:px-8 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-4">
+        {/* Search Section */}
+        <div className="flex flex-col sm:flex-row sm:space-x-4 gap-3 sm:gap-0 w-full sm:w-auto">
           <input
-            className="w-6/12 p-3 rounded-md border text-slate-900  border-blue-500 outline-none"
+            className="w-full sm:w-60 p-2 sm:p-3 rounded-md border text-slate-900 border-blue-500 outline-none"
             type="text"
             value={searchText}
             placeholder="Search Subject"
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
+            onChange={(e) => setSearchText(e.target.value)}
           />
+
           <input
-            className="w-6/12 p-3 rounded-md border text-slate-900  border-blue-500 outline-none"
+            className="w-full sm:w-40 p-2 sm:p-3 rounded-md border text-slate-900 border-blue-500 outline-none"
             type="text"
             value={searchMarks}
             placeholder="Marks"
-            onChange={(e) => {
-              setSearchMarks(e.target.value);
-            }}
+            onChange={(e) => setSearchMarks(e.target.value)}
           />
 
           <button
-            className=" p-3 rounded-md border font-semibold text-slate-900  border-blue-500 outline-none"
+            className="w-full sm:w-auto p-2 sm:p-3 rounded-md border font-semibold text-slate-900 border-blue-500 outline-none"
             onClick={() => {
               if (searchText.length === 0 || searchMarks.length === 0) {
-                alert("⚠ Fill the both fields");
+                alert("⚠ Fill both fields");
               } else {
-                const filterSubject = originalData.filter((sub) => {
-                  return sub?.Subject.subject_name ?.toLowerCase().includes(searchText.toLowerCase());                                        
-                });
+                const filterSubject = originalData.filter((sub) =>
+                  sub?.Subject.subject_name
+                    ?.toLowerCase()
+                    .includes(searchText.toLowerCase())
+                );
 
                 const marks = Number.parseInt(searchMarks);
-                
-                const finalDataWithMarks = filterSubject.filter((mark) => {
-                  return mark?.questions_details?.marks === marks;
-                });
 
-                setFilterData(finalDataWithMarks); // Update with the filtered data
+                const finalDataWithMarks = filterSubject.filter(
+                  (mark) => mark?.questions_details?.marks === marks
+                );
+
+                setFilterData(finalDataWithMarks);
                 setSearchText("");
                 setSearchMarks("");
               }
@@ -109,9 +107,10 @@ const QuestionStorage = () => {
           </button>
         </div>
 
+        {/* Exam Form Button */}
         <button
           onClick={handleNavigateExamForm}
-          className="p-3 rounded-md font-semibold bg-blue-950 border text-white"
+          className="w-full sm:w-auto p-2 sm:p-3 rounded-md font-semibold bg-blue-950 text-white"
         >
           Go to Exam Form
         </button>
