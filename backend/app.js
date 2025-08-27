@@ -56,7 +56,7 @@ app.use("/api", examRoutes);
 app.use("/api", examPaperRoutes);
 app.use("/api", questionRoute);
 app.use("/api", subjectRoute);
-app.use("/", paperRoute);
+app.use("/api", paperRoute);
 app.use("/api",sideBarRouter);
 app.use("/api",subjectsRouter);
 
