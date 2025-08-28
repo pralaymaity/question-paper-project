@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { storeQuestion } from "../../utils/collegeQuestionSlice";
 
 const CollegeQuestionForm = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [form, setForm] = useState({
@@ -25,7 +24,7 @@ const CollegeQuestionForm = () => {
     "Operating System",
     "Artificial Intelligence",
     "Data Structures & Algorithms",
-    "Android"
+    "Android",
   ];
 
   const dispatch = useDispatch();
@@ -47,8 +46,6 @@ const CollegeQuestionForm = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        
-        
       });
 
       //console.log(response);
@@ -120,6 +117,9 @@ const CollegeQuestionForm = () => {
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setForm({ ...form, questionText: e.target.value })}
         />
+        <p className="text-sm text-red-600 mt-1 font-medium">
+          *for multipile questions use /n (new line)
+        </p>
 
         <select
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
@@ -146,10 +146,13 @@ const CollegeQuestionForm = () => {
         <input
           type="text"
           value={form.marks}
-          placeholder="Marks (2+2+1)"
+          placeholder="Marks 2+2+1"
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setForm({ ...form, marks: e.target.value })}
         />
+        <p className="text-sm text-red-600 mt-1 font-medium">
+          *Do not use parentheses, just use '+' like 2+2+1
+        </p>
 
         <select
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
