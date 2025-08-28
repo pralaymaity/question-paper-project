@@ -33,7 +33,7 @@ const useGeneratePaper = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/api/get-paper`);
+      const res = await axios.get(`${apiUrl}/api-clg/get-paper`);
 
       let jsonData = res?.data?.paper;
       setQuestions(jsonData);
@@ -44,7 +44,7 @@ const useGeneratePaper = () => {
 
   const resetData = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/api/reset-paper`);
+      const res = await axios.post(`${apiUrl}/api-clg/reset-paper`);
 
       setQuestions(res.data);
       dispatch(clearAllQuestions())

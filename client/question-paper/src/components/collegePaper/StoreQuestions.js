@@ -8,9 +8,9 @@ const StoreQuestions = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [subjects, setSubjects] = useState([]);
-  console.log(subjects);
+  //console.log(subjects);
   const [questions, setQuestions] = useState([]);
-  console.log(questions);
+  //console.log(questions);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
@@ -76,7 +76,7 @@ const StoreQuestions = () => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios.post(
-        `${apiUrl}/api/add-question`,
+        `${apiUrl}/api-clg/add-question`,
         {
           eachQuestionId,
         },
@@ -90,15 +90,20 @@ const StoreQuestions = () => {
       if (err?.response?.status && err?.status === 400) {
         showToast(err.response.data.error);
       }
+      else if(err?.response?.status === 401){
+        console.log("something is wrong");
+        
+      }
       //console.log("faild to add question-id", err);
     }
   };
 
   const handleRemoveQuestion = async (eachQuestionId, question_group) => {
+    
     const token = localStorage.getItem("token");
     try {
       await axios.post(
-        `${apiUrl}/api/remove-question`,
+        `${apiUrl}/api-clg/remove-question`,
         { eachQuestionId },
         {
           headers: { Authorization: `Bearer ${token}` },
