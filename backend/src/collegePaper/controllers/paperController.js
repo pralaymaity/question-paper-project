@@ -61,6 +61,8 @@ const addQuestionToPaper = async (req, res) => {
 const removeQuestionFromPaper = async (req, res) => {
   try {
     const { eachQuestionId } = req.body;
+    console.log(eachQuestionId);
+    
 
     const question = await QuestionStorage.findByPk(eachQuestionId);
     if (!question) {
