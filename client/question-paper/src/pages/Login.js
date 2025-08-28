@@ -107,7 +107,7 @@ const Login = () => {
       {/* Info Box */}
       <div className="mt-4 w-[95%] sm:w-full max-w-md mx-auto p-4 bg-green-100 border-l-4 border-green-700 rounded shadow-md relative">
         <p className="text-red-800 font-medium text-sm sm:text-base text-center sm:text-left">
-          * After SignIn/SignUp, please wait for 30 seconds to start the
+          * After SignIn/SignUp, please wait for 45-55 seconds to start the
           server...⏳
         </p>
       </div>
