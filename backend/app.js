@@ -1,42 +1,27 @@
 require("dotenv").config();
-// require('dotenv').config(); loads environment variables from a .env file into process.env.
+
 
 const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const allowOrigins = [
-  "http://localhost:3000",
-  "https://question-paper-project.onrender.com"
-]
-
+//Cors handle
 const corsOptions = {
-  origin: allowOrigins, 
+  origin: "http://localhost:3000",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
 };
-app.options("*", cors(corsOptions));  //Handle preflight requests for all routes
+
 app.use(cors(corsOptions));
 
 
 // Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 
-//models
-const { Sequelize, DataTypes } = require("sequelize");
-const User = require("./src/loginUser/models/loginUser");
-const Subject = require("./src/mcqPaper/models/subject");
-const Question = require("./src/mcqPaper/models/questions");
-const ExamForm = require("./src/mcqPaper/models/examForm");
-const ExamQuestions = require("./src/mcqPaper/models/examQuestions");
-const SubjectPaper = require("./src/collegePaper/models/subjectPaper");
-const QuestionStorage = require("./src/collegePaper/models/questionStorage");
 
-app.use((req, res, next) => {
-  console.log("🔥 Incoming request from:", req.headers.origin);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log("🔥 Incoming request from:", req.headers.origin);
+//   next();
+// });
 
 
 // Main API routes
@@ -60,30 +45,32 @@ app.use("/api-clg", paperRoute);
 app.use("/api",sideBarRouter);
 app.use("/api",subjectsRouter);
 
-// Initialize Sequelize
-const sequelize = require("./src/config/config");
-(async function () {
-  try {
-    await sequelize.authenticate();
-    console.log("Database Connection has been established successfully.");
-    await User.sync();
-    await Subject.sync();
-    await Question.sync();
-    await ExamForm.sync();
-    await ExamQuestions.sync();
-    await SubjectPaper.sync();
-    await QuestionStorage.sync(); //{ force: true } if u want later update the table
-    //console.log("🔁 QuestionStorage table dropped and recreated successfully!");
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-})();
-sequelize.sync();
-
+// test call
 app.get("/", (req, res) => {
   res.send("Hello World!!");
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+// DB + Server start
+const sequelize = require("./src/config/config");
+(async function () {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Database connected successfully");
+
+    await sequelize.sync({ alter: true }); 
+    
+
+    console.log("✅ All tables synced");
+
+    app.listen(process.env.PORT, () => {
+  console.log(`🔥 Server is running on port ${process.env.PORT}`);
 });
+
+  } catch (error) {
+    console.error("❌ Unable to connect to the database:", error);
+  }
+})();
+
+
+
+
